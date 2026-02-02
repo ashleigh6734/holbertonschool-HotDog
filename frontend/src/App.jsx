@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import reactLogo from './assets/paw.jpg'
+import viteLogo from './assets/paw.jpg'
 import './App.css'
 
 function App() {
