@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/paw.jpg'
-import viteLogo from './assets/paw.jpg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/paw.jpg";
+import viteLogo from "./assets/paw.jpg";
+import "./App.css";
+import Register from "./pages/Register";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -29,7 +30,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
