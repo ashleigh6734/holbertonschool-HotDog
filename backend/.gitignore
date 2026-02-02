@@ -1,2 +1,6 @@
 # this ignores the SQLite database file
 backend/database/app.db
+# ignores seeded data, avoid merge conflicts and leaking test data
+__pycache__/
+*.pyc
+.env
