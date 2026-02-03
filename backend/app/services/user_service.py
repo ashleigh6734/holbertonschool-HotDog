@@ -26,3 +26,16 @@ class UserService():
         db.session.commit()
 
         return user
+    
+    @staticmethod
+    def get_user_id(user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return ValueError("404: User not found")
+        return user
+    
+    @staticmethod
+    def get_user_by_email(email):
+        return User.query.filter_by(email=email).first()
+
+    
