@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import avatarIcon from "../../assets/icons/user-avatar.png";
 import "./Avatar.css";
 
@@ -17,10 +18,10 @@ export default function Avatar({ user }) {
 
       {open && (
         <div className="avatar-menu">
-          <button>Manage Appointments</button>
-          <button>Pet Medical History</button>
-          <button>Profile</button>
-          <button>Account</button>
+          <Link to="/appointments">Manage Appointments</Link>
+          <Link to="/medical-history">Pet Medical History</Link>
+          <Link to="/pet-profile">Profile</Link>
+          <Link to="/account">Account</Link>
           <button className="logout">Logout</button>
         </div>
       )}

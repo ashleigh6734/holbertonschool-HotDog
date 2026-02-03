@@ -1,55 +1,34 @@
-import { useState } from "react";
-import reactLogo from "./assets/paw.jpg";
-import viteLogo from "./assets/paw.jpg";
-import "./App.css";
-// import Register from "./pages/Register";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import PetProfile from "./pages/PetProfile.jsx";
+import Booking from "./pages/Booking.jsx";
+import Appointments from "./pages/Appointments.jsx";
+import MedicalHistory from "./pages/MedicalHistory.jsx";
+import Account from "./pages/Account.jsx";
+import Avatar from "./components/avatar/Avatar.jsx";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function App() {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      {/* Grace Header here */}
+      <Avatar user={{ name: "Sylvia", avatarUrl: null }} />
+
+      <Routes>
+        {/* Register and Login page? */}
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/pets/:id" element={<PetProfile />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/appointments" element={<Appointments />} />
+        <Route path="/medical-history" element={<MedicalHistory />} />
+        <Route path="/pet-profile" element={<PetProfile />} />
+        <Route path="/account" element={<Account />} />
+        {/* more pages coming ... */}
+      </Routes>
+
+      {/* Grace Footer here */}
     </>
   );
 }
-
-export default App;
-
-
-// Avatar test code
-// import Avatar from "../src/components/avatar/Avatar"
-
-// export default function App() {
-//   const mockUser = {
-//     name: "Veronica",
-//     avatarUrl: null
-//   };
-
-//   return (
-//     <div style={{ padding: 50 }}>
-//       <h1>Avatar Test</h1>
-
-//       <Avatar user={mockUser} />
-//     </div>
-//   );
-// }

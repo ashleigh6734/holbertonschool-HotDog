@@ -1,28 +1,36 @@
 .avatar-container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .avatar-btn {
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .avatar-menu {
   position: absolute;
-  right: 0;
+  right: auto;
+  left: 0;
   top: 55px;
   background: white;
   border-radius: 8px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
   min-width: 220px;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .avatar-menu button {
@@ -44,4 +52,15 @@
 
 .avatar-menu .logout {
   color: #c0392b;
+}
+
+.avatar-menu a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.avatar-menu a:hover {
+  background-color: #f7f7f7;
 }
