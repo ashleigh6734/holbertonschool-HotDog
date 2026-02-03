@@ -1,0 +1,47 @@
+.avatar-container {
+  position: relative;
+}
+
+.avatar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.avatar-menu {
+  position: absolute;
+  right: 0;
+  top: 55px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  min-width: 220px;
+  overflow: hidden;
+}
+
+.avatar-menu button {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.avatar-menu button:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.avatar-menu button:hover {
+  background: #f2f2f2;
+}
+
+.avatar-menu .logout {
+  color: #c0392b;
+}
