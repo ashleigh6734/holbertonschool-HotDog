@@ -2,7 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/paw.jpg";
 import viteLogo from "./assets/paw.jpg";
 import "./App.css";
-import Register from "./pages/Register";
+// import Register from "./pages/Register";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -34,3 +34,22 @@ function App() {
 }
 
 export default App;
+
+
+// Avatar test code
+// import Avatar from "../src/components/avatar/Avatar"
+
+// export default function App() {
+//   const mockUser = {
+//     name: "Veronica",
+//     avatarUrl: null
+//   };
+
+//   return (
+//     <div style={{ padding: 50 }}>
+//       <h1>Avatar Test</h1>
+
+//       <Avatar user={mockUser} />
+//     </div>
+//   );
+// }
