@@ -1,7 +1,7 @@
 from app.extensions import db, bcrypt
 from datetime import datetime
 import re
-from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates, relationship
 
 class User(db.Model):
     __tablename__ = "users"
@@ -19,7 +19,7 @@ class User(db.Model):
     # RELATIONSHIPS
     # =====================
     
-    #  to be implemented when other models have setup otherwise conflicts will arise
+    pets = relationship('Pet', back_populates='owner', lazy=True, cascade="all, delete-orphan")
 
     # =====================
     # VALIDATORS
