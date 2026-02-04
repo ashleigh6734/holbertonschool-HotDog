@@ -4,6 +4,7 @@ from flask_cors import CORS
 from .config import Config
 from .extensions import db # db instance
 from .models import user
+from .models import pet
 
 def create_app():
     # initialise flask app
