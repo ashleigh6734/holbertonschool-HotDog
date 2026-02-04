@@ -6,7 +6,7 @@ class UserService():
     @staticmethod
     def create_user(data):
         # Check if email already exists
-        existing_email = User.query.filter_by(email=data['email'].first())
+        existing_email = User.query.filter_by(email=data['email']).first()
         if existing_email:
             raise ValueError("Email already registered")
 
@@ -28,7 +28,7 @@ class UserService():
         return user
     
     @staticmethod
-    def get_user_id(user_id):
+    def get_user_by_id(user_id):
         user = User.query.get(user_id)
         if not user:
             return ValueError("404: User not found")
