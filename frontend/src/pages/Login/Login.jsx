@@ -1,50 +1,40 @@
 import "./Login.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
+import FormLabel from "../../components/Form/FormLabel";
+import FormRadio from "../../components/Form/FormRadio";
 
 export default function Login() {
   return (
     <div className="form-card">
       <Form>
-        <h3>Login</h3>
+        <h2>Login</h2>
 
         <p muted>Access your dashboard now! </p>
 
         <p>Are you a provider?</p>
-        {["radio"].map((type) => (
-          <div key={`inline-${type}`} className="mb-3">
-            <Form.Check
-              inline
-              label="Yes"
-              name="group1"
-              type={type}
-              id={`inline-${type}-1`}
-            />
-            <Form.Check
-              inline
-              label="No"
-              name="group1"
-              type={type}
-              id={`inline-${type}-2`}
-            />
-          </div>
-        ))}
+        <FormRadio name="group1" firstLabel="Yes" secondLabel="No" />
 
-        <Form.Group className="mb-3 justify-left" controlId="formEmail">
-          <Form.Label>Email*</Form.Label>
-          <Form.Control placeholder="Email" />
-        </Form.Group>
+        <FormLabel
+          className="justify-left mb-3"
+          controlId="loginEmail"
+          type="email"
+          placeholder="Email"
+          name="Email*"
+        />
 
-        <Form.Group className="mb-3 justify-left" controlId="formPassword">
-          <Form.Label>Password*</Form.Label>
-          <Form.Control placeholder="Enter Password" />
-        </Form.Group>
+        <FormLabel
+          className="justify-left mb-4"
+          controlId="loginPassword"
+          type="password"
+          placeholder="Password"
+          name="Password*"
+        />
 
         <Button className="login-btn" variant="warning" type="logIn">
           Login
         </Button>
 
         <p className="sub-text justify-left">
-          {" "}
           New to HotDog? <a href="#">Sign up</a>
         </p>
       </Form>

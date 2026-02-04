@@ -19,6 +19,7 @@ body {
   border-radius: 12px;
   width: 450px;
   box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.239);
+  align-items: center;
 }
 
 .justify-left {
