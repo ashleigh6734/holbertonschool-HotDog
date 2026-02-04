@@ -1,6 +1,6 @@
-import "../styles/Register.css";
+import "./Register.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
-import ToggleSwitch from "../components/buttons/ToggleSwitch";
+// import ToggleSwitch from "../components/buttons/ToggleSwitch";
 
 export default function Register() {
   return (
@@ -45,7 +45,7 @@ export default function Register() {
           </Form.Group>
 
           <Form.Group
-            className="justify-left"
+            // className="justify-left"
             as={Col}
             controlId="formGridLastName"
           >
