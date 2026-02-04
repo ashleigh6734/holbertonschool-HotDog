@@ -35,7 +35,7 @@ export default function Login() {
         </Button>
 
         <p className="sub-text justify-left">
-          New to HotDog? <a href="#">Sign up</a>
+          New to HotDog? <a href="../register">Sign up</a>
         </p>
       </Form>
     </div>
