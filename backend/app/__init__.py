@@ -5,6 +5,7 @@ from .config import Config
 from .extensions import db # db instance
 from .models import user
 from .models import pet
+from app.api_routes.users_routes import users_bp
 
 def create_app():
     # initialise flask app
@@ -25,5 +26,11 @@ def create_app():
     # ========================
     with app.app_context():
         db.create_all()  # automatically creates tables if they don't exist
+
+
+    # ========================
+    # Register Blueprints
+    # ========================
+    app.register_blueprint(users_bp)
 
     return app
