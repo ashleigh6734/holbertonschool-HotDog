@@ -78,7 +78,7 @@ export default function Register() {
         <FormLabel
           className="justify-left mb-3"
           controlId="formConfirmPassword"
-          type="confirmpassword"
+          type="password"
           placeholder="Re-enter Password"
           name="Confirm Password"
         />
