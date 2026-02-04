@@ -16,3 +16,15 @@ def get_all_users():
         }
         for u in users
     ])
+
+@users_bp.route('/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    """ Fetch a single user by ID """
+    user = User.query.get_or_404(user_id) # return 404 if not found
+    return jsonify([
+           {
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }
+    ])
