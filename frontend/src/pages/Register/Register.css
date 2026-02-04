@@ -1,8 +1,8 @@
 body {
-  background-image: url("./../assets/images/hotdog-backround.jpg");
-  background-repeat: no-repeat; /* Prevents repeating */
-  background-size: cover; /* Scales image to cover the entire element */
-  background-position: center; /* Centers the image within the element */
+  background-image: url("../../assets/images/hotdog-backround.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
 }
 
