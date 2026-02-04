@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
-import PetProfile from "./pages/PetProfile.jsx";
-import Booking from "./pages/Booking.jsx";
-import Appointments from "./pages/Appointments.jsx";
-import Register from "./pages/Register/Register.jsx";
-import MedicalHistory from "./pages/MedicalHistory.jsx";
 import Account from "./pages/Account.jsx";
+import Appointments from "./pages/Appointments.jsx";
+import Booking from "./pages/Booking.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login/Login.jsx";
+import MedicalHistory from "./pages/MedicalHistory.jsx";
+import PetProfile from "./pages/PetProfile.jsx";
+import Register from "./pages/Register/Register.jsx";
 import Avatar from "./components/avatar/Avatar.jsx";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
 
       <Routes>
         <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pets/:id" element={<PetProfile />} />

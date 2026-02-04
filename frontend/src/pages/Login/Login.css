@@ -1,0 +1,37 @@
+body {
+  background-image: url("../../assets/images/hotdog-backround.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.form-card {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-card form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 450px;
+  box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.239);
+}
+
+.justify-left {
+  text-align: left;
+}
+
+.login-btn {
+  background-color: #ffc72c;
+  width: 100%;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.sub-text {
+  font-size: small;
+}
