@@ -41,3 +41,11 @@ def create_user():
         }), 201
     except ValueError as e:
         return jsonify({"error: str(e)"}), 400
+
+@users_bp.route('/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        UserService.delete_user(user_id)
+        return jsonify({"message": "User successfully deleted"})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
