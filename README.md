@@ -1,2 +1,1 @@
-Test for git repo connection.
-Sylvia test.
+Welcome to HotDog - HolbertonSchool Australia
