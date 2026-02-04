@@ -89,7 +89,7 @@ export default function Register() {
 
         <p className="sub-text justify-left">
           {" "}
-          Already have an account? <a href="#">Login</a>
+          Already have an account? <a href="../login">Login</a>
         </p>
       </Form>
     </div>
