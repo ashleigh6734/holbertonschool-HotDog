@@ -1,0 +1,25 @@
+.auth-toggle {
+  background: #e9ecef;
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.auth-btn {
+  border-radius: 999px !important;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  color: #1f3b64;
+  border: none;
+}
+
+.auth-btn.active {
+  background-color: #1f3b64;
+  color: #fff;
+}
+
+.auth-btn:focus,
+.auth-btn:active {
+  box-shadow: none !important;
+}
