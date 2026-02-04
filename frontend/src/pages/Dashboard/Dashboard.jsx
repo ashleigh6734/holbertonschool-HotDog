@@ -20,7 +20,6 @@ export default function Dashboard() {
 
         <DashboardSearch
           onSearch={(query) => {
-            // MVP: 先打印，后面你们接 API 或 route
             console.log("search:", query);
           }}
         />
