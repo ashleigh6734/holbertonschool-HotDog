@@ -10,7 +10,7 @@ export default function Register() {
       <Form>
         {/* <ToggleSwitch /> */}
 
-        <h3>Create a HotDog Account</h3>
+        <h2>Create a HotDog Account</h2>
 
         <p>Keep on top of your pet's appointments and create an account! </p>
 
