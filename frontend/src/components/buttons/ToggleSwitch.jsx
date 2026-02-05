@@ -22,7 +22,7 @@ export default function ToggleSwitch({
         {radios.map((radio, idx) => (
           <ToggleButton
             key={idx}
-            id={`radio-${idx}`}
+            id={`radio-${idx}-dummy`}
             type="radio"
             variant={idx % 2 ? "outline-warning" : "outline-primary"}
             name="radio"
