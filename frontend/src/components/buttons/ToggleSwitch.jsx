@@ -8,31 +8,54 @@ export default function ToggleSwitch({
   firstPath,
   secondPath,
 }) {
-  const radios = [
-    { name: firstRadio, value: firstRadio, path: firstPath },
-    { name: secondRadio, value: secondRadio, path: secondPath },
-  ];
-
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
     <>
       <ButtonGroup>
-        {radios.map((radio, idx) => (
-          <ToggleButton
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant={idx % 2 ? "outline-warning" : "outline-primary"}
-            name="radio"
-            value={radio.value}
-            checked={location.pathname === radio.path}
-            onChange={() => navigate(radio.path)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
+        <ToggleButton
+          key={1}
+          id={`radio-${1}`}
+          type="radio"
+          // variant={
+          //   location.pathname === firstPath
+          //     ? "outline-warning"
+          //     : "outline-primary"
+          // }
+          name="radio"
+          style={{
+            backgroundColor:
+              location.pathname === firstPath ? "#FFA500" : "#191970",
+          }}
+          value={firstRadio}
+          onClick={() => {
+            navigate(firstPath);
+          }}
+        >
+          {firstRadio}
+        </ToggleButton>
+        <ToggleButton
+          key={2}
+          id={`radio-${2}`}
+          type="radio"
+          // variant={
+          //   location.pathname === secondPath
+          //     ? "outline-primary"
+          //     : "outline-primary"
+          // }
+          name="radio"
+          style={{
+            backgroundColor:
+              location.pathname === secondPath ? "#FFA500" : "#191970",
+          }}
+          value={secondRadio}
+          onClick={() => {
+            navigate(secondPath);
+          }}
+        >
+          {secondRadio}
+        </ToggleButton>
       </ButtonGroup>
     </>
   );
