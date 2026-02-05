@@ -9,21 +9,33 @@
 }
 
 /* Intro */
+.intro {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
 .intro-hi {
   margin: 0 0 12px;
   font-weight: 600;
+  justify-self: start;
 }
 
 .intro-title {
   margin: 0;
-  font-size: 34px;
+  font-size: 40px;
+  font-weight: 600;
   line-height: 1.15;
   max-width: 720px;
+  justify-self: center;
+  text-align: center;
 }
 
 /* Search */
 .search {
   margin: 22px 0 26px;
+  display: flex;
+  justify-content: center;
 }
 
 .search-box {
@@ -35,6 +47,7 @@
   border-radius: 14px;
   overflow: hidden;
   background: #fff;
+  width: 100%;
   max-width: 640px;
 }
 
@@ -86,20 +99,38 @@
 }
 
 .service-card {
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #efefef;
 }
 
-.service-img {
-  height: 74px;
-  background: #d8d8d8;
+.service-card img.service-img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* make image square */
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
+/* Overlay label on top of the image */
 .service-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 8px 10px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.45);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.service-card:hover .service-label {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 /* events */
@@ -163,12 +194,13 @@
 }
 
 .banner-title {
-  margin: 0 0 10px;
-  font-size: 26px;
+  font-size: 40px;
+  font-weight: 600;
 }
 
 .banner-text {
-  margin: 0 0 14px;
+  font-size: 40px;
+  font-weight: 600;
   max-width: 360px;
 }
 
@@ -186,11 +218,12 @@
   justify-content: flex-end;
 }
 
-.banner-circle {
-  width: 180px;
-  height: 180px;
-  border-radius: 999px;
-  background: rgba(255, 210, 77, 0.9);
+.banner-image {
+  width: 220px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
 }
 
 /* stylists section */

@@ -1,16 +1,12 @@
-import "./Dashboard.css";
+import './Dashboard.css';
 
-import DashboardHero from "../../components/Dashboard/DashboardHero";
-import DashboardSearch from "../../components/Dashboard/DashboardSearch";
-import TopServicesAndEvents from "../../components/Dashboard/TopServicesAndEvents";
-import DashboardBanner from "../../components/Dashboard/DashboardBanner";
-import PetStylistReviews from "../../components/Dashboard/PetStylistReviews";
+import DashboardHero from '../../components/Dashboard/DashboardHero';
+import DashboardSearch from '../../components/Dashboard/DashboardSearch';
+import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents';
+import DashboardBanner from '../../components/Dashboard/DashboardBanner';
+import PetStylistReviews from '../../components/Dashboard/PetStylistReviews';
 
-import {
-  TOP_SERVICES,
-  UPCOMING_EVENTS,
-  STYLISTS,
-} from "./dashboardData";
+import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData';
 
 export default function Dashboard() {
   return (
@@ -20,7 +16,7 @@ export default function Dashboard() {
 
         <DashboardSearch
           onSearch={(query) => {
-            console.log("search:", query);
+            console.log('search:', query);
           }}
         />
 
@@ -33,13 +29,12 @@ export default function Dashboard() {
           title="Tick season!"
           text="Get your furry friend the care they need with All Pets Health"
           ctaText="Book appointment"
-          onCtaClick={() => console.log("CTA clicked")}
         />
       </div>
 
       <PetStylistReviews
         stylists={STYLISTS}
-        onBookClick={() => console.log("Book appointment")}
+        onBookClick={() => console.log('Book appointment')}
       />
     </div>
   );
