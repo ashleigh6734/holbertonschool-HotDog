@@ -23,7 +23,7 @@ class Appointment (db.model):
     
     id = db.Column(db.Integer, primary_key = True)
     pet_id = db.Column(db.Integer, db.ForeignKey("pets.id"), nullable=False)
-    provider_id = db.Column(db.Integer, db.ForeignKey("service_providers.id"), nullable=False)  #todo (Dana): check service_provider table reference after its model is done
+    provider_id = db.Column(db.Integer, db.ForeignKey("service_providers.id"), nullable=False)
     date_time = db.Column(db.DateTime, nullable=False, index=True)
     status = db.Column(
         db.Enum(AppointmentStatus, name="appointment_status"),
