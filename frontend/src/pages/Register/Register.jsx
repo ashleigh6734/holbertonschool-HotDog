@@ -1,14 +1,14 @@
 import "./Register.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
-// import ToggleSwitch from "../components/buttons/ToggleSwitch";
 import FormLabel from "../../components/Form/FormLabel";
 import FormRadio from "../../components/Form/FormRadio";
+import ToggleSwitch from "../../components/buttons/ToggleSwitch";
 
 export default function Register() {
   return (
     <div className="form-card">
       <Form>
-        {/* <ToggleSwitch /> */}
+        <ToggleSwitch firstRadio="Login" secondRadio="Sign Up" />
 
         <h2>Create a HotDog Account</h2>
 
@@ -24,7 +24,7 @@ export default function Register() {
             controlId="formGridFirstName"
             type="firstname"
             placeholder="First Name"
-            name="First Name"
+            name="First Name*"
           />
 
           <FormLabel
@@ -32,11 +32,11 @@ export default function Register() {
             controlId="formGridLastName"
             type="lastname"
             placeholder="Last Name"
-            name="Last Name"
+            name="Last Name*"
           />
         </Row>
 
-        <Form.Group className="mb-3 justify-left" controlId="formDOB">
+        {/* <Form.Group className="mb-3 justify-left" controlId="formDOB">
           <Form.Label>Date of Birth</Form.Label>
           <Row>
             <Col xs={3}>
@@ -49,7 +49,7 @@ export default function Register() {
               <Form.Control type="text" placeholder="YYYY" maxLength={4} />
             </Col>
           </Row>
-        </Form.Group>
+        </Form.Group> */}
 
         <FormLabel
           className="justify-left mb-3"
@@ -80,7 +80,7 @@ export default function Register() {
           controlId="formConfirmPassword"
           type="password"
           placeholder="Re-enter Password"
-          name="Confirm Password"
+          name="Confirm Password*"
         />
 
         <Button className="signup-btn" variant="warning" type="signUp">
