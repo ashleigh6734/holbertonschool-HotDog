@@ -8,7 +8,12 @@ export default function Register() {
   return (
     <div className="form-card">
       <Form>
-        <ToggleSwitch firstRadio="Login" secondRadio="Sign Up" />
+        <ToggleSwitch
+          firstRadio={"Login"}
+          firstPath={"/login"}
+          secondRadio={"Sign Up"}
+          secondPath={"/register"}
+        />
 
         <h2>Create a HotDog Account</h2>
 
@@ -35,21 +40,6 @@ export default function Register() {
             name="Last Name*"
           />
         </Row>
-
-        {/* <Form.Group className="mb-3 justify-left" controlId="formDOB">
-          <Form.Label>Date of Birth</Form.Label>
-          <Row>
-            <Col xs={3}>
-              <Form.Control type="text" placeholder="DD" maxLength={2} />
-            </Col>
-            <Col xs={3}>
-              <Form.Control type="text" placeholder="MM" maxLength={2} />
-            </Col>
-            <Col xs={3}>
-              <Form.Control type="text" placeholder="YYYY" maxLength={4} />
-            </Col>
-          </Row>
-        </Form.Group> */}
 
         <FormLabel
           className="justify-left mb-3"
