@@ -1,15 +1,27 @@
 import { useState } from "react";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import { useNavigate } from "react-router-dom";
 
-export default function ToggleSwitch({ firstRadio, secondRadio }) {
-  const [radioValue, setRadioValue] = useState("1");
+export default function ToggleSwitch({
+  firstRadio,
+  secondRadio,
+  firstPath,
+  secondPath,
+}) {
+  const [radioValue, setRadioValue] = useState("login"); // login | signup
 
   const radios = [
-    { name: firstRadio, value: "1" },
-    { name: secondRadio, value: "2" },
+    { name: firstRadio, value: firstRadio, path: firstPath },
+    { name: secondRadio, value: secondRadio, path: secondPath },
   ];
+
+  const navigate = useNavigate();
+
+  const handleChange = (e, path) => {
+    setRadioValue(e.currentTarget.value);
+    navigate(path);
+  };
 
   return (
     <>
@@ -23,22 +35,12 @@ export default function ToggleSwitch({ firstRadio, secondRadio }) {
             name="radio"
             value={radio.value}
             checked={radioValue === radio.value}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
-            // style={{ backgroundColor: "pink" }}
+            onChange={(e) => handleChange(e, radio.path)}
           >
             {radio.name}
           </ToggleButton>
         ))}
       </ButtonGroup>
-
-      {/* <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-        <ToggleButton id="tbg-radio-1" value={1} variant="warning">
-          {firstRadio}
-        </ToggleButton>
-        <ToggleButton id="tbg-radio-3" value={2} variant="primary">
-          {secondRadio}
-        </ToggleButton>
-      </ToggleButtonGroup> */}
     </>
   );
 }
