@@ -30,13 +30,13 @@ class ServiceProvider(db.Model):
     # This uses a backref to access 'user.service_provider'
     owner = relationship('User', backref=db.backref('service_provider', uselist=False))
 
-    reviews = relationship(
+    """reviews = relationship(
         "Review",
         back_populates="service_provider", 
         lazy=True,
         cascade="all, delete-orphan",
     )
-
+"""
     # =====================
     # VALIDATORS
     # =====================
