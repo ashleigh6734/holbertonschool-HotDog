@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.services.user_service import UserService
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 users_bp = Blueprint('users', __name__, url_prefix='/api/users')
 
@@ -48,9 +49,12 @@ def create_user():
         return jsonify({"error": str(e)}), 400
 
 @users_bp.route('/<int:user_id>', methods=['PATCH'])
+@jwt_required()
 def update_user(user_id):
-    if not request.is_json:
-        return jsonify({"error": "Invalid JSON"}), 400
+    current_user = get_jwt_identity() # logged in user
+
+    if current_user != user_id:
+        return jsonify({"error": "Unauthorized"}), 403
 
     data = request.get_json()
     user = UserService.update_user(user_id, data)
@@ -58,10 +62,16 @@ def update_user(user_id):
     if not user:
         return jsonify({"error": "User not found"}), 404
     
-    return jsonify({"message": "User successfully updated"}), 404
+    return jsonify({"message": "User successfully updated"}), 200
 
 @users_bp.route('/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
+    current_user = get_jwt_identity() # logged in user
+
+    if current_user != user_id:
+        return jsonify({"error": "Unauthorized"}), 403
+
     user = UserService.delete_user(user_id)
 
     if not user:
