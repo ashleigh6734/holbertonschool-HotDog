@@ -1,12 +1,20 @@
 import "./Login.css";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import FormLabel from "../../components/Form/FormLabel";
 import FormRadio from "../../components/Form/FormRadio";
+import ToggleSwitch from "../../components/buttons/ToggleSwitch";
 
 export default function Login() {
   return (
     <div className="form-card">
       <Form>
+        <ToggleSwitch
+          firstRadio={"Login"}
+          firstPath={"/login"}
+          secondRadio={"Sign Up"}
+          secondPath={"/register"}
+        />
+
         <h2>Login</h2>
 
         <p muted>Access your dashboard now! </p>

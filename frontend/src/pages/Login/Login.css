@@ -36,3 +36,15 @@ body {
 .sub-text {
   font-size: small;
 }
+
+.button-active {
+  background: #ffd24d;
+  color: rgb(14, 14, 85);
+  border-radius: 10px;
+}
+
+.button-inactive {
+  background: rgb(14, 14, 85);
+  color: #ffd24d;
+  border-radius: 10px;
+}
