@@ -29,10 +29,8 @@ class UserService():
     
     @staticmethod
     def get_user_by_id(user_id):
-        user = User.query.get(user_id)
-        if not user:
-            return ValueError("404: User not found")
-        return user
+        return User.query.get(user_id)
+
     
     @staticmethod
     def get_user_by_email(email):
