@@ -8,31 +8,52 @@ export default function ToggleSwitch({
   firstPath,
   secondPath,
 }) {
-  const radios = [
-    { name: firstRadio, value: firstRadio, path: firstPath },
-    { name: secondRadio, value: secondRadio, path: secondPath },
-  ];
-
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
     <>
-      <ButtonGroup>
-        {radios.map((radio, idx) => (
-          <ToggleButton
-            key={idx}
-            id={`radio-${idx}`}
-            type="radio"
-            variant={idx % 2 ? "outline-warning" : "outline-primary"}
-            name="radio"
-            value={radio.value}
-            checked={location.pathname === radio.path}
-            onChange={() => navigate(radio.path)}
-          >
-            {radio.name}
-          </ToggleButton>
-        ))}
+      <ButtonGroup className="mb-4 mt-2">
+        <ToggleButton
+          key={1}
+          id={`radio-${1}`}
+          type="radio"
+          name="radio"
+          style={{
+            backgroundColor:
+              location.pathname === firstPath ? "#FFC72C" : "#1f3a5f",
+            border: "none",
+            color: location.pathname === firstPath ? "#1f3a5f" : "#FFC72C",
+            fontWeight: "bold",
+          }}
+          size="sm"
+          value={firstRadio}
+          onClick={() => {
+            navigate(firstPath);
+          }}
+        >
+          {firstRadio}
+        </ToggleButton>
+        <ToggleButton
+          key={2}
+          id={`radio-${2}`}
+          type="radio"
+          name="radio"
+          style={{
+            backgroundColor:
+              location.pathname === secondPath ? "#FFC72C" : "#1f3a5f",
+            color: location.pathname === secondPath ? "#1f3a5f" : "#FFC72C",
+            border: "none",
+            fontWeight: "bold",
+          }}
+          size="sm"
+          value={secondRadio}
+          onClick={() => {
+            navigate(secondPath);
+          }}
+        >
+          {secondRadio}
+        </ToggleButton>
       </ButtonGroup>
     </>
   );
