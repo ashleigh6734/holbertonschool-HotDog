@@ -38,9 +38,16 @@ class PetService:
         # Make sure breed matches species
         PetService.validate_breed_for_species(species, breed)
 
-        dob = data.get("date_of_birth")
-        if dob:
-            dob = date.fromisoformat(dob)
+        # Optional DOB
+        dob_raw = data.get("date_of_birth")
+
+        if dob_raw in (None, "", "null"):
+            dob = None
+        else:
+            try:
+                dob = date.fromisoformat(dob_raw)
+            except ValueError:
+                raise ValueError("date_of_birth must be in YYYY-MM-DD format")
 
         pet = Pet(
             owner_id=owner_id,
@@ -88,6 +95,17 @@ class PetService:
         if "breed" in data:
             PetService.validate_breed_for_species(pet.species, data["breed"])
             pet.breed = data["breed"]
+        
+        if "date_of_birth" in data:
+            dob_raw = data["date_of_birth"]
+
+            if dob_raw in (None, "", "null"):
+                pet.date_of_birth = None
+            else:
+                try:
+                    pet.date_of_birth = date.fromisoformat(dob_raw)
+                except ValueError:
+                    raise ValueError("date_of_birth must be in YYYY-MM-DD format")
 
         for field in [
             "name",
