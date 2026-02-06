@@ -17,7 +17,7 @@ export default function Login() {
 
         <h2>Login</h2>
 
-        <p className="mb-3">Access your dashboard now! </p>
+        <p className="mb-3 sub-text">Access your dashboard now! </p>
 
         <FormLabel
           className="justify-left mb-3"
