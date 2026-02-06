@@ -1,7 +1,7 @@
 from app import create_app
 from app.extensions import db
 from app.models.user import User
-from app.models.pet import Pet
+from app.models.pet import Pet, SpeciesEnum, GenderEnum
 from datetime import date
 
 app = create_app()
@@ -30,8 +30,10 @@ with app.app_context():
     pet1 = Pet(
         owner_id=user1.id,
         name="Butters",
-        species="Dog",
-        breed="Toller Retriever",
+        species=SpeciesEnum.dog,
+        breed="mixed",
+        gender=GenderEnum.male,
+        desexed=True,
         date_of_birth=date(2024, 1, 17),
         weight=28.5,
         medical_notes="Up to date on vaccinations"
@@ -40,8 +42,10 @@ with app.app_context():
     pet2 = Pet(
         owner_id=user1.id,
         name="Snom",
-        species="Cat",
-        breed="Ragdoll",
+        species=SpeciesEnum.cat,
+        breed="bengal",
+        gender=GenderEnum.female,
+        desexed=True,
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
         medical_notes="Indoor cat"
