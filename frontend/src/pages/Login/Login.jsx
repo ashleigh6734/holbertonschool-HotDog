@@ -17,17 +17,14 @@ export default function Login() {
 
         <h2>Login</h2>
 
-        <p muted>Access your dashboard now! </p>
-
-        <p>Are you a provider?</p>
-        <FormRadio name="group1" firstLabel="Yes" secondLabel="No" />
+        <p className="mb-3">Access your dashboard now! </p>
 
         <FormLabel
           className="justify-left mb-3"
           controlId="loginEmail"
           type="email"
           placeholder="Email"
-          name="Email*"
+          name="Email"
         />
 
         <FormLabel
@@ -35,7 +32,7 @@ export default function Login() {
           controlId="loginPassword"
           type="password"
           placeholder="Password"
-          name="Password*"
+          name="Password"
         />
 
         <Button className="login-btn" variant="warning" type="logIn">

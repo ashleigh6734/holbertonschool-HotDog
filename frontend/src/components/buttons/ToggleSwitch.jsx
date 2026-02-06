@@ -13,21 +13,20 @@ export default function ToggleSwitch({
 
   return (
     <>
-      <ButtonGroup>
+      <ButtonGroup className="mb-4 mt-2">
         <ToggleButton
           key={1}
           id={`radio-${1}`}
           type="radio"
-          // variant={
-          //   location.pathname === firstPath
-          //     ? "outline-warning"
-          //     : "outline-primary"
-          // }
           name="radio"
           style={{
             backgroundColor:
-              location.pathname === firstPath ? "#FFA500" : "#191970",
+              location.pathname === firstPath ? "#FFC72C" : "#1f3a5f",
+            border: "none",
+            color: location.pathname === firstPath ? "#1f3a5f" : "#FFC72C",
+            fontWeight: "bold",
           }}
+          size="sm"
           value={firstRadio}
           onClick={() => {
             navigate(firstPath);
@@ -39,16 +38,15 @@ export default function ToggleSwitch({
           key={2}
           id={`radio-${2}`}
           type="radio"
-          // variant={
-          //   location.pathname === secondPath
-          //     ? "outline-primary"
-          //     : "outline-primary"
-          // }
           name="radio"
           style={{
             backgroundColor:
-              location.pathname === secondPath ? "#FFA500" : "#191970",
+              location.pathname === secondPath ? "#FFC72C" : "#1f3a5f",
+            color: location.pathname === secondPath ? "#1f3a5f" : "#FFC72C",
+            border: "none",
+            fontWeight: "bold",
           }}
+          size="sm"
           value={secondRadio}
           onClick={() => {
             navigate(secondPath);
