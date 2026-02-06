@@ -17,11 +17,9 @@ export default function Register() {
 
         <h2>Create a HotDog Account</h2>
 
-        <p>Keep on top of your pet's appointments and create an account! </p>
-
-        <p>Are you a provider?</p>
-
-        <FormRadio name="group1" firstLabel="Yes" secondLabel="No" />
+        <p className="mb-5 sub-text">
+          Keep on top of your pet's appointments and create an account!{" "}
+        </p>
 
         <Row className="mb-3">
           <FormLabel

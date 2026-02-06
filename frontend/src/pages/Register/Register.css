@@ -13,15 +13,6 @@ body {
   font-weight: bold;
 }
 
-/* .form-card {
-  outline-width: 0.5px;
-  outline-color: gray;
-  padding: 50px;
-  border-radius: 15px;
-  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.239);
-  width: auto;
-} */
-
 .form-card {
   min-height: 100vh;
   display: flex;
