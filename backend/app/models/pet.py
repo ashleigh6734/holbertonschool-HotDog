@@ -1,7 +1,40 @@
 from app.extensions import db
 from datetime import date, datetime
-import re
 from sqlalchemy.orm import validates, relationship
+from sqlalchemy import Enum
+import enum
+
+# =====================
+# ENUMS
+# =====================
+
+class SpeciesEnum(enum.Enum):
+    dog = "dog"
+    cat = "cat"
+
+class DogBreedEnum(enum.Enum):
+    labrador = "labrador"
+    golden_retriever = "golden_retriever"
+    german_shepherd = "german_shepherd"
+    bulldog = "bulldog"
+    mixed = "mixed"
+
+class CatBreedEnum(enum.Enum):
+    domestic_shorthair = "domestic_shorthair"
+    domestic_longhair = "domestic_longhair"
+    bengal = "bengal"
+    siamese = "siamese"
+    mixed = "mixed"
+
+class GenderEnum(enum.Enum):
+    male = "male"
+    female = "female"
+    unknown = "unknown"
+
+
+# =====================
+# MODEL
+# =====================
 
 class Pet(db.Model):
     __tablename__ = "pets"
@@ -9,8 +42,10 @@ class Pet(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     name = db.Column(db.String(50), nullable=False)
-    species = db.Column(db.String(50), nullable=False)
+    species = db.Column(Enum(SpeciesEnum), nullable=False)
     breed = db.Column(db.String(100), nullable=False)
+    gender = db.Column(Enum(GenderEnum), nullable=False)
+    desexed = db.Column(db.Boolean, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=True)
     weight = db.Column(db.Float, nullable=True)
     medical_notes = db.Column(db.String(500), nullable=True)
@@ -37,32 +72,21 @@ class Pet(db.Model):
 
         return value
 
-    @validates('species')
-    def validate_species(self, key, value):
-        """ Species type validation"""
-        if not isinstance(value, str):
-            raise TypeError(f"{key.title()} must be a string")
-        value = value.strip()
-        if len(value) > 50:
-            raise ValueError(f"{key.title()} cannot exceed 50 characters")
-
-        return value
-
     @validates('breed')
     def validate_breed(self, key, value):
         """ Breed type validation"""
         if not isinstance(value, str):
             raise TypeError(f"{key.title()} must be a string")
         value = value.strip()
-        if len(value) > 50:
-            raise ValueError(f"{key.title()} cannot exceed 100 characters")
+        if len(value) > 100:
+            raise ValueError("Breed cannot exceed 100 characters")
 
         return value
 
     @validates('date_of_birth')
     def validate_dob(self, key, value):
         """ DOB validation """
-        if value > date.today():
+        if value and value > date.today():
             raise ValueError("Date of birth cannot be in the future")
 
         return value
@@ -74,7 +98,7 @@ class Pet(db.Model):
             return value # due optional attr
         
         if value <= 0:
-            return ValueError("Weight must be more than 0")
+            raise ValueError("Weight must be more than 0")
         
         return float(value)
 

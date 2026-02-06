@@ -7,6 +7,7 @@ from .models import user
 from .models import pet
 from app.api_routes.users_routes import users_bp
 from app.api_routes.auth import auth_bp
+from app.api_routes.pets import pets_bp
 
 def create_app():
     # initialise flask app
@@ -33,5 +34,6 @@ def create_app():
     # ========================
     app.register_blueprint(users_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(pets_bp)
 
     return app
