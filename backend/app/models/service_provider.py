@@ -30,13 +30,27 @@ class ServiceProvider(db.Model):
     opening_time = db.Column(db.Time, nullable=False, default=time(9, 0)) 
     closing_time = db.Column(db.Time, nullable=False, default=time(17, 0))
     slot_duration = db.Column(db.Integer, nullable=False, default=30)
-    
+
     # 4. BUSINESS DETAILS
     description = db.Column(db.String(500), nullable=True)
     address = db.Column(db.String(255), nullable=True)
     phone = db.Column(db.String(25), nullable=True)
     email = db.Column(db.String(120), nullable=True) # Public contact email
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @validates("service_type")
+    def validate_service_type(self, key, value):
+        # 1. Allow passing the Enum object directly (e.g., ServiceType.GROOMING)
+        if isinstance(value, ServiceType):
+            return value
+
+        # 2. Allow passing the string value (e.g., "Grooming")
+        if isinstance(value, str):
+            for member in ServiceType:
+                if member.value == value:
+                    return member
+            
+        raise ValueError(f"Invalid service type: '{value}'. Must be one of {[e.value for e in ServiceType]}")
 
     # =====================
     # RELATIONSHIPS
