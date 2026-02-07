@@ -1,7 +1,18 @@
 from app.extensions import db
-from datetime import datetime
+from datetime import datetime, time
 import re
 from sqlalchemy.orm import validates, relationship
+import enum
+
+class ServiceType(enum.Enum):
+    VET_CONSULTATIONS = "Vet Consultations"
+    DESEXING = "Desexing"
+    DENTAL = "Dental"
+    VACCINATIONS = "Vaccinations"
+    DOG_WALKING = "Dog Walking"
+    NAIL_TRIMMING = "Nail Trimming"
+    HAIRCUTS_COAT = "Haircuts and Coat Maintenance"
+    PUPPY_TRAINING = "Puppy Training"
 
 class ServiceProvider(db.Model):
     __tablename__ = "service_providers"
@@ -10,12 +21,17 @@ class ServiceProvider(db.Model):
     
     # 1. LINK TO USER (The Business Owner)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
     name = db.Column(db.String(100), nullable=False)
-
+    
     # 2. SERVICE TYPE (Required for Search Filters)
-    service_type = db.Column(db.String(50), nullable=False)
+    service_type = db.Column(db.Enum(ServiceType), nullable=False)
 
+    # 3. AVAILABILITY (For Booking System)
+    opening_time = db.Column(db.Time, nullable=False, default=time(9, 0)) 
+    closing_time = db.Column(db.Time, nullable=False, default=time(17, 0))
+    slot_duration = db.Column(db.Integer, nullable=False, default=30)
+    
+    # 4. BUSINESS DETAILS
     description = db.Column(db.String(500), nullable=True)
     address = db.Column(db.String(255), nullable=True)
     phone = db.Column(db.String(25), nullable=True)
@@ -29,24 +45,27 @@ class ServiceProvider(db.Model):
     # Relationship to the User model (Owner)
     # This uses a backref to access 'user.service_provider'
     owner = relationship('User', backref=db.backref('service_provider', uselist=False))
+    appointments = relationship('Appointment', backref='provider', lazy=True)
 
-    """reviews = relationship(
+    reviews = relationship(
         "Review",
         back_populates="service_provider", 
         lazy=True,
         cascade="all, delete-orphan",
     )
-"""
+
     # =====================
     # VALIDATORS
     # =====================
 
-    # Validator for Service Type (Ensures clean data for filters)
-    @validates("service_type")
-    def validate_service_type(self, key, value):
-        valid_services = ["Grooming", "Walking", "Boarding", "Veterinary", "Training"]
-        if value not in valid_services:
-            raise ValueError(f"Service type must be one of {valid_services}")
+    @validates("slot_duration")
+    def validate_slot_duration(self, key, value):
+        if not isinstance(value, int):
+            raise TypeError("Slot duration must be an integer (minutes)")
+        if value < 15:
+            raise ValueError("Slot duration must be at least 15 minutes")
+        if value > 240:
+             raise ValueError("Slot duration cannot exceed 4 hours (240 mins)")
         return value
 
     @validates("name")
