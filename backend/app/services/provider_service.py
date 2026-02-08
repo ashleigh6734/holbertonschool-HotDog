@@ -47,18 +47,31 @@ class ProviderService:
         query = ServiceProvider.query
         
         if filters:
-            # Filter by Service Type (e.g. "Dog Walking")
-            if "service_type" in filters:
-                st = filters["service_type"]
-                # Find the enum that matches the string value
-                for enum_member in ServiceType:
-                    if enum_member.value == st:
-                        query = query.filter(ServiceProvider.service_type == enum_member)
-                        break
+            # 1. Filter by Service Type
+            service_type_str = filters.get("service_type")
             
-            # Filter by Name (Partial match)
-            if "name" in filters:
-                query = query.filter(ServiceProvider.name.ilike(f"%{filters['name']}%"))
+            if service_type_str:
+                print(f"DEBUG: Searching for service_type='{service_type_str}'") # Debug print
+                
+                # Try to find the matching Enum
+                found_enum = None
+                for enum_member in ServiceType:
+                    if enum_member.value == service_type_str:
+                        found_enum = enum_member
+                        break
+                
+                if found_enum:
+                    print(f"DEBUG: Found Enum match: {found_enum}")
+                    query = query.filter(ServiceProvider.service_type == found_enum)
+                else:
+                    print("DEBUG: No matching Enum found for this string.")
+
+            
+            # 2. Filter by Name (Partial match)
+            name_str = filters.get("name")
+            if name_str:
+                print(f"DEBUG: Searching for name like '%{name_str}%'")
+                query = query.filter(ServiceProvider.name.ilike(f"%{name_str}%"))
 
         return query.all()
 
