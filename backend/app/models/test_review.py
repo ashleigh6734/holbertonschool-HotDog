@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from flask import Flask
 from sqlalchemy.exc import IntegrityError
-
 from app.extensions import db
 from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, GenderEnum
@@ -23,42 +22,51 @@ class TestReviewModel(unittest.TestCase):
         with self.app.app_context():
             db.create_all()
 
-            self.user = User(
+            # 1. Create User
+            user = User(
                 first_name="Taylor",
                 last_name="Swift",
                 email="taylor@example.com",
                 password_hash="hashed"
             )
-            db.session.add(self.user)
+            db.session.add(user)
             db.session.commit()
+            
+            self.user_id = user.id
 
-            self.provider = ServiceProvider(
-                user_id=self.user.id,
+            # 2. Create Provider
+            provider = ServiceProvider(
+                user_id=self.user_id,
                 name="Happy Paws",
                 service_type=ServiceType.VET_CONSULTATIONS,
                 description="Friendly vet care"
             )
-            db.session.add(self.provider)
+            db.session.add(provider)
             db.session.commit()
+            self.provider_id = provider.id
 
-            self.pet = Pet(
-                owner_id=self.user.id,
+            # 3. Create Pet 
+            pet = Pet(
+                owner_id=self.user_id,
                 name="Buddy",
                 species=SpeciesEnum.dog,
                 breed="labrador",
                 gender=GenderEnum.male,
                 desexed=True
             )
-            db.session.add(self.pet)
+            db.session.add(pet)
             db.session.commit()
+            self.pet_id = pet.id
 
-            self.appointment = Appointment(
-                pet_id=self.pet.id,
-                provider_id=self.provider.id,
+            # 4. Create Appointment
+            appointment = Appointment(
+                pet_id=self.pet_id,
+                provider_id=self.provider_id,
                 date_time=datetime.now(timezone.utc) + timedelta(days=1)
             )
-            db.session.add(self.appointment)
+            db.session.add(appointment)
             db.session.commit()
+            self.appointment_id = appointment.id
 
     def tearDown(self):
         """Clean up the database after each test"""
@@ -70,9 +78,9 @@ class TestReviewModel(unittest.TestCase):
         """Test creating a valid review"""
         with self.app.app_context():
             review = Review(
-                user_id=self.user.id,
-                provider_id=self.provider.id,
-                appointment_id=self.appointment.id,
+                user_id=self.user_id,        
+                provider_id=self.provider_id, 
+                appointment_id=self.appointment_id, 
                 rating=5,
                 comment="  Great service! "
             )
@@ -82,18 +90,18 @@ class TestReviewModel(unittest.TestCase):
             saved = Review.query.first()
             self.assertEqual(saved.rating, 5)
             self.assertEqual(saved.comment, "Great service!")
-            self.assertEqual(saved.user_id, self.user.id)
-            self.assertEqual(saved.provider_id, self.provider.id)
-            self.assertEqual(saved.appointment_id, self.appointment.id)
+            self.assertEqual(saved.user_id, self.user_id)
+            self.assertEqual(saved.provider_id, self.provider_id)
+            self.assertEqual(saved.appointment_id, self.appointment_id)
 
     def test_rating_must_be_integer(self):
         """Test rating must be an integer"""
         with self.app.app_context():
             with self.assertRaises(TypeError):
                 Review(
-                    user_id=self.user.id,
-                    provider_id=self.provider.id,
-                    appointment_id=self.appointment.id,
+                    user_id=self.user_id,
+                    provider_id=self.provider_id,
+                    appointment_id=self.appointment_id,
                     rating="5"
                 )
 
@@ -102,16 +110,16 @@ class TestReviewModel(unittest.TestCase):
         with self.app.app_context():
             with self.assertRaises(ValueError):
                 Review(
-                    user_id=self.user.id,
-                    provider_id=self.provider.id,
-                    appointment_id=self.appointment.id,
+                    user_id=self.user_id,
+                    provider_id=self.provider_id,
+                    appointment_id=self.appointment_id,
                     rating=0
                 )
             with self.assertRaises(ValueError):
                 Review(
-                    user_id=self.user.id,
-                    provider_id=self.provider.id,
-                    appointment_id=self.appointment.id,
+                    user_id=self.user_id,
+                    provider_id=self.provider_id,
+                    appointment_id=self.appointment_id,
                     rating=6
                 )
 
@@ -120,9 +128,9 @@ class TestReviewModel(unittest.TestCase):
         with self.app.app_context():
             with self.assertRaises(TypeError):
                 Review(
-                    user_id=self.user.id,
-                    provider_id=self.provider.id,
-                    appointment_id=self.appointment.id,
+                    user_id=self.user_id,
+                    provider_id=self.provider_id,
+                    appointment_id=self.appointment_id,
                     rating=4,
                     comment=123
                 )
@@ -132,9 +140,9 @@ class TestReviewModel(unittest.TestCase):
         with self.app.app_context():
             with self.assertRaises(ValueError):
                 Review(
-                    user_id=self.user.id,
-                    provider_id=self.provider.id,
-                    appointment_id=self.appointment.id,
+                    user_id=self.user_id,
+                    provider_id=self.provider_id,
+                    appointment_id=self.appointment_id,
                     rating=4,
                     comment="a" * 501
                 )
@@ -143,18 +151,18 @@ class TestReviewModel(unittest.TestCase):
         """Test a review cannot be created twice for the same appointment"""
         with self.app.app_context():
             first_review = Review(
-                user_id=self.user.id,
-                provider_id=self.provider.id,
-                appointment_id=self.appointment.id,
+                user_id=self.user_id,
+                provider_id=self.provider_id,
+                appointment_id=self.appointment_id,
                 rating=5
             )
             db.session.add(first_review)
             db.session.commit()
 
             duplicate_review = Review(
-                user_id=self.user.id,
-                provider_id=self.provider.id,
-                appointment_id=self.appointment.id,
+                user_id=self.user_id,
+                provider_id=self.provider_id,
+                appointment_id=self.appointment_id,
                 rating=4
             )
             db.session.add(duplicate_review)
