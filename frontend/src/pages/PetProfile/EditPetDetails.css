@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
+.edit-pet-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #000;
+}
+
+.edit-pet-header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.edit-pet-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f3a5f;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  font-weight: 700;
+  font-family: 'Open Sans', sans-serif;
+  align-self: flex-start;
+  padding-left: 20px;
+}
+
+.back-btn:hover {
+  opacity: 0.8;
+}
+
+.edit-pet-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 12px 20px;
+  margin: 16px;
+  border-radius: 4px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.edit-pet-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 28px;
+}
+
+/* Pet Card Section */
+.pet-card-section {
+  display: flex;
+  justify-content: center;
+}
+
+.pet-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 260px;
+}
+
+.pet-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  display: block;
+  background: #e0e0e0;
+}
+
+.pet-card-name {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f3a5f;
+  margin: 0 0 12px;
+}
+
+.pet-info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0 20px;
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.pet-info-item {
+  text-align: center;
+}
+
+.pet-info-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #666;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pet-info-value {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  margin: 4px 0 0;
+}
+
+.delete-btn {
+  width: 100%;
+  background: #1f3a5f;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background: #152841;
+}
+
+/* Form Section */
+.form-section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f3a5f;
+  margin: 0 0 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f3a5f;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-input,
+.form-textarea {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #000;
+  background: white;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #1f3a5f;
+  box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.1);
+}
+
+.form-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #1f3a5f;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #d0d0d0;
+  background: white;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+.btn-save {
+  padding: 10px 20px;
+  background: #ffd24d;
+  color: #1f3a5f;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-save:hover {
+  background: #ffca1a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .edit-pet-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .edit-pet-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .edit-pet-title {
+    font-size: 20px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-save,
+  .btn-cancel {
+    width: 100%;
+  }
+}
