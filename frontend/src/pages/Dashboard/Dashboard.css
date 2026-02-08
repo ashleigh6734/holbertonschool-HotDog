@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
 .dash {
   width: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.dash h1,
+.dash .intro-title,
+.dash .banner-title,
+.dash .banner-text {
+  font-family: 'Nunito', sans-serif;
 }
 
 .dash-container {
@@ -19,16 +29,18 @@
   margin: 0 0 12px;
   font-weight: 600;
   justify-self: start;
+  color: #1f3a5f;
 }
 
 .intro-title {
   margin: 0;
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.15;
   max-width: 720px;
   justify-self: center;
   text-align: center;
+  color: #1f3a5f;
 }
 
 /* Search */
@@ -213,6 +225,18 @@
   font-weight: 800;
 }
 
+.banner-title {
+  color: #ffffff;
+}
+
+.banner-text {
+  color: #ffc72c;
+}
+
+.banner-btn {
+  color: #333333;
+}
+
 .banner-visual {
   display: flex;
   justify-content: flex-end;
@@ -236,6 +260,13 @@
   text-align: center;
   margin: 0 0 20px;
   font-size: 22px;
+}
+
+/* Pet stylist title font and color */
+.stylists-title,
+.stylist-name {
+  font-family: 'Nunito', sans-serif;
+  color: #1f3a5f;
 }
 
 .stylist-grid {
@@ -304,7 +335,7 @@
   border-radius: 12px;
   cursor: pointer;
   background: #173a66;
-  color: #fff;
+  color: #ffc72c;
   font-weight: 800;
 }
 

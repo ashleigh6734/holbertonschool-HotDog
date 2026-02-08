@@ -4,6 +4,16 @@
   align-items: center;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
+.avatar-container {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.avatar-container h1 {
+  font-family: 'Nunito', sans-serif;
+}
+
 .avatar-btn {
   background: none;
   border: none;
