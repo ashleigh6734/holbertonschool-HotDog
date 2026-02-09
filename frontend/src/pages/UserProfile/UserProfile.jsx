@@ -1,13 +1,18 @@
 import FormLabel from "../../components/Form/FormLabel";
 import FormNav from "../../components/Form/FormNav";
 import "./UserProfile.css";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useState } from "react";
+import SuccessToast from "../../components/toasts/successToast";
 
 export default function UserProfile() {
+  // EDIT/SAVE STATE
   const [editMode, setEditMode] = useState(false);
   const closeEditMode = () => setEditMode(false);
   const openEditMode = () => setEditMode(true);
+
+  // SHOW TOAST ON PASSWORD SAVE
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <div className="profile-page">
@@ -108,7 +113,12 @@ export default function UserProfile() {
                   name="Confirm New Password"
                 />
               </Form>
-              <button className="btn-layout btn-yellow">
+              <button
+                className="btn-layout btn-yellow"
+                onClick={() => {
+                  setShowToast(true);
+                }}
+              >
                 Change my password
               </button>
             </div>
@@ -122,6 +132,11 @@ export default function UserProfile() {
                 <button className="btn-layout btn-navy">Delete Account</button>
               </div>
             </Form>
+            <SuccessToast
+              showToast={showToast}
+              onClose={() => setShowToast(false)}
+              message="Your password was updated successfully!"
+            />
           </div>
         </div>
       </div>
