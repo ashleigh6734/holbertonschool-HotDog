@@ -1,7 +1,6 @@
 import unittest
 from datetime import time, datetime, timedelta, timezone
 from flask import Flask
-
 from app.extensions import db
 from app.models.pet import Pet, SpeciesEnum, DogBreedEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType
