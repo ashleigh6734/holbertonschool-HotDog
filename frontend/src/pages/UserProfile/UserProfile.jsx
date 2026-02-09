@@ -1,10 +1,11 @@
-import FormLabel from "../../components/Form/FormLabel";
-import FormNav from "../../components/Form/FormNav";
-import "./UserProfile.css";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
+import FormLabel from "../../components/Form/FormLabel";
+import FormNav from "../../components/Form/FormNav";
 import SuccessToast from "../../components/toasts/successToast";
 import ConfirmModal from "../../components/modals/ConfirmModal";
+import "./UserProfile.css";
+import "../../styles/common.css";
 
 export default function UserProfile() {
   // EDIT/SAVE STATE

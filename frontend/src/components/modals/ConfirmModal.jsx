@@ -22,8 +22,8 @@ export default function ConfirmModal({
         <Button
           variant="primary"
           style={{
-            backgroundColor: "#FFC72C",
-            color: "#1f3a5f",
+            backgroundColor: "#1f3a5f",
+            color: "#FFC72C",
             outline: "none",
             border: "none",
           }}
