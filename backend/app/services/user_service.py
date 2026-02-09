@@ -17,6 +17,7 @@ class UserService():
             email=data["email"],
             image_url=data.get("image_url"),
             # role defaults to "user" in model
+            phone_number=data["phone_number"]
         )
 
         # Model handles hashing of ps
@@ -65,6 +66,9 @@ class UserService():
 
         if "image_url" in data:
             user.image_url = data["image_url"]
+        
+        if "phone_number" in data:
+            user.phone_number = data["phone_number"]
 
         db.session.commit()
         return user
