@@ -22,6 +22,8 @@ class User(db.Model):
     # =====================
     
     pets = relationship('Pet', back_populates='owner', lazy=True, cascade="all, delete-orphan")
+    service_provider = relationship('ServiceProvider', back_populates='user', uselist=False)
+    reviews_written = relationship('Review', back_populates="user", cascade="all, delete-orphan")
 
     # =====================
     # VALIDATORS
