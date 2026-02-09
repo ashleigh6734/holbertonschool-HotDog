@@ -1,4 +1,5 @@
 from app.extensions import db, bcrypt
+import uuid
 from datetime import datetime
 import re
 from sqlalchemy.orm import validates, relationship
@@ -6,13 +7,13 @@ from sqlalchemy.orm import validates, relationship
 class User(db.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key = True)
-    first_name = db.Column(db.String(50), nullable=False)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(50), default="user")
     image_url = db.Column(db.String, nullable=True)
+    phone_number = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # =====================
@@ -52,6 +53,18 @@ class User(db.Model):
         if value not in allowed_roles:
             raise ValueError(f"Role must be one of {allowed_roles}")
         return value
+    
+    @validates('phone_number')
+    def validate_phone_number(self, key, value):
+        if value is None:
+            return None
+        if not isinstance(value, str):
+            raise TypeError("Phone number must be a string")
+        value = value.strip()
+        phone_regex = r'^\+?[1-9]\d{1,14}$'
+        if not re.match(phone_regex, value):
+            raise ValueError("Invalid phone number format, for example: +61(CountryCode) XXXX XXXX")
+        return value      
     
     # =====================
     # PASSWORD HASHING
