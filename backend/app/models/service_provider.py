@@ -3,6 +3,7 @@ from datetime import datetime, time
 import re
 from sqlalchemy.orm import validates, relationship
 import enum
+import uuid
 
 class ServiceType(enum.Enum):
     VET_CONSULTATIONS = "Vet Consultations"
@@ -17,10 +18,10 @@ class ServiceType(enum.Enum):
 class ServiceProvider(db.Model):
     __tablename__ = "service_providers"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     
     # 1. LINK TO USER (The Business Owner)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     
     # 2. SERVICE TYPE (Required for Search Filters)
