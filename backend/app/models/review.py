@@ -1,21 +1,21 @@
 from app.extensions import db
 from datetime import datetime
 from sqlalchemy.orm import validates, relationship
+import uuid
 
 class Review(db.Model):
     __tablename__ = "reviews"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     
     # 1. LINK TO USER (The Author)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
     
     # 2. LINK TO PROVIDER (The Business being reviewed)
-    provider_id = db.Column(db.Integer, db.ForeignKey('service_providers.id'), nullable=False)
+    provider_id = db.Column(db.String(36), db.ForeignKey("service_providers.id"), nullable=False)
     
     # 3. LINK TO APPOINTMENT (The verified booking)
-    # unique=True ensures a user can't review the same appointment twice
-    appointment_id = db.Column(db.Integer, db.ForeignKey('appointments.id'), nullable=False, unique=True)
+    appointment_id = db.Column(db.String(36), db.ForeignKey("appointments.id"), nullable=False)
 
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(500), nullable=True)
