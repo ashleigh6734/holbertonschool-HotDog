@@ -1,4 +1,5 @@
 import { Nav } from "react-bootstrap";
+import "../../pages/UserProfile/UserProfile.css";
 
 export default function FormNav({ nav1, nav2, nav3 }) {
   return (

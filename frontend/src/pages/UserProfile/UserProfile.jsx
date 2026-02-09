@@ -12,21 +12,18 @@ export default function UserProfile() {
   return (
     <div className="profile-page">
       <div className="profile-container">
-        <h1 className="mb-4">My Profile</h1>
+        <h1 className="mb-5">My Profile</h1>
         <div className="form">
           <div className="form-nav">
-            <div
-              style={{
-                alignSelf: "center",
-                width: "150px",
-                marginTop: "20px",
-              }}
-            >
-              <h3>Account</h3>
+            <div>
+              <h3 style={{ paddingLeft: "16px", paddingTop: "30px" }}>
+                Account
+              </h3>
               <FormNav
                 nav1="My Details"
                 nav2="Manage Password"
                 nav3="Manage Account"
+                className="link-style"
               />
             </div>
           </div>
@@ -93,7 +90,9 @@ export default function UserProfile() {
                 </button>
               )}
             </div>
-            <h6 id="mngpwd">Manage Password</h6>
+            <h6 id="mngpwd" style={{ margin: "0px" }}>
+              Manage Password
+            </h6>
             <div className="form-block mb-3">
               <Form>
                 <FormLabel

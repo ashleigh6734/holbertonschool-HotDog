@@ -1,62 +1,62 @@
 .profile-page {
+  min-height: 100vh;
   width: 100%;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   background-color: #e9ecf0;
 }
 
 .profile-container {
-  width: 980px;
+  max-width: 980px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .form {
-  width: 800px;
-  overflow: auto;
-  outline: solid;
-  height: 900px;
-  display: flex;
-  flex-direction: row;
-  /* align-items: center; */
-  justify-content: center;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 700px;
 }
 
 .form-nav {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: auto;
-  margin-left: auto;
   background: white;
   border-radius: 12px;
+  height: auto;
+  top: 24px;
+  width: 200px;
 }
 
 .form-panel {
   display: flex;
   flex-direction: column;
-  margin-left: auto;
+  gap: 16px;
 }
 
 .form-block {
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  max-width: 600px;
-  width: 450px;
-  align-items: center;
+  max-width: 450px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn-yellow {
   background: #ffc72c;
   color: #1f3a5f;
+  width: fit-content;
 }
 
 .btn-navy {
   background: #1f3a5f;
   color: #ffc72c;
+  width: fit-content;
 }
 
 .btn-layout {
@@ -67,4 +67,13 @@
   border: none;
   font-size: small;
   font-weight: bold;
+}
+
+.form-nav a {
+  color: #333333;
+}
+
+.form-nav a:hover {
+  background: #e9ecf0;
+  color: #333333;
 }
