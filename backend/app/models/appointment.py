@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 import enum
 from app.extensions import db
 from sqlalchemy.orm import validates
+from app.models.pet import Pet
+from app.models.service_provider import ServiceProvider
 
 # get the current date and time
 def utccurrent():
@@ -18,7 +20,7 @@ class AppointmentStatus(enum.Enum):
 # =====================
 # APPOINTMENT MODEL
 # =====================
-class Appointment (db.model):
+class Appointment (db.Model):
     __tablename__ = "appointments"
     
     id = db.Column(db.Integer, primary_key = True)
@@ -46,9 +48,9 @@ class Appointment (db.model):
 
     def __repr__(self):
         return (
-            f"<Appointment id={self.id}"
-            f"date_time={self.date_time}"
-            f"status={self.status.value}>"
+            f"Appointment id={self.id} "
+            f"date_time={self.date_time} "
+            f"status={self.status.value}"
         )
     
 
@@ -56,7 +58,7 @@ class Appointment (db.model):
     # VALIDATORS
     # =====================
     # Validation helpers
-    def check_entity_exists(self, model_cls, entity_id, field_name):
+    def _check_entity_exists(self, model_cls, entity_id, field_name):
         """
         Check if an ID is provided and if that exists in our db
         
@@ -72,7 +74,7 @@ class Appointment (db.model):
             raise ValueError(f"{field_name} does not exist")
         return entity_id
     
-    def check_double_booking(self):
+    def _check_double_booking(self):
         """
         Check two CONFIRMED appoinments for the same provider at the same time
         """
@@ -90,7 +92,52 @@ class Appointment (db.model):
             raise ValueError("This time slot is no longer available. Please choose a different time.")
         
     # Validation checks
-    # Check 1: ensure appointment time is valid
+    # Check 1: appointment time is valid
+    @validates("date_time")
+    def validate_date_time(self, _key, value):
+        if value is None:
+            raise ValueError("Appointment time can't be empty")
+        
+        if value.tzinfo is None or value.tzinfo.utcoffset(value) is None:
+            raise ValueError("Appointment time is invalid")
+        
+        if value <= utccurrent():
+            raise ValueError("Appointment time must be in the future")
+        
+        self.date_time = value
+        self._check_double_booking()
+        return value
+    
+    # Check 2: status is valid
+    @validates("status")
+    def validate_status(self, _key, value):
+        if value is None:
+            raise ValueError("Status can't be empty")
+        
+        if isinstance(value, str):
+            try:
+                value = AppointmentStatus[value.strip().upper()]
+            except KeyError as exc:
+                raise ValueError("Status is invalid") from exc
+            
+        self.status = value
+        self._check_double_booking()
+        
+        return value
+    
+    # Check 3: pet_id and provider_id exist
+    @validates("pet_id")
+    def validate_pet_id(self, _key, value):
+        validated_pet_id = self._check_entity_exists(Pet, value, "pet_id")
+        self.pet_id = validated_pet_id
+        return validated_pet_id
+    
+    @validates("provider_id")
+    def validate_provider_id(self, _key, value):
+        validated_provider_id = self._check_entity_exists(ServiceProvider, value, "provider_id")
+        self.provider_id = validated_provider_id
+        self._check_double_booking()
+        return validated_provider_id
     
     
     # =====================

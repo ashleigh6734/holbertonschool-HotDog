@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+
 .avatar-container {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.avatar-container {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.avatar-container h1 {
+  font-family: 'Nunito', sans-serif;
 }
 
 .avatar-btn {
@@ -27,7 +37,7 @@
   top: 55px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   min-width: 220px;
   overflow: hidden;
   z-index: 1000;

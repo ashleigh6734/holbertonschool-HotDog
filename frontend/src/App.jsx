@@ -1,20 +1,20 @@
 import { Routes, Route } from "react-router-dom";
+import Account from "./pages/Account.jsx";
 import Appointments from "./pages/Appointments.jsx";
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login/Login.jsx";
-import MedicalHistory from "./pages/MedicalHistory.jsx";
-import PetProfile from "./pages/PetProfile.jsx";
+import EditPetDetails from "./pages/PetProfile/editPetDetails.jsx";
+import PetProfile from "./pages/PetProfile/PetProfile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Avatar from "./components/avatar/Avatar.jsx";
-import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 
 export default function App() {
   return (
     <>
       {/* Grace Header here */}
-      <Avatar user={{ name: "Sylvia", avatarUrl: null }} />
+      <Avatar user={{}} />
 
       <Routes>
         <Route path="/register" element={<Register />} />
@@ -23,8 +23,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/pets/:id" element={<PetProfile />} />
         <Route path="/booking" element={<Booking />} />
-        <Route path="/appointments" element={<Appointments />} />
-        <Route path="/medical-history" element={<MedicalHistory />} />
+        <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
         <Route path="/pet-profile" element={<PetProfile />} />
         <Route path="/user" element={<UserProfile />} />
         {/* more pages coming ... */}
