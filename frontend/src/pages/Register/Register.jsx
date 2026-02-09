@@ -1,4 +1,5 @@
 import "./Register.css";
+import "../../styles/common.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
 import FormLabel from "../../components/Form/FormLabel";
 import FormRadio from "../../components/Form/FormRadio";
@@ -15,7 +16,9 @@ export default function Register() {
             secondRadio={"Sign Up"}
             secondPath={"/register"}
           />
-          <h2>Create a HotDog Account</h2>
+          <h2 style={{ color: "#1f3a5f", fontWeight: 700 }}>
+            Create a HotDog Account
+          </h2>
           <p className="mb-5 sub-text">
             Keep on top of your pet's appointments and create an account!{" "}
           </p>
@@ -63,7 +66,7 @@ export default function Register() {
             placeholder="Re-enter Password"
             name="Confirm Password*"
           />
-          <Button className="signup-btn" variant="warning" type="signUp">
+          <Button className="signup-btn" type="signUp">
             Sign Up
           </Button>
           <p className="sub-text justify-left">
