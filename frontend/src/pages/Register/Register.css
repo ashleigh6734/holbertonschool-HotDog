@@ -7,11 +7,17 @@
   min-height: 100vh;
 }
 
-.signup-btn {
+.btn.signup-btn {
   background-color: #ffc72c;
   width: 100%;
   margin-bottom: 30px;
-  font-weight: bold;
+  font-weight: 600;
+  font-family:
+    Open Sans,
+    sans-serif;
+  color: #1f3a5f;
+  border: none;
+  font-size: 1rem;
 }
 
 .form-card {
@@ -37,4 +43,7 @@
 
 .sub-text {
   font-size: small;
+  font-family:
+    Open Sans,
+    sans-serif;
 }

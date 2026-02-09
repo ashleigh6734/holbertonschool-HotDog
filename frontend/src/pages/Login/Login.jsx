@@ -15,7 +15,7 @@ export default function Login() {
             secondRadio={"Sign Up"}
             secondPath={"/register"}
           />
-          <h2>Login</h2>
+          <h2 style={{ color: "#1f3a5f", fontWeight: 700 }}>Login</h2>
           <p className="mb-3 sub-text">Access your dashboard now! </p>
           <FormLabel
             className="justify-left mb-3"
@@ -31,7 +31,7 @@ export default function Login() {
             placeholder="Password"
             name="Password"
           />
-          <Button className="login-btn" variant="warning" type="logIn">
+          <Button className="login-btn" type="logIn">
             Login
           </Button>
           <p className="sub-text justify-left">
