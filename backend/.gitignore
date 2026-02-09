@@ -1,5 +1,5 @@
 # this ignores the SQLite database file
-database/app.db
+app.db
 
 # Python cache
 __pycache__/
