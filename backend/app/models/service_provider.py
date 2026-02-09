@@ -58,11 +58,10 @@ class ServiceProvider(db.Model):
     # =====================
     
     # Relationship to the User model (Owner)
-    # This uses a backref to access 'user.service_provider'
-    owner = relationship('User', backref=db.backref('service_provider', uselist=False))
-    appointments = relationship('Appointment', backref='provider', lazy=True)
+    user = db.relationship('User', back_populates='service_provider')
+    appointments = db.relationship('Appointment', back_populates='service_provider', lazy=True)
 
-    reviews = relationship(
+    reviews = db.relationship(
         "Review",
         back_populates="service_provider", 
         lazy=True,

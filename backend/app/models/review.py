@@ -26,13 +26,13 @@ class Review(db.Model):
     # =====================
     
     # Link to User
-    user = relationship('User', backref=db.backref('reviews_written', lazy=True))
+    user = db.relationship('User', back_populates='reviews_written')
     
     # Link to ServiceProvider
-    service_provider = relationship('ServiceProvider', back_populates='reviews')
+    service_provider = db.relationship('ServiceProvider', back_populates='reviews')
     
     # Link to Appointment
-    appointment = relationship('Appointment', backref=db.backref('review', uselist=False))
+    appointment = db.relationship('Appointment', back_populates='review')
 
     # =====================
     # VALIDATORS

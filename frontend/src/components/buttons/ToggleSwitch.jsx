@@ -25,6 +25,7 @@ export default function ToggleSwitch({
             border: "none",
             color: location.pathname === firstPath ? "#1f3a5f" : "#FFC72C",
             fontWeight: "bold",
+            fontFamily: "Open Sans, sans serif",
           }}
           size="sm"
           value={firstRadio}
@@ -45,6 +46,7 @@ export default function ToggleSwitch({
             color: location.pathname === secondPath ? "#1f3a5f" : "#FFC72C",
             border: "none",
             fontWeight: "bold",
+            fontFamily: "Open Sans, sans serif",
           }}
           size="sm"
           value={secondRadio}
