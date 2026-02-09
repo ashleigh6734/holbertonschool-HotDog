@@ -17,6 +17,7 @@ with app.app_context():
         first_name="John",
         last_name="Doe",
         email="john@test.com",
+        phone_number="+61412345678"
     )
     user1.set_password("password123")
 
