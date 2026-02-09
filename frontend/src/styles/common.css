@@ -11,8 +11,13 @@ h6 {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: "Nunito", sans-serif;
+}
+
+h6 {
+  font-family: "Open Sans", sans-serif;
 }
 
 body {

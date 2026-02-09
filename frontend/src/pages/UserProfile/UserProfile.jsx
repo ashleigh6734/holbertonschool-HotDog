@@ -22,11 +22,20 @@ export default function UserProfile() {
   return (
     <div className="profile-page">
       <div className="profile-container">
-        <h1 className="mb-5">My Profile</h1>
+        <h1 className="mb-5" style={{ fontWeight: "800", color: "#1f3a5f" }}>
+          My Profile
+        </h1>
         <div className="form">
           <div className="form-nav">
             <div>
-              <h3 style={{ paddingLeft: "16px", paddingTop: "30px" }}>
+              <h3
+                style={{
+                  paddingLeft: "16px",
+                  paddingTop: "30px",
+                  color: "#1f3a5f",
+                  fontWeight: "800",
+                }}
+              >
                 Account
               </h3>
               <FormNav
@@ -38,7 +47,9 @@ export default function UserProfile() {
             </div>
           </div>
           <div className="form-panel">
-            <h6 id="mydetails">My Details</h6>
+            <h6 id="mydetails" style={{ fontWeight: 700, color: "#1f3a5f" }}>
+              My Details
+            </h6>
             <div className="form-block mb-3">
               <Form>
                 <FormLabel
@@ -102,7 +113,10 @@ export default function UserProfile() {
               )}
             </div>
 
-            <h6 id="mngpwd" style={{ margin: "0px" }}>
+            <h6
+              id="mngpwd"
+              style={{ margin: "0px", fontWeight: 700, color: "#1f3a5f" }}
+            >
               Manage Password
             </h6>
 
@@ -132,7 +146,13 @@ export default function UserProfile() {
             </div>
 
             <Form>
-              <h6 id="mngacc">Manage Account</h6>
+              <h6
+                id="mngacc"
+                style={{ margin: "0px", fontWeight: 700, color: "#1f3a5f" }}
+                className="mb-3"
+              >
+                Manage Account
+              </h6>
               <div className="form-block mb-3">
                 <p>
                   We're sorry to see you go! Note that this action cannot be
