@@ -1,14 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
-import Account from './pages/Account.jsx';
-import Appointments from './pages/Appointments.jsx';
-import Booking from './pages/Booking.jsx';
-import Dashboard from './pages/Dashboard/Dashboard.jsx';
-import Home from './pages/Home.jsx';
-import Login from './pages/Login/Login.jsx';
-import EditPetDetails from './pages/PetProfile/editPetDetails.jsx';
-import PetProfile from './pages/PetProfile/PetProfile.jsx';
-import Register from './pages/Register/Register.jsx';
-import Avatar from './components/avatar/Avatar.jsx';
+import { Routes, Route } from "react-router-dom";
+import Appointments from "./pages/Appointments.jsx";
+import Booking from "./pages/Booking.jsx";
+import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login/Login.jsx";
+import EditPetDetails from "./pages/PetProfile/editPetDetails.jsx";
+import PetProfile from "./pages/PetProfile/PetProfile.jsx";
+import Register from "./pages/Register/Register.jsx";
+import Avatar from "./components/avatar/Avatar.jsx";
+import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
         <Route path="/pet-profile" element={<PetProfile />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/user" element={<UserProfile />} />
         {/* more pages coming ... */}
       </Routes>
 
