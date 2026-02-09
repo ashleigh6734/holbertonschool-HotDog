@@ -1,0 +1,37 @@
+import { Button, Modal } from "react-bootstrap";
+import "../../pages/UserProfile/UserProfile.css";
+
+export default function ConfirmModal({
+  show,
+  handleClose,
+  heading,
+  body,
+  secondaryButton,
+  primaryButton,
+}) {
+  return (
+    <Modal show={show} onHide={handleClose} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>{heading}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{body}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          {secondaryButton}
+        </Button>
+        <Button
+          variant="primary"
+          style={{
+            backgroundColor: "#FFC72C",
+            color: "#1f3a5f",
+            outline: "none",
+            border: "none",
+          }}
+          onClick={handleClose}
+        >
+          {primaryButton}
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
