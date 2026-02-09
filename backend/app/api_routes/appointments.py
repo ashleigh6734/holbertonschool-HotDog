@@ -116,7 +116,7 @@ def list_appointments():
     }), 200
 
 
-@appointments_bp.route("/<int:appointment_id>", methods=["GET"])
+@appointments_bp.route("/<string:appointment_id>", methods=["GET"])
 def get_appointment(appointment_id: int):
     """
     Get a single appointment by ID
@@ -128,7 +128,7 @@ def get_appointment(appointment_id: int):
     return jsonify({"appointment": appointment_to_dict(appointment)}), 200
 
 
-@appointments_bp.route("/<int:appointment_id>/cancel", methods=["DELETE"])
+@appointments_bp.route("/<string:appointment_id>/cancel", methods=["DELETE"])
 def cancel_appointment(appointment_id: int):
     """
     Cancel an appointment by ID

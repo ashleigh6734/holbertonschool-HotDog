@@ -1,10 +1,13 @@
 import unittest
+import uuid
 from datetime import time, datetime, timedelta, timezone
 from flask import Flask
 from app.extensions import db
+from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, DogBreedEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType
 from app.models.appointment import Appointment, AppointmentStatus
+from app.services.appointment_service import AppointmentService
 
 
 # -----------------------------------------
@@ -16,18 +19,30 @@ def future_datetime(hours_from_now: int = 24):
 
 def naive_future_dt(hours_from_now: int = 24):
     """Return a naive datetime (NO timezone) in the future."""
-    return datetime.utcnow() + timedelta(hours=hours_from_now)
+    return datetime.now() + timedelta(hours=hours_from_now)
 
 def past_dt(hours_ago: int = 1):
     """Return a timezone-aware UTC datetime in the past."""
     return datetime.now(timezone.utc) - timedelta(hours=hours_ago)
 
-def create_pet(owner_id=1):
+def create_user():
+    """Create a User with a unique email"""
+    user = User(
+        first_name="No",
+        last_name="Name",
+        email=f"noname_{uuid.uuid4()}@example.com",
+    )
+    user.set_password("password123")
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+def create_pet(owner_id: str): # str due to uuid set up
     pet = Pet(
         owner_id=owner_id,
         name="Tiger",
         species=SpeciesEnum.dog,
-        breed=DogBreedEnum.bulldog.value,
+        breed=DogBreedEnum.bulldog.value,  # .value here as Pet model expects breed to be str
         gender=GenderEnum.male,
         desexed=True,
         date_of_birth=None,
@@ -38,9 +53,9 @@ def create_pet(owner_id=1):
     db.session.commit()
     return pet
 
-def create_provider(user_id=1):
+def create_provider(user_id: str):
     service_provider = ServiceProvider(
-        user_id=user_id,
+        user_id=user_id, #required here as ServiceProvider has FK to User model
         name="Friendly Vet Clinic",
         service_type=ServiceType.VACCINATIONS,
         opening_time=time(9, 0),
@@ -78,7 +93,7 @@ class TestAppointmentModel(unittest.TestCase):
         db.session.rollback()
         db.session.remove()
         db.drop_all()
-
+        db.engine.dispose()
         # Pop app context
         self.context.pop()
 
@@ -86,136 +101,128 @@ class TestAppointmentModel(unittest.TestCase):
     # Tests
     # -----------------------------------------
     def test_cant_book_in_the_past(self):
-        pet = create_pet()
-        provider = create_provider()
+        owner = create_user()
+        pet = create_pet(owner_id=owner.id)
+        provider_owner = create_user()
+        provider = create_provider(user_id=provider_owner.id)
 
         with self.assertRaisesRegex(ValueError, "future"):
-            appt = Appointment(
-                pet_id=pet.id,
-                provider_id=provider.id,
-                date_time=past_dt(),
-                status=AppointmentStatus.CONFIRMED,
-            )
-            db.session.add(appt)
-            db.session.commit()
+            AppointmentService.create_appointment({
+                "pet_id": pet.id,
+                "provider_id": provider.id,
+                "date_time": past_dt(),
+            })
 
     def test_cant_book_without_timezone(self):
-        pet = create_pet()
-        provider = create_provider()
+        owner = create_user()
+        pet = create_pet(owner_id=owner.id)
+        provider_owner = create_user()
+        provider = create_provider(user_id=provider_owner.id)
 
-        with self.assertRaisesRegex(ValueError, r"(invalid|timezone)"):
+        with self.assertRaisesRegex(ValueError, r"(timezone|include timezone)"):
             appt = Appointment(
                 pet_id=pet.id,
                 provider_id=provider.id,
-                date_time=naive_future_dt(),
+                date_time=naive_future_dt(),        # validation check should reject
                 status=AppointmentStatus.CONFIRMED,
             )
             db.session.add(appt)
             db.session.commit()
 
     def test_cant_double_book_same_provider_same_time(self):
-        pet1 = create_pet(owner_id=1)
-        pet2 = create_pet(owner_id=2)
-        provider = create_provider()
+        owner1 = create_user()
+        owner2 = create_user()
+        pet1 = create_pet(owner_id=owner1.id)
+        pet2 = create_pet(owner_id=owner2.id)
+        provider_owner = create_user()
+        provider = create_provider(user_id=provider_owner.id)
 
         slot = future_datetime(24)
 
-        appt1 = Appointment(
-            pet_id=pet1.id,
-            provider_id=provider.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt1)
-        db.session.commit()
+        AppointmentService.create_appointment({
+            "pet_id": pet1.id,
+            "provider_id": provider.id,
+            "date_time": slot,
+        })
 
-        with self.assertRaisesRegex(ValueError, r"(not available|already booked)"):
-            appt2 = Appointment(
-                pet_id=pet2.id,
-                provider_id=provider.id,
-                date_time=slot,
-                status=AppointmentStatus.CONFIRMED,
-            )
-            db.session.add(appt2)
-            db.session.commit()
+        with self.assertRaisesRegex(ValueError, r"(no longer available|not available|already booked|time slot)"):
+            AppointmentService.create_appointment({
+                "pet_id": pet2.id,
+                "provider_id": provider.id,
+                "date_time": slot,
+            })
 
     def test_can_book_same_time_different_provider(self):
-        pet = create_pet()
-        provider1 = create_provider(user_id=1)
-        provider2 = create_provider(user_id=2)
+        owner = create_user()
+        pet = create_pet(owner_id=owner.id)
+
+        provider_owner1 = create_user()
+        provider_owner2 = create_user()
+        provider1 = create_provider(user_id=provider_owner1.id)
+        provider2 = create_provider(user_id=provider_owner2.id)
 
         slot = future_datetime(24)
 
-        appt1 = Appointment(
-            pet_id=pet.id,
-            provider_id=provider1.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt1)
-        db.session.commit()
+        appt1 = AppointmentService.create_appointment({
+            "pet_id": pet.id,
+            "provider_id": provider1.id,
+            "date_time": slot,
+        })
 
-        appt2 = Appointment(
-            pet_id=pet.id,
-            provider_id=provider2.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt2)
-        db.session.commit()
+        appt2 = AppointmentService.create_appointment({
+            "pet_id": pet.id,
+            "provider_id": provider2.id,
+            "date_time": slot,
+        })
 
         self.assertIsNotNone(appt1.id)
         self.assertIsNotNone(appt2.id)
 
     def test_can_cancel_appointment(self):
-        pet = create_pet()
-        provider = create_provider()
+        owner = create_user()
+        pet = create_pet(owner_id=owner.id)
+        
+        provider_owner = create_user()
+        provider = create_provider(user_id=provider_owner.id)
+
         slot = future_datetime(24)
 
-        appt = Appointment(
-            pet_id=pet.id,
-            provider_id=provider.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt)
-        db.session.commit()
+        appt = AppointmentService.create_appointment({
+            "pet_id": pet.id,
+            "provider_id": provider.id,
+            "date_time": slot,
+        })
 
-        appt.status = AppointmentStatus.CANCELLED
-        db.session.commit()
-
-        refreshed = db.session.get(Appointment, appt.id)
-        self.assertEqual(refreshed.status, AppointmentStatus.CANCELLED)
+        cancelled = AppointmentService.cancel_appointment(appt.id)
+        self.assertIsNotNone(cancelled)
+        self.assertEqual(cancelled.status, AppointmentStatus.CANCELLED)
 
     def test_cancelled_appt_does_not_block_new_appt(self):
-        pet1 = create_pet(owner_id=1)
-        pet2 = create_pet(owner_id=2)
-        provider = create_provider()
+        owner1 = create_user()
+        owner2 = create_user()
+        pet1 = create_pet(owner_id=owner1.id)
+        pet2 = create_pet(owner_id=owner2.id)
+
+        provider_owner = create_user()
+        provider = create_provider(user_id=provider_owner.id)
+
         slot = future_datetime(24)
 
-        appt1 = Appointment(
-            pet_id=pet1.id,
-            provider_id=provider.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt1)
-        db.session.commit()
+        appt1 = AppointmentService.create_appointment({
+            "pet_id": pet1.id,
+            "provider_id": provider.id,
+            "date_time": slot,
+        })
 
-        appt1.status = AppointmentStatus.CANCELLED
-        db.session.commit()
+        AppointmentService.cancel_appointment(appt1.id)
 
-        appt2 = Appointment(
-            pet_id=pet2.id,
-            provider_id=provider.id,
-            date_time=slot,
-            status=AppointmentStatus.CONFIRMED,
-        )
-        db.session.add(appt2)
-        db.session.commit()
+        appt2 = AppointmentService.create_appointment({
+            "pet_id": pet2.id,
+            "provider_id": provider.id,
+            "date_time": slot,
+        })
 
         self.assertIsNotNone(appt2.id)
-
 
 if __name__ == "__main__":
     unittest.main()

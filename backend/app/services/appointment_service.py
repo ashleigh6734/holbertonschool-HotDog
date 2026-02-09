@@ -25,7 +25,27 @@ class AppointmentService:
         if record is None:
             raise ValueError(f"{field_name} does not exist")
         return record
-    
+
+    @staticmethod
+    def parse_iso_datetime(value: str) -> datetime:
+        """
+        Parse an ISO datetime string
+        Support 'Z' suffix by converting to '+00:00'
+
+        Return a datetime object
+        """
+        if not value or not isinstance(value, str):
+            raise ValueError("date_time is required")
+
+        iso = value.strip()
+        if iso.endswith("Z"):
+            iso = iso[:-1] + "+00:00"
+
+        try:
+            return datetime.fromisoformat(iso)
+        except ValueError as exc:
+            raise ValueError("Invalid date_time format. Must be ISO") from exc
+
     @staticmethod
     def _validate_date_time(date_time):
         """
@@ -54,3 +74,53 @@ class AppointmentService:
 
         if conflicting_appointment_query.first() is not None:
             raise ValueError("This time slot is no longer available. Please choose a different time.")
+
+    @staticmethod
+    def create_appointment(data: dict) -> Appointment:
+        pet_id = data.get("pet_id")
+        provider_id = data.get("provider_id")
+        raw_datetime= data.get("date_time")
+        notes= data.get("notes")
+        
+        # Allow service to accept either datetime or iso string
+        if isinstance(raw_datetime, str):
+            date_time = AppointmentService.parse_iso_datetime(raw_datetime)
+        else:
+            date_time = raw_datetime
+
+        # Existence checks
+        AppointmentService._check_entity_exists(Pet, pet_id, "pet_id")
+        AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
+
+        # Business checks
+        AppointmentService._validate_date_time(date_time)
+        AppointmentService._check_double_booking(provider_id, date_time)
+
+        appointment = Appointment(
+            pet_id=pet_id,
+            provider_id=provider_id,
+            date_time=date_time,
+            notes=notes,
+            status=AppointmentStatus.CONFIRMED,
+        )
+
+        db.session.add(appointment)
+        db.session.commit()
+        return appointment
+    
+    @staticmethod
+    def get_appointment_by_id(appointment_id: str) -> Appointment | None:
+        return db.session.get(Appointment, appointment_id)
+
+    @staticmethod
+    def cancel_appointment(appointment_id: str) -> Appointment | None:
+        appointment = db.session.get(Appointment, appointment_id)
+        if not appointment:
+            return None
+
+        if appointment.status == AppointmentStatus.CANCELLED:
+            raise ValueError("Appointment is already cancelled")
+
+        appointment.status = AppointmentStatus.CANCELLED
+        db.session.commit()
+        return appointment

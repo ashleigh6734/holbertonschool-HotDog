@@ -56,7 +56,8 @@ class Pet(db.Model):
     # RELATIONSHIPS
     # =====================
     
-    owner = relationship("User", back_populates='pets')  
+    owner = relationship("User", back_populates='pets')
+    appointments = relationship("Appointment", back_populates="pet")
 
     # =====================
     # VALIDATORS

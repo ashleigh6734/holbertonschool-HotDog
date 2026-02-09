@@ -57,6 +57,13 @@ class Appointment (db.Model):
         "ServiceProvider",
         back_populates="appointments",
     )
+    
+    review = db.relationship(
+        "Review",
+        back_populates="appointment",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
 
     # =====================
     # VALIDATORS
