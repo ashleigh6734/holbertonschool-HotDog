@@ -2,8 +2,13 @@ import FormLabel from "../../components/Form/FormLabel";
 import FormNav from "../../components/Form/FormNav";
 import "./UserProfile.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
+import { useState } from "react";
 
 export default function UserProfile() {
+  const [editMode, setEditMode] = useState(false);
+  const closeEditMode = () => setEditMode(false);
+  const openEditMode = () => setEditMode(true);
+
   return (
     <div className="profile-page">
       <div className="profile-container">
@@ -34,47 +39,61 @@ export default function UserProfile() {
                   controlId="userFirstName"
                   type="firstname"
                   name="First Name"
-                  id="test"
-                  disabled="true"
-                  readOnly="true"
+                  disabled={!editMode}
+                  readOnly={!editMode}
                 />
                 <FormLabel
                   className="justify-left mb-1"
                   controlId="userLastName"
                   type="lastname"
                   name="Last Name"
-                  disabled="true"
-                  readOnly="true"
+                  disabled={!editMode}
+                  readOnly={!editMode}
                 />
                 <FormLabel
                   className="justify-left mb-1"
                   controlId="userEmail"
                   type="email"
                   name="Email"
-                  disabled="true"
-                  readOnly="true"
+                  disabled={!editMode}
+                  readOnly={!editMode}
                 />
                 <FormLabel
                   className="justify-left mb-1"
                   controlId="userMobile"
                   type="mobile"
                   name="Mobile Number"
-                  disabled="true"
-                  readOnly="true"
+                  disabled={!editMode}
+                  readOnly={!editMode}
                 />
                 <FormLabel
                   className="justify-left mb-3"
                   controlId="emergencyNumber"
                   type="secondaryNumber"
                   name="Secondary Phone Number"
-                  disabled="true"
-                  readOnly="true"
+                  disabled={!editMode}
+                  readOnly={!editMode}
                 />
               </Form>
-              <button className="btn-layout btn-yellow">Edit</button>
-              <button className="btn-layout btn-yellow">Save details</button>
+              {editMode ? (
+                <div>
+                  <button
+                    onClick={closeEditMode}
+                    className="btn-layout btn-yellow"
+                  >
+                    Save details
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={openEditMode}
+                  className="btn-layout btn-yellow"
+                >
+                  Edit Details
+                </button>
+              )}
             </div>
-            <h6>Manage Password and Account</h6>
+            <h6 id="mngpwd">Manage Password</h6>
             <div className="form-block mb-3">
               <Form>
                 <FormLabel
@@ -95,9 +114,11 @@ export default function UserProfile() {
               </button>
             </div>
             <Form>
+              <h6 id="mngacc">Manage Account</h6>
               <div className="form-block mb-3">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, se
+                  We're sorry to see you go! Note that this action cannot be
+                  undone and will result to a loss of all data.
                 </p>
                 <button className="btn-layout btn-navy">Delete Account</button>
               </div>

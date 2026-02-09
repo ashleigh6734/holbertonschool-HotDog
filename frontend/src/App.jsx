@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import Account from "./pages/Account.jsx";
 import Appointments from "./pages/Appointments.jsx";
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
@@ -9,6 +8,7 @@ import EditPetDetails from "./pages/PetProfile/editPetDetails.jsx";
 import PetProfile from "./pages/PetProfile/PetProfile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Avatar from "./components/avatar/Avatar.jsx";
+import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 
 export default function App() {
   return (
