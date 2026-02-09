@@ -1,5 +1,6 @@
-/*HEADINGS*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
 
+/*HEADINGS*/
 h1,
 h2,
 h3,
@@ -9,6 +10,7 @@ h6 {
   color: #1f3a5f;
 }
 
-.h3 {
-  color: #1f3a5f;
+h1,
+h2 {
+  font-family: "Nunito", sans-serif;
 }
