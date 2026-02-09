@@ -1,4 +1,5 @@
 import FormLabel from "../../components/Form/FormLabel";
+import FormNav from "../../components/Form/FormNav";
 import "./UserProfile.css";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
@@ -8,9 +9,24 @@ export default function UserProfile() {
       <div className="profile-container">
         <h1 className="mb-4">My Profile</h1>
         <div className="form">
-          <div className="form-nav"></div>
+          <div className="form-nav">
+            <div
+              style={{
+                alignSelf: "center",
+                width: "150px",
+                marginTop: "20px",
+              }}
+            >
+              <h3>Account</h3>
+              <FormNav
+                nav1="My Details"
+                nav2="Manage Password"
+                nav3="Manage Account"
+              />
+            </div>
+          </div>
           <div className="form-panel">
-            <h6>My Details</h6>
+            <h6 id="mydetails">My Details</h6>
             <div className="form-block mb-3">
               <Form>
                 <FormLabel
@@ -78,13 +94,14 @@ export default function UserProfile() {
                 Change my password
               </button>
             </div>
-
-            <div className="form-block mb-3">
-              <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, se
-              </p>
-              <button className="btn-layout btn-navy">Delete Account</button>
-            </div>
+            <Form>
+              <div className="form-block mb-3">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, se
+                </p>
+                <button className="btn-layout btn-navy">Delete Account</button>
+              </div>
+            </Form>
           </div>
         </div>
       </div>

@@ -14,20 +14,24 @@
 
 .form {
   width: 800px;
+  overflow: auto;
   outline: solid;
-  max-height: 90vh;
+  height: 900px;
   display: flex;
   flex-direction: row;
   /* align-items: center; */
   justify-content: center;
   padding: 20px;
 }
+
 .form-nav {
   display: flex;
   flex-direction: column;
-  outline: solid;
   width: 200px;
+  height: auto;
   margin-left: auto;
+  background: white;
+  border-radius: 12px;
 }
 
 .form-panel {
