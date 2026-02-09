@@ -1,36 +1,16 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify
+from sqlalchemy import func
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
+from app.models.service_provider import ServiceProvider
 
-appointments_bp = Blueprint("appointments", __name__, url_prefix='api/appointments/')
+appointments_bp = Blueprint("appointments", __name__, url_prefix="api/appointments")
 
 # -------------------------
 # Helpers
 # -------------------------
-
-def parse_iso_utc_datetime(value: str) -> datetime:
-    """
-    Accept ISO datetime string and return tz-aware UTC datetime.
-    Examples accepted:
-      - "2026-02-10T09:30:00+00:00"
-      - "2026-02-10T09:30:00Z"
-    """
-    if not value or not isinstance(value, str):
-        raise ValueError("date_time is required")
-
-    v = value.strip()
-    if v.endswith("Z"):
-        v = v[:-1] + "+00:00"
-
-    dt = datetime.fromisoformat(v)  # can raise ValueError
-    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
-        raise ValueError("Appointment time is invalid")  # aligns with your validator wording
-
-    # Normalize to UTC (your model expects tz-aware; validator compares to utccurrent())
-    return dt.astimezone(timezone.utc)
-
-
+# convert appointment objs into JSON-safe dict
 def appointment_to_dict(appt: Appointment) -> dict:
     return {
         "id": appt.id,
@@ -44,7 +24,7 @@ def appointment_to_dict(appt: Appointment) -> dict:
         "reminder_24h_sent_at": appt.reminder_24h_sent_at.isoformat() if appt.reminder_24h_sent_at else None,
     }
 
-
+# standardise error message across routes
 def error_response(message: str, status_code: int = 400, extra: dict | None = None):
     payload = {"error": message}
     if extra:
@@ -53,31 +33,31 @@ def error_response(message: str, status_code: int = 400, extra: dict | None = No
 
 
 # -------------------------
-# Routes (match your table)
+# Routes
 # -------------------------
-
-@appointments_bp.route("/bookings", methods=["POST"])
-def create_booking():
+@appointments_bp.route("", methods=["POST"])
+def create_appointment():
     """
-    POST /bookings
+    Create an appointment
     Input: { pet_id, provider_id, date_time, notes? }
     Output: booking confirmation
     """
     data = request.get_json(silent=True) or {}
 
-    # quick presence check to give nice "missing fields" errors
-    required = ["pet_id", "provider_id", "date_time"]
-    missing = [k for k in required if data.get(k) in (None, "")]
+    # quick check for required fields
+    required_fields = ["pet_id", "provider_id", "date_time"]
+    missing = [f for f in required_fields if data.get(f) in (None, "")]
     if missing:
         return error_response("Missing required fields", 400, {"missing": missing})
 
     try:
-        dt_utc = parse_iso_utc_datetime(data["date_time"])
+        # parse ISO str (note: frontend guarantee sending UTC times)
+        appointment_time = datetime.fromisoformat(data["date_time"])
 
         appt = Appointment(
-            pet_id=data["pet_id"],              # your validators will check exists
-            provider_id=data["provider_id"],    # your validators will check exists + double booking
-            date_time=dt_utc,                   # your validator checks tz-aware + future
+            pet_id=data["pet_id"],
+            provider_id=data["provider_id"],
+            date_time=appointment_time,
             notes=data.get("notes"),
             # status defaults to CONFIRMED in model
         )
@@ -85,111 +65,93 @@ def create_booking():
         db.session.add(appt)
         db.session.commit()
 
-    except ValueError as e:
+    except ValueError as exc:
         db.session.rollback()
-        return error_response(str(e), 400)
+        return error_response(str(exc), 400)
     except Exception:
         db.session.rollback()
         return error_response("Internal server error", 500)
 
     return jsonify({
-        "message": "Booking confirmed",
+        "message": "Appointment confirmed",
         "booking": appointment_to_dict(appt)
     }), 201
 
 
-@appointments_bp.route("/bookings/list", methods=["GET"])
-def list_bookings():
+@appointments_bp.route("/list", methods=["GET"])
+def list_appointments():
     """
-    GET /bookings/list
-    query params (per your table): date, service
-
-    Your model does NOT have a 'service' field.
-    - We'll filter by date (day window in UTC).
-    - If 'service' is provided, we return 400 explaining it's unsupported for now.
-      (Or you can later join via provider/services relationship.)
+    Get a list of appointments
+    query params: date
+    Filter by date or service type (note: frontend send UTC formatted date to backend)
     """
-    q_date = request.args.get("date")       # expected "YYYY-MM-DD"
-    q_service = request.args.get("service") # not supported with current model
-
-    if q_service:
-        return error_response(
-            "Filtering by 'service' is not supported yet because Appointment has no service field. "
-            "Use provider_id for now or implement a join via ServiceProvider/services.",
-            400
-        )
+    q_date = request.args.get("date")
+    q_service = request.args.get("service")
 
     query = Appointment.query
 
+    # filter by UTC dates
     if q_date:
         try:
-            day = datetime.strptime(q_date.strip(), "%Y-%m-%d").date()
+            day = datetime.strptime(q_date, "%Y-%m-%d").date()
         except ValueError:
             return error_response("Invalid date format. Use YYYY-MM-DD.", 400)
 
-        # Filter by UTC day window: [00:00, next day 00:00)
         start = datetime(day.year, day.month, day.day, tzinfo=timezone.utc)
-        end = start.replace() + (datetime(day.year, day.month, day.day, tzinfo=timezone.utc) - start)
-        # The line above is a no-op in some envs; do it safely:
-        end = start + (datetime(day.year, day.month, day.day, tzinfo=timezone.utc) - start)
-        # Better: just use timedelta
-        from datetime import timedelta
         end = start + timedelta(days=1)
 
         query = query.filter(Appointment.date_time >= start, Appointment.date_time < end)
 
-    # Optional: exclude cancelled by default (common for "list bookings")
-    query = query.filter(Appointment.status != AppointmentStatus.CANCELLED)
-
-    appts = query.order_by(Appointment.date_time.asc()).all()
-
+    # filter by service type (JOIN)
+    if q_service:
+        service = q_service.strip().lower()
+        query = (query.join(Appointment.service_provider).filter(func.lower(ServiceProvider.service_type) == service))
+        
+    # sort appointments by asc
+    appointments = query.order_by(Appointment.date_time.asc()).all()
+    
     return jsonify({
-        "count": len(appts),
-        "bookings": [appointment_to_dict(a) for a in appts]
+        "count": len(appointments),
+        "appointments": [appointment_to_dict(a) for a in appointments]
     }), 200
 
 
-@appointments_bp.route("/bookings/<int:booking_id>", methods=["GET"])
-def get_booking(booking_id: int):
+@appointments_bp.route("/<int:appointment_id>", methods=["GET"])
+def get_appointment(appointment_id: int):
     """
-    GET /bookings/<booking_id>
-    Output: booking details
+    Get a single appointment by ID
     """
-    appt = db.session.get(Appointment, booking_id)
-    if not appt:
-        return error_response("Booking not found", 404)
+    appointment = db.session.get(Appointment, appointment_id)
+    if not appointment:
+        return error_response("Appointment not found", 404)
 
-    return jsonify({"booking": appointment_to_dict(appt)}), 200
+    return jsonify({"appointment": appointment_to_dict(appointment)}), 200
 
 
-@appointments_bp.route("/bookings/<int:booking_id>/cancel", methods=["DELETE"])
-def cancel_booking(booking_id: int):
+@appointments_bp.route("/<int:appointment_id>/cancel", methods=["DELETE"])
+def cancel_appointment(appointment_id: int):
     """
-    DELETE /bookings/<booking_id>/cancel
-    Output: cancel booking (soft cancel)
+    Cancel an appointment by ID
     """
-    appt = db.session.get(Appointment, booking_id)
-    if not appt:
-        return error_response("Booking not found", 404)
+    appointment = db.session.get(Appointment, appointment_id)
+    if not appointment:
+        return error_response("Appointment not found", 404)
 
-    # idempotent cancel
-    if appt.status == AppointmentStatus.CANCELLED:
-        return jsonify({
-            "message": "Booking already cancelled",
-            "booking": appointment_to_dict(appt)
-        }), 200
+    # block cancelling twice
+    if appointment.status == AppointmentStatus.CANCELLED:
+        return error_response("Booking is already cancelled", 400)
 
     try:
-        appt.status = AppointmentStatus.CANCELLED
+        appointment.status = AppointmentStatus.CANCELLED
         db.session.commit()
-    except ValueError as e:
+    except ValueError as exc:
         db.session.rollback()
-        return error_response(str(e), 400)
+        return error_response(str(exc), 400)
     except Exception:
         db.session.rollback()
         return error_response("Internal server error", 500)
 
     return jsonify({
-        "message": "Booking cancelled",
-        "booking": appointment_to_dict(appt)
+        "message": "Appointment cancelled",
+        "appointment": appointment_to_dict(appointment)
     }), 200

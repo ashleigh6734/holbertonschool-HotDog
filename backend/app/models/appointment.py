@@ -53,7 +53,7 @@ class Appointment (db.Model):
         back_populates="appointments",
     )
 
-    provider = db.relationship(
+    service_provider = db.relationship(
         "ServiceProvider",
         back_populates="appointments",
     )
