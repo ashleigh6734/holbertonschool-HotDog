@@ -6,11 +6,19 @@ export default function FormLabel({
   type,
   placeholder,
   name,
+  id,
+  disabled,
+  readOnly,
 }) {
   return (
-    <Form.Group className={className} as={Col} controlId={controlId}>
+    <Form.Group id={id} className={className} as={Col} controlId={controlId}>
       <Form.Label>{name}</Form.Label>
-      <Form.Control type={type} placeholder={placeholder} />
+      <Form.Control
+        type={type}
+        placeholder={placeholder}
+        disabled={disabled}
+        readOnly={readOnly}
+      />
     </Form.Group>
   );
 }
