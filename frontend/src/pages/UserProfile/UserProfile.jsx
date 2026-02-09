@@ -4,6 +4,7 @@ import "./UserProfile.css";
 import { Form } from "react-bootstrap";
 import { useState } from "react";
 import SuccessToast from "../../components/toasts/successToast";
+import ConfirmModal from "../../components/modals/ConfirmModal";
 
 export default function UserProfile() {
   // EDIT/SAVE STATE
@@ -13,6 +14,9 @@ export default function UserProfile() {
 
   // SHOW TOAST ON PASSWORD SAVE
   const [showToast, setShowToast] = useState(false);
+
+  // SHOW MODAL ON DELETE ACCOUNT
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="profile-page">
@@ -77,6 +81,7 @@ export default function UserProfile() {
                   readOnly={!editMode}
                 />
               </Form>
+
               {editMode ? (
                 <div>
                   <button
@@ -95,9 +100,11 @@ export default function UserProfile() {
                 </button>
               )}
             </div>
+
             <h6 id="mngpwd" style={{ margin: "0px" }}>
               Manage Password
             </h6>
+
             <div className="form-block mb-3">
               <Form>
                 <FormLabel
@@ -122,6 +129,7 @@ export default function UserProfile() {
                 Change my password
               </button>
             </div>
+
             <Form>
               <h6 id="mngacc">Manage Account</h6>
               <div className="form-block mb-3">
@@ -129,13 +137,37 @@ export default function UserProfile() {
                   We're sorry to see you go! Note that this action cannot be
                   undone and will result to a loss of all data.
                 </p>
-                <button className="btn-layout btn-navy">Delete Account</button>
+                <button
+                  type="button"
+                  className="btn-layout btn-navy"
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  Delete Account
+                </button>
               </div>
             </Form>
+
             <SuccessToast
               showToast={showToast}
               onClose={() => setShowToast(false)}
               message="Your password was updated successfully!"
+            />
+
+            <ConfirmModal
+              show={showModal}
+              handleClose={() => setShowModal(false)}
+              heading="Delete Account"
+              body={
+                <>
+                  Are you sure you want to permanently delete your account?{" "}
+                  <br />
+                  All data will be erased after 30 days.
+                </>
+              }
+              secondaryButton="Close"
+              primaryButton="Delete Account"
             />
           </div>
         </div>
