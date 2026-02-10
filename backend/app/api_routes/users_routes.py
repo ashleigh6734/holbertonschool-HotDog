@@ -69,7 +69,7 @@ def update_user(user_id):
     
     return jsonify({"message": "User successfully updated"}), 200
 
-@users_bp.route('/<int:user_id>', methods=['DELETE'])
+@users_bp.route('/<string:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
     current_user = get_jwt_identity() # logged in user
