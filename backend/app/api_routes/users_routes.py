@@ -50,7 +50,7 @@ def create_user():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-@users_bp.route('/<int:user_id>', methods=['PATCH'])
+@users_bp.route('/<string:user_id>', methods=['PATCH'])
 @jwt_required()
 def update_user(user_id):
     current_user = get_jwt_identity() # logged in user
