@@ -9,6 +9,7 @@ import PetProfile from "./pages/PetProfile/PetProfile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Avatar from "./components/avatar/Avatar.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
+import AllPets from "./pages/PetProfile/AllPets.jsx";
 
 export default function App() {
   return (
@@ -21,10 +22,11 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/pets/:id" element={<PetProfile />} />
+        <Route path="/pets/:id" element={<PetProfile />} /> // indiv pet profile
         <Route path="/booking" element={<Booking />} />
-        <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
-        <Route path="/pet-profile" element={<PetProfile />} />
+        <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit
+        indiv pet
+        <Route path="/pets" element={<AllPets />} /> // all pets
         <Route path="/user" element={<UserProfile />} />
         {/* more pages coming ... */}
       </Routes>
