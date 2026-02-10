@@ -12,9 +12,9 @@ class User(db.Model):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(50), default="user")
+    role = db.Column(db.String(50), nullable=False, default="user")
     image_url = db.Column(db.String, nullable=True)
-    phone_number = db.Column(db.String, nullable=True)
+    phone_number = db.Column(db.String, unique=True, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # =====================
@@ -31,6 +31,8 @@ class User(db.Model):
     @validates('first_name', 'last_name')
     def validate_name(self, key, value):
         """ First and last name validations """
+        if not value:
+            raise ValueError(f"{key.replace('_',' ').title()} cannot be empty")
         if not isinstance(value, str):
             raise TypeError(f"{key.replace('_',' ').title()} must be a string")
         value = value.strip()
@@ -52,7 +54,7 @@ class User(db.Model):
     
     @validates('role')
     def validate_role(self, key, value):
-        allowed_roles = ["user", "provider_employee"]
+        allowed_roles = ["user", "provider"]
         if value not in allowed_roles:
             raise ValueError(f"Role must be one of {allowed_roles}")
         return value
@@ -63,12 +65,19 @@ class User(db.Model):
             return None
         if not isinstance(value, str):
             raise TypeError("Phone number must be a string")
-        value = value.strip()
-        phone_regex = r'^\+?[1-9]\d{1,14}$'
-        if not re.match(phone_regex, value):
-            raise ValueError("Invalid phone number format, for example: +61(CountryCode) XXXX XXXX")
-        return value      
-    
+        
+        # remove spaces, parentheses, dashes etc
+        stripped = re.sub(r"[^\d+]", "", value.strip())
+
+        # enforce E.164 format 
+        phone_regex = r'^\+[1-9]\d{1,14}$'
+
+        if not re.match(phone_regex, stripped):
+            raise ValueError(
+                "Invalid phone number. Use following format, e.g. +61412345678"
+            )
+        return stripped
+
     # =====================
     # PASSWORD HASHING
     # =====================

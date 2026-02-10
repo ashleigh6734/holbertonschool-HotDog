@@ -4,12 +4,14 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 users_bp = Blueprint('users', __name__, url_prefix='/api/users')
 
-@users_bp.route('/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    """ Fetch a single user by ID """
+@users_bp.route('/me', methods=['GET'])
+@jwt_required()
+def get_me():
+    """ For frontend, account profile """
+    user_id = get_jwt_identity()
     user = UserService.get_user_by_id(user_id)
 
-    if user is None:
+    if not user:
         return jsonify({"error": "User not found."}), 404
 
     return jsonify({
@@ -48,7 +50,7 @@ def create_user():
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
 
-@users_bp.route('/<int:user_id>', methods=['PATCH'])
+@users_bp.route('/<string:user_id>', methods=['PATCH'])
 @jwt_required()
 def update_user(user_id):
     current_user = get_jwt_identity() # logged in user
@@ -57,6 +59,9 @@ def update_user(user_id):
         return jsonify({"error": "Unauthorized"}), 403
 
     data = request.get_json()
+    if not request.is_json:
+        return jsonify({"error": "Invalid JSON"}), 400
+
     user = UserService.update_user(user_id, data)
     
     if not user:
@@ -64,7 +69,7 @@ def update_user(user_id):
     
     return jsonify({"message": "User successfully updated"}), 200
 
-@users_bp.route('/<int:user_id>', methods=['DELETE'])
+@users_bp.route('/<string:user_id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
     current_user = get_jwt_identity() # logged in user
