@@ -59,6 +59,9 @@ def update_user(user_id):
         return jsonify({"error": "Unauthorized"}), 403
 
     data = request.get_json()
+    if not request.is_json:
+        return jsonify({"error": "Invalid JSON"}), 400
+
     user = UserService.update_user(user_id, data)
     
     if not user:
