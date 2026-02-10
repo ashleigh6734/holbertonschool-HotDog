@@ -65,12 +65,19 @@ class User(db.Model):
             return None
         if not isinstance(value, str):
             raise TypeError("Phone number must be a string")
-        value = value.strip()
-        phone_regex = r'^\+?[1-9]\d{1,14}$'
-        if not re.match(phone_regex, value):
-            raise ValueError("Invalid phone number format, for example: +61(CountryCode) XXXX XXXX")
-        return value      
-    
+        
+        # remove spaces, parentheses, dashes etc
+        stripped = re.sub(r"[^\d+]", "", value.strip())
+
+        # enforce E.164 format 
+        phone_regex = r'^\+[1-9]\d{1,14}$'
+
+        if not re.match(phone_regex, stripped):
+            raise ValueError(
+                "Invalid phone number. Use following format, e.g. +61412345678"
+            )
+        return stripped
+
     # =====================
     # PASSWORD HASHING
     # =====================
