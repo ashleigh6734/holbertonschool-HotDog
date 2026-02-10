@@ -1,0 +1,35 @@
+.all-pets-container {
+  background-color: #e9ecf0;
+  min-height: 100vh;
+  justify-items: center;
+}
+
+.all-pets-content {
+  display: grid;
+  grid-template-rows: 80px 50px 1fr;
+  width: 100%;
+  max-width: 700px;
+  align-items: center;
+}
+
+.all-pets-header {
+  justify-self: center;
+}
+
+.all-pets-header h2 {
+  font-weight: bold;
+}
+
+.all-pets-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.all-pets-actions button {
+  border-radius: 10px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.4rem;
+}
