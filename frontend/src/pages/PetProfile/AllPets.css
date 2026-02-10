@@ -17,7 +17,8 @@
 }
 
 .all-pets-header h2 {
-  font-weight: bold;
+  font-weight: bolder;
+  color: #1f3a5f;
 }
 
 .all-pets-actions {
