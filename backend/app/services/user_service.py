@@ -17,7 +17,7 @@ class UserService():
             email=data["email"],
             image_url=data.get("image_url"),
             # role defaults to "user" in model
-            phone_number=data["phone_number"]
+            phone_number=data.get("phone_number")
         )
 
         # Model handles hashing of ps
@@ -69,6 +69,10 @@ class UserService():
         
         if "phone_number" in data:
             user.phone_number = data["phone_number"]
+        
+        # Role CANNOT be updated
+        if "role" in data:
+            raise ValueError("Role cannot be updated")
 
         db.session.commit()
         return user
