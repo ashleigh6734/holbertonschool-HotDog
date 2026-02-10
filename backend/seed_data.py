@@ -21,7 +21,16 @@ with app.app_context():
     )
     user1.set_password("password123")
 
-    db.session.add(user1)
+    user2 = User(
+        first_name="Mary",
+        last_name="Doe",
+        email="mary@test.com",
+        phone_number="+61412345628",
+        role="provider"
+    )
+    user2.set_password("password124")
+
+    db.session.add_all([user1, user2])
     db.session.commit() # commit first so user 1 gets an ID
 
 

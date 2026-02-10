@@ -54,7 +54,7 @@ class User(db.Model):
     
     @validates('role')
     def validate_role(self, key, value):
-        allowed_roles = ["user", "provider_employee"]
+        allowed_roles = ["user", "provider"]
         if value not in allowed_roles:
             raise ValueError(f"Role must be one of {allowed_roles}")
         return value
