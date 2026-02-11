@@ -18,6 +18,7 @@ def appointment_to_dict(appt: Appointment) -> dict:
         "provider_id": appt.provider_id,
         "date_time": appt.date_time.isoformat() if appt.date_time else None,
         "status": appt.status.value if appt.status else None,
+        "service_type": appt.service_type.value if appt.service_type else None,
         "notes": appt.notes,
         "created_at": appt.created_at.isoformat() if appt.created_at else None,
         "confirmation_sent_at": appt.confirmation_sent_at.isoformat() if appt.confirmation_sent_at else None,
@@ -45,7 +46,7 @@ def create_appointment():
     data = request.get_json(silent=True) or {}
 
     # quick check for required fields
-    required_fields = ["pet_id", "provider_id", "date_time"]
+    required_fields = ["pet_id", "provider_id", "date_time", "service_type"]
     missing = [f for f in required_fields if data.get(f) in (None, "")]
     if missing:
         return error_response("Missing required fields", 400, {"missing": missing})
@@ -58,6 +59,7 @@ def create_appointment():
             pet_id=data["pet_id"],
             provider_id=data["provider_id"],
             date_time=appointment_time,
+            service_type=data["service_type"],
             notes=data.get("notes"),
             # status defaults to CONFIRMED in model
         )
@@ -105,7 +107,7 @@ def list_appointments():
     # filter by service type (JOIN)
     if q_service:
         service = q_service.strip().lower()
-        query = (query.join(Appointment.service_provider).filter(func.lower(ServiceProvider.service_type) == service))
+        query = query.filter(func.lower(Appointment.service_type) == service)
         
     # sort appointments by asc
     appointments = query.order_by(Appointment.date_time.asc()).all()

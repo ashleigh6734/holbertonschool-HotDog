@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.pet import Pet
-from app.models.service_provider import ServiceProvider
+from app.models.service_provider import ServiceProvider, ServiceType
 
 
 def utccurrent():
@@ -81,7 +81,10 @@ class AppointmentService:
         provider_id = data.get("provider_id")
         raw_datetime= data.get("date_time")
         notes= data.get("notes")
+        service_type_str = data.get("service_type")
         
+        if not service_type_str:
+            raise ValueError("Service type is required")
         # Allow service to accept either datetime or iso string
         if isinstance(raw_datetime, str):
             date_time = AppointmentService.parse_iso_datetime(raw_datetime)
@@ -90,18 +93,23 @@ class AppointmentService:
 
         # Existence checks
         AppointmentService._check_entity_exists(Pet, pet_id, "pet_id")
-        AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
+        provider = AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
 
         # Business checks
         AppointmentService._validate_date_time(date_time)
         AppointmentService._check_double_booking(provider_id, date_time)
 
+        offered_services = [s.service_type.value for s in provider.services]
+        if service_type_str not in offered_services:
+             raise ValueError(f"Provider does not offer service: {service_type_str}")
+         
         appointment = Appointment(
             pet_id=pet_id,
             provider_id=provider_id,
             date_time=date_time,
             notes=notes,
             status=AppointmentStatus.CONFIRMED,
+            service_type=service_type_str
         )
 
         db.session.add(appointment)
