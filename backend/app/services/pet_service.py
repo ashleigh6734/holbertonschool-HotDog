@@ -58,7 +58,7 @@ class PetService:
             desexed = data["desexed"],
             date_of_birth=dob,
             weight=data.get("weight"),
-            medical_notes=data.get("medical_notes"),
+            notes=data.get("notes"),
         )
 
         db.session.add(pet)
@@ -112,7 +112,7 @@ class PetService:
             "desexed",
             "date_of_birth",
             "weight",
-            "medical_notes",
+            "notes",
         ]:
             if field in data:
                 setattr(pet, field, data[field])
