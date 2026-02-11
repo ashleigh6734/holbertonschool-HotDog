@@ -15,7 +15,7 @@ class Review(db.Model):
     provider_id = db.Column(db.String(36), db.ForeignKey("service_providers.id"), nullable=False)
     
     # 3. LINK TO APPOINTMENT (The verified booking)
-    appointment_id = db.Column(db.String(36), db.ForeignKey("appointments.id"), nullable=False)
+    appointment_id = db.Column(db.String(36), db.ForeignKey("appointments.id"), nullable=False, unique=True)
 
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(500), nullable=True)
