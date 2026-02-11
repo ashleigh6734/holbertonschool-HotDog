@@ -28,7 +28,7 @@ def create_pet():
             "desexed": pet.desexed,
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
-            "medical_notes": pet.medical_notes,
+            "notes": pet.notes,
             "age": pet.age_display
         }), 201
     except ValueError as e:
@@ -79,7 +79,7 @@ def get_pet(pet_id):
         "desexed": pet.desexed,
         "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
         "weight": pet.weight,
-        "medical_notes": pet.medical_notes,
+        "notes": pet.notes,
         "age": pet.age_display
     }), 200
 

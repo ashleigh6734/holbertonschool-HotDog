@@ -48,7 +48,7 @@ class Pet(db.Model):
     desexed = db.Column(db.Boolean, nullable=False)
     date_of_birth = db.Column(db.Date, nullable=True)
     weight = db.Column(db.Float, nullable=True)
-    medical_notes = db.Column(db.String(500), nullable=True)
+    notes = db.Column(db.String(500), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -103,16 +103,16 @@ class Pet(db.Model):
         
         return float(value)
 
-    @validates('medical_notes')
-    def validate_medical_notes(self, key, value):
+    @validates('notes')
+    def validate_notes(self, key, value):
         """Medical notes validation """
         if value is None:
             return value
         if not isinstance(value, str):
-            raise TypeError("Medical notes must be a string")
+            raise TypeError("Notes must be a string")
         value = value.strip()
         if len(value) > 500:
-            raise ValueError("Medical notes cannot exceed 500 characters")
+            raise ValueError("Notes cannot exceed 500 characters")
 
         return value
     
