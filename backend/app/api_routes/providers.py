@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.services.provider_service import ProviderService
+from app.services.provider_service import ServiceProviderService
 
 providers_bp = Blueprint('providers', __name__, url_prefix='/api/providers')
 
@@ -17,11 +17,11 @@ def create_provider():
         return jsonify({"error": "Invalid JSON"}), 400
 
     try:
-        provider = ProviderService.create_provider(user_id, data)
+        provider = ServiceProviderService.create_provider(user_id, data)
         return jsonify({
             "id": provider.id,
             "name": provider.name,
-            "service_type": provider.service_type.value,
+            "services": [s.service_type.value for s in provider.services],
             "message": "Provider profile created successfully!"
         }), 201
     except ValueError as e:
@@ -33,20 +33,19 @@ def create_provider():
 # =====================
 @providers_bp.route("/", methods=["GET"])
 def get_providers():
-    # Public route - No JWT required to search!
     # Capture query params: /api/providers?service_type=Dog Walking
     filters = {
         "service_type": request.args.get("service_type"),
         "name": request.args.get("name")
     }
     
-    providers = ProviderService.get_all_providers(filters)
+    providers = ServiceProviderService.get_all_providers(filters)
 
     return jsonify([
         {
             "id": p.id,
             "name": p.name,
-            "service_type": p.service_type.value,
+            "services": [s.service_type.value for s in p.services],
             "address": p.address,
             "opening_time": p.opening_time.strftime("%H:%M"),
             "closing_time": p.closing_time.strftime("%H:%M"),
@@ -62,7 +61,7 @@ def get_providers():
 @providers_bp.route("/<int:provider_id>", methods=["GET"])
 def get_provider(provider_id):
     # Public route - View Profile Page
-    provider = ProviderService.get_provider_by_id(provider_id)
+    provider = ServiceProviderService.get_provider_by_id(provider_id)
 
     if not provider:
         return jsonify({"error": "Provider not found"}), 404
@@ -70,12 +69,11 @@ def get_provider(provider_id):
     return jsonify({
         "id": provider.id,
         "name": provider.name,
-        "service_type": provider.service_type.value,
+        "services": [s.service_type.value for s in provider.services],
         "description": provider.description,
         "address": provider.address,
         "phone": provider.phone,
         "email": provider.email,
-        # Return time as string "09:00" for frontend
         "opening_time": provider.opening_time.strftime("%H:%M"),
         "closing_time": provider.closing_time.strftime("%H:%M"),
         "slot_duration": provider.slot_duration,
@@ -90,7 +88,7 @@ def get_provider(provider_id):
 @jwt_required()
 def update_provider(provider_id):
     current_user_id = get_jwt_identity()
-    provider = ProviderService.get_provider_by_id(provider_id)
+    provider = ServiceProviderService.get_provider_by_id(provider_id)
 
     if not provider:
         return jsonify({"error": "Provider not found"}), 404
@@ -102,7 +100,7 @@ def update_provider(provider_id):
     data = request.get_json()
     
     try:
-        updated = ProviderService.update_provider(provider, data)
+        updated = ServiceProviderService.update_provider(provider, data)
         return jsonify({"message": "Provider updated successfully"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
