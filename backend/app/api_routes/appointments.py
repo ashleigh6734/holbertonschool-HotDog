@@ -5,7 +5,7 @@ from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.service_provider import ServiceProvider
 
-appointments_bp = Blueprint("appointments", __name__, url_prefix="api/appointments")
+appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
 
 # -------------------------
 # Helpers
@@ -35,7 +35,7 @@ def error_response(message: str, status_code: int = 400, extra: dict | None = No
 # -------------------------
 # Routes
 # -------------------------
-@appointments_bp.route("", methods=["POST"])
+@appointments_bp.route("/", methods=["POST"])
 def create_appointment():
     """
     Create an appointment
@@ -139,7 +139,7 @@ def cancel_appointment(appointment_id: int):
 
     # block cancelling twice
     if appointment.status == AppointmentStatus.CANCELLED:
-        return error_response("Booking is already cancelled", 400)
+        return error_response("Appointment is already cancelled", 400)
 
     try:
         appointment.status = AppointmentStatus.CANCELLED
