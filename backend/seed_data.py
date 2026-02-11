@@ -39,7 +39,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Charlie", "last": "Walker", "email": "charlie@walks.com"},
         "business": {
             "name": "Happy Tails Dog Walking",
-            "service_type": ServiceType.DOG_WALKING,
+            "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
             "address": "78 Park Ave, Brisbane QLD",
             "phone": "0400555666",
@@ -51,7 +51,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Diana", "last": "Trainer", "email": "diana@train.com"},
         "business": {
             "name": "Good Boy Puppy School",
-            "service_type": ServiceType.PUPPY_TRAINING,
+            "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
             "address": "101 Training Crt, Perth WA",
             "phone": "0400777888",
@@ -63,7 +63,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Evan", "last": "Surgeon", "email": "evan@desex.com"},
         "business": {
             "name": "Safe Hands Desexing Clinic",
-            "service_type": ServiceType.DESEXING,
+            "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
             "address": "202 Safety Rd, Adelaide SA",
             "phone": "0400999000",
@@ -75,7 +75,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Fiona", "last": "Dentist", "email": "fiona@teeth.com"},
         "business": {
             "name": "Canine Smiles Dental",
-            "service_type": ServiceType.DENTAL,
+            "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
             "address": "303 Molar St, Hobart TAS",
             "phone": "0400123123",
