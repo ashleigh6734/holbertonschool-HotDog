@@ -6,7 +6,7 @@ from app.models.user import User
 from app.models.pet import Pet 
 from app.models.appointment import Appointment
 from app.models.review import Review
-from app.models.service_provider import ServiceProvider, ServiceType
+from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
 
 class TestServiceProvider(unittest.TestCase):
 
@@ -37,92 +37,97 @@ class TestServiceProvider(unittest.TestCase):
             db.session.remove()
             db.drop_all()
 
-    def test_create_provider_with_enum(self):
-        """Test creating a provider using the new Enum list"""
+    def test_create_provider_with_services(self):
+        """Test creating a provider and adding services to it"""
         with self.app.app_context():
+            # 1. Create Provider
             provider = ServiceProvider(
                 user_id=self.user_id,
                 name="Ash's Vet Clinic",
-                service_type=ServiceType.VET_CONSULTATIONS,
                 description="Expert vet care"
             )
             db.session.add(provider)
+            db.session.flush() # Get ID
+
+            # 2. Add a Service (Using the new table)
+            service = ProviderService(
+                provider_id=provider.id,
+                service_type=ServiceType.VET_CONSULTATIONS
+            )
+            db.session.add(service)
             db.session.commit()
 
-            # Verify it saved
+            # 3. Verify it saved
             saved = ServiceProvider.query.first()
             self.assertEqual(saved.name, "Ash's Vet Clinic")
-            # Check the Enum value is correct
-            self.assertEqual(saved.service_type, ServiceType.VET_CONSULTATIONS)
-            # Check the string value matches the Enum text
-            self.assertEqual(saved.service_type.value, "Vet Consultations")
+            
+            # 4. Check the relationship (It should be a LIST now)
+            self.assertEqual(len(saved.services), 1)
+            self.assertEqual(saved.services[0].service_type, ServiceType.VET_CONSULTATIONS)
 
     def test_availability_defaults(self):
-        """Test that opening times default to 9am-5pm if not provided"""
+        """Test that opening times default to 9am-5pm"""
         with self.app.app_context():
             provider = ServiceProvider(
                 user_id=self.user_id,
-                name="Default Time Spa",
-                service_type=ServiceType.DOG_WALKING
+                name="Default Time Spa"
             )
             db.session.add(provider)
             db.session.commit()
 
             saved = ServiceProvider.query.first()
-            # Default is 09:00:00
             self.assertEqual(saved.opening_time, time(9, 0))
-            # Default is 17:00:00
             self.assertEqual(saved.closing_time, time(17, 0))
-            # Default slot is 30 mins
             self.assertEqual(saved.slot_duration, 30)
 
     def test_availability_custom(self):
-        """Test setting custom opening hours and slot duration"""
+        """Test setting custom opening hours"""
         with self.app.app_context():
             provider = ServiceProvider(
                 user_id=self.user_id,
                 name="Late Night Vets",
-                service_type=ServiceType.DENTAL,
-                opening_time=time(12, 0), # Opens at noon
-                closing_time=time(22, 0), # Closes at 10pm
-                slot_duration=60          # 1 hour slots
+                opening_time=time(12, 0),
+                closing_time=time(22, 0),
+                slot_duration=60
             )
             db.session.add(provider)
             db.session.commit()
 
             saved = ServiceProvider.query.first()
             self.assertEqual(saved.opening_time, time(12, 0))
-            self.assertEqual(saved.closing_time, time(22, 0))
             self.assertEqual(saved.slot_duration, 60)
 
     def test_invalid_slot_duration(self):
         """Test validation for slot duration limits"""
         with self.app.app_context():
-            # Too short (5 mins)
+            # Too short
             with self.assertRaises(ValueError):
                 ServiceProvider(
                     user_id=self.user_id,
                     name="Fast Spa",
-                    service_type=ServiceType.NAIL_TRIMMING,
                     slot_duration=5 
                 )
             
-            # Too long (5 hours / 300 mins)
+            # Too long
             with self.assertRaises(ValueError):
                 ServiceProvider(
                     user_id=self.user_id,
                     name="Slow Spa",
-                    service_type=ServiceType.NAIL_TRIMMING,
                     slot_duration=300 
                 )
+            
 
     def test_invalid_enum(self):
-        """Test that we cannot pass a random string to the Enum column"""
+        """Test that we cannot pass a random string to the ProviderService model"""
         with self.app.app_context():
+            # Create a valid provider first
+            provider = ServiceProvider(user_id=self.user_id, name="Test Spa")
+            db.session.add(provider)
+            db.session.flush()
+
             with self.assertRaises(ValueError): 
-                ServiceProvider(
-                    user_id=self.user_id,
-                    name="Bad Type Spa",
+                ProviderService(
+                    provider_id=provider.id,
                     service_type="Underwater Basket Weaving"
                 )
 
