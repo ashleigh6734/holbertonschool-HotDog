@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import Appointments from "./pages/Appointments.jsx";
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Home from "./pages/Home.jsx";
@@ -10,6 +9,7 @@ import Register from "./pages/Register/Register.jsx";
 import Avatar from "./components/avatar/Avatar.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
+import Appointments from "./pages/Appointments/Appointments.jsx";
 
 export default function App() {
   return (
@@ -28,6 +28,7 @@ export default function App() {
         indiv pet
         <Route path="/pets" element={<AllPets />} /> // all pets
         <Route path="/user" element={<UserProfile />} />
+        <Route path="/appointments/:id" element={<Appointments />} />
         {/* more pages coming ... */}
       </Routes>
 
