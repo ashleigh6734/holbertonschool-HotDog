@@ -3,6 +3,7 @@ import enum
 from datetime import datetime, timezone
 from app.extensions import db
 from sqlalchemy.orm import validates
+from app.models.service_provider import ServiceType
 
 # get the current date and time
 def utccurrent():
@@ -26,6 +27,9 @@ class Appointment (db.Model):
     pet_id = db.Column(db.String(36), db.ForeignKey("pets.id"), nullable=False)
     provider_id = db.Column(db.String(36), db.ForeignKey("service_providers.id"), nullable=False)
     date_time = db.Column(db.DateTime, nullable=False, index=True)
+    
+    service_type = db.Column(db.Enum(ServiceType), nullable=False)
+    
     status = db.Column(
         db.Enum(AppointmentStatus, name="appointment_status"),
         nullable=False,
@@ -102,3 +106,14 @@ class Appointment (db.Model):
             f"Date ={self.date_time} "
             f"Status ={self.status.value}>"
         )
+        
+    # NEW VALIDATOR. Check 3: service type is valid
+    @validates("service_type")
+    def validate_service_type(self, key, value):
+        if isinstance(value, ServiceType):
+            return value
+        if isinstance(value, str):
+            for member in ServiceType:
+                if member.value == value:
+                    return member
+        raise ValueError(f"Invalid service type: '{value}'")

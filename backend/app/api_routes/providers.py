@@ -58,7 +58,7 @@ def get_providers():
 # =====================
 # GET SINGLE PROVIDER
 # =====================
-@providers_bp.route("/<int:provider_id>", methods=["GET"])
+@providers_bp.route("/<string:provider_id>", methods=["GET"])
 def get_provider(provider_id):
     # Public route - View Profile Page
     provider = ServiceProviderService.get_provider_by_id(provider_id)
@@ -84,7 +84,7 @@ def get_provider(provider_id):
 # =====================
 # UPDATE PROVIDER
 # =====================
-@providers_bp.route("/<int:provider_id>", methods=["PATCH"])
+@providers_bp.route("/<string:provider_id>", methods=["PATCH"])
 @jwt_required()
 def update_provider(provider_id):
     current_user_id = get_jwt_identity()

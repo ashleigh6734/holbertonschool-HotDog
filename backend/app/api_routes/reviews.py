@@ -37,7 +37,7 @@ def create_review():
 # =====================
 # GET PROVIDER REVIEWS
 # =====================
-@reviews_bp.route("/provider/<int:provider_id>", methods=["GET"])
+@reviews_bp.route("/provider/<string:provider_id>", methods=["GET"])
 def get_provider_reviews(provider_id):
     """
     Public route to fetch all reviews for a specific provider/clinic.
