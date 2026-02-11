@@ -18,7 +18,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
             "address": "123 High St, Melbourne VIC",
-            "phone": "0400111222",
+            "phone": "+61400111222",
             "email": "contact@pawsclaws.com",
             "slot_duration": 30
         }
@@ -30,7 +30,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
             "address": "45 Dogwood Ln, Sydney NSW",
-            "phone": "0400333444",
+            "phone": "+61400333444",
             "email": "info@sparklepaws.com",
             "slot_duration": 60
         }
@@ -42,7 +42,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
             "address": "78 Park Ave, Brisbane QLD",
-            "phone": "0400555666",
+            "phone": "+61400555666",
             "email": "walks@happytails.com",
             "slot_duration": 45
         }
@@ -54,7 +54,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
             "address": "101 Training Crt, Perth WA",
-            "phone": "0400777888",
+            "phone": "+61400777888",
             "email": "train@goodboy.com",
             "slot_duration": 60
         }
@@ -66,7 +66,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
             "address": "202 Safety Rd, Adelaide SA",
-            "phone": "0400999000",
+            "phone": "+61400999000",
             "email": "admin@safehands.com",
             "slot_duration": 90
         }
@@ -78,7 +78,7 @@ PROVIDERS_DATA = [
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
             "address": "303 Molar St, Hobart TAS",
-            "phone": "0400123123",
+            "phone": "+61400123123",
             "email": "smile@caninesmiles.com",
             "slot_duration": 45
         }
@@ -125,7 +125,7 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2024, 1, 17),
         weight=28.5,
-        medical_notes="Up to date on vaccinations"
+        notes="Up to date on vaccinations"
     )
 
     pet2 = Pet(
@@ -137,7 +137,7 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
-        medical_notes="Indoor cat"
+        notes="Indoor cat"
     )
 
     db.session.add_all([pet1, pet2])
@@ -152,8 +152,8 @@ with app.app_context():
             first_name=data["owner"]["first"],
             last_name=data["owner"]["last"],
             email=data["owner"]["email"],
-            role="provider_employee",
-            phone_number="0400000000"
+            role="provider",
+            phone_number=data["business"]["phone"]
         )
         owner.set_password("password123")
         db.session.add(owner)
