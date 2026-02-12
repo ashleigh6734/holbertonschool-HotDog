@@ -28,7 +28,7 @@ export default function App() {
         indiv pet
         <Route path="/pets" element={<AllPets />} /> // all pets
         <Route path="/user" element={<UserProfile />} />
-        <Route path="/appointments/:id" element={<Appointments />} />
+        <Route path="/appointments" element={<Appointments />} />
         {/* more pages coming ... */}
       </Routes>
 
