@@ -19,6 +19,19 @@ def create_app():
     # load configurations
     app.config.from_object(Config)
 
+    #Ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+        print(f"✅ Instance Path: {app.instance_path}")
+    except OSError:
+        print(f"✅ Instance Path exists: {app.instance_path}")
+
+    #FORCE the database to use this specific folder
+    db_name = 'database.db' 
+    db_path = os.path.join(app.instance_path, db_name)
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+    print(f"✅ Database URI:  {app.config['SQLALCHEMY_DATABASE_URI']}")
+
     # enable CORS
     CORS(app)
 
