@@ -52,6 +52,9 @@ class AppointmentService:
         """
         Check appointment must be in the future and timezone-aware
         """
+        if date_time.tzinfo is None or date_time.tzinfo.utcoffset(date_time) is None:
+            raise ValueError("date_time must include timezone information")
+
         if date_time <= utccurrent():
             raise ValueError("Appointment time must be in the future")
         
@@ -95,12 +98,15 @@ class AppointmentService:
         else:
             date_time = raw_datetime
 
+        # normalize to UTC for storage/duplicate checks (store as naive UTC)
+        date_time = date_time.astimezone(timezone.utc).replace(tzinfo=None)
+
         # Existence checks
         AppointmentService._check_entity_exists(Pet, pet_id, "pet_id")
         provider = AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
 
         # Business checks
-        AppointmentService._validate_date_time(date_time)
+        AppointmentService._validate_date_time(date_time.replace(tzinfo=timezone.utc))
         AppointmentService._check_double_booking(provider_id, date_time)
 
         offered_services = [s.service_type.value for s in provider.services] if provider.services else []
