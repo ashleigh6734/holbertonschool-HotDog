@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from typing import Optional
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.pet import Pet
@@ -120,11 +121,11 @@ class AppointmentService:
         return appointment
     
     @staticmethod
-    def get_appointment_by_id(appointment_id: str) -> Appointment | None:
+    def get_appointment_by_id(appointment_id: str) -> Optional[Appointment]:
         return db.session.get(Appointment, appointment_id)
 
     @staticmethod
-    def cancel_appointment(appointment_id: str) -> Appointment | None:
+    def cancel_appointment(appointment_id: str) -> Optional[Appointment]:
         appointment = db.session.get(Appointment, appointment_id)
         if not appointment:
             return None
