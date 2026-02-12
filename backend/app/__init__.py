@@ -10,7 +10,7 @@ from app.api_routes.auth import auth_bp
 from app.api_routes.pets import pets_bp
 from app.api_routes.providers import providers_bp
 from app.api_routes.reviews import reviews_bp
-import os
+from app.api_routes.appointments import appointments_bp
 
 def create_app():
     # initialise flask app
@@ -53,6 +53,6 @@ def create_app():
     app.register_blueprint(pets_bp)
     app.register_blueprint(providers_bp)
     app.register_blueprint(reviews_bp)
-
+    app.register_blueprint(appointments_bp)
 
     return app

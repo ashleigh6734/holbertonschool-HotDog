@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from typing import Optional
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.pet import Pet
@@ -82,7 +83,10 @@ class AppointmentService:
         raw_datetime= data.get("date_time")
         notes= data.get("notes")
         service_type_str = data.get("service_type")
-        
+        # normalize enum input
+        if hasattr(service_type_str, "value"):
+            service_type_str = service_type_str.value
+
         if not service_type_str:
             raise ValueError("Service type is required")
         # Allow service to accept either datetime or iso string
@@ -99,9 +103,9 @@ class AppointmentService:
         AppointmentService._validate_date_time(date_time)
         AppointmentService._check_double_booking(provider_id, date_time)
 
-        offered_services = [s.service_type.value for s in provider.services]
-        if service_type_str not in offered_services:
-             raise ValueError(f"Provider does not offer service: {service_type_str}")
+        offered_services = [s.service_type.value for s in provider.services] if provider.services else []
+        if offered_services and service_type_str not in offered_services:
+            raise ValueError(f"Provider does not offer service: {service_type_str}")
          
         appointment = Appointment(
             pet_id=pet_id,
@@ -117,11 +121,11 @@ class AppointmentService:
         return appointment
     
     @staticmethod
-    def get_appointment_by_id(appointment_id: str) -> Appointment | None:
+    def get_appointment_by_id(appointment_id: str) -> Optional[Appointment]:
         return db.session.get(Appointment, appointment_id)
 
     @staticmethod
-    def cancel_appointment(appointment_id: str) -> Appointment | None:
+    def cancel_appointment(appointment_id: str) -> Optional[Appointment]:
         appointment = db.session.get(Appointment, appointment_id)
         if not appointment:
             return None
