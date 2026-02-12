@@ -13,6 +13,7 @@ def utccurrent():
 # ENUM FOR STATUS
 # =====================
 class AppointmentStatus(enum.Enum):
+    PENDING = "PENDING"
     CONFIRMED = "CONFIRMED"
     CANCELLED = "CANCELLED"
     COMPLETED = "COMPLETED"
@@ -33,7 +34,7 @@ class Appointment (db.Model):
     status = db.Column(
         db.Enum(AppointmentStatus, name="appointment_status"),
         nullable=False,
-        default=AppointmentStatus.CONFIRMED,
+        default=AppointmentStatus.PENDING,
         index=True
     )
     
