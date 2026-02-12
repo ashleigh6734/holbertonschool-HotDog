@@ -82,7 +82,10 @@ class AppointmentService:
         raw_datetime= data.get("date_time")
         notes= data.get("notes")
         service_type_str = data.get("service_type")
-        
+        # normalize enum input
+        if hasattr(service_type_str, "value"):
+            service_type_str = service_type_str.value
+
         if not service_type_str:
             raise ValueError("Service type is required")
         # Allow service to accept either datetime or iso string
@@ -99,9 +102,9 @@ class AppointmentService:
         AppointmentService._validate_date_time(date_time)
         AppointmentService._check_double_booking(provider_id, date_time)
 
-        offered_services = [s.service_type.value for s in provider.services]
-        if service_type_str not in offered_services:
-             raise ValueError(f"Provider does not offer service: {service_type_str}")
+        offered_services = [s.service_type.value for s in provider.services] if provider.services else []
+        if offered_services and service_type_str not in offered_services:
+            raise ValueError(f"Provider does not offer service: {service_type_str}")
          
         appointment = Appointment(
             pet_id=pet_id,
