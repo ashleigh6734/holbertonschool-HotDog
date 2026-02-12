@@ -26,7 +26,7 @@ def appointment_to_dict(appt: Appointment) -> dict:
     }
 
 # standardise error message across routes
-def error_response(message: str, status_code: int = 400, extra: dict | None = None):
+def error_response(message: str, status_code: int = 400, extra=None):
     payload = {"error": message}
     if extra:
         payload.update(extra)
