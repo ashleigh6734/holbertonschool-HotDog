@@ -22,10 +22,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/pets/:id" element={<PetProfile />} /> // indiv pet profile
         <Route path="/booking" element={<Booking />} />
-        <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit
-        indiv pet
+        <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit individual pet
         <Route path="/pets" element={<AllPets />} /> // all pets
         <Route path="/user" element={<UserProfile />} />
         <Route path="/appointments/:id" element={<Appointments />} />
