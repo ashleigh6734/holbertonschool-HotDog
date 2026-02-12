@@ -3,7 +3,8 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy import func
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
-from app.models.service_provider import ServiceProvider
+from app.services.appointment_service import AppointmentService
+from app.models.service_provider import ServiceType
 
 appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
 
@@ -61,7 +62,7 @@ def create_appointment():
             date_time=appointment_time,
             service_type=data["service_type"],
             notes=data.get("notes"),
-            # status defaults to CONFIRMED in model
+            # status defaults to PENDING in model and becomes CONFIRMED once confirmation email is sent
         )
 
         db.session.add(appt)
@@ -119,7 +120,7 @@ def list_appointments():
 
 
 @appointments_bp.route("/<string:appointment_id>", methods=["GET"])
-def get_appointment(appointment_id: int):
+def get_appointment(appointment_id: str):
     """
     Get a single appointment by ID
     """
@@ -129,9 +130,27 @@ def get_appointment(appointment_id: int):
 
     return jsonify({"appointment": appointment_to_dict(appointment)}), 200
 
+@appointments_bp.route("/<string:appointment_id>/confirm", methods=["PATCH"])
+def confirm_booking(appointment_id: str):
+    """
+    Confirm appointment by ID and send confirmation email once
+    """
+    try:
+        appointment = AppointmentService.confirm_appointment(appointment_id)
+        if appointment is None:
+            return jsonify({"error": "Appointment not found"}), 404
+        return jsonify({
+            "message": "Appointment confirmed",
+            "appointment": appointment_to_dict(appointment)
+            }), 200
+        
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception:
+        return error_response("Internal server error", 500)
 
 @appointments_bp.route("/<string:appointment_id>/cancel", methods=["DELETE"])
-def cancel_appointment(appointment_id: int):
+def cancel_appointment(appointment_id: str):
     """
     Cancel an appointment by ID
     """
