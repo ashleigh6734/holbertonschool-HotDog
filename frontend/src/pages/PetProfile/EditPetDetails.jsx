@@ -80,7 +80,7 @@ export default function EditPetDetails() {
           <div className="pet-card">
             <img
               className="pet-avatar"
-              src="/src/assets/images/pet-avatar.png"
+              src="/src/assets/images/cat.jpg"
               alt={`${pet?.name || 'Pet'} avatar`}
             />
             <h3 className="pet-card-name">{formData.name}</h3>

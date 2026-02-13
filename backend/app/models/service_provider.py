@@ -14,6 +14,26 @@ class ServiceType(enum.Enum):
     NAIL_TRIMMING = "Nail Trimming"
     HAIRCUTS_COAT = "Haircuts and Coat Maintenance"
     PUPPY_TRAINING = "Puppy Training"
+    
+class ProviderService(db.Model):
+    __tablename__ = "provider_services"
+    
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    provider_id = db.Column(db.String(36), db.ForeignKey("service_providers.id"), nullable=False)
+    service_type = db.Column(db.Enum(ServiceType), nullable=False)
+
+    # Link back to the provider
+    provider = db.relationship("ServiceProvider", back_populates="services")
+
+    @validates("service_type")
+    def validate_service_type(self, key, value):
+        if isinstance(value, ServiceType):
+            return value
+        if isinstance(value, str):
+            for member in ServiceType:
+                if member.value == value:
+                    return member
+        raise ValueError(f"Invalid service type: '{value}'")
 
 class ServiceProvider(db.Model):
     __tablename__ = "service_providers"
@@ -24,9 +44,6 @@ class ServiceProvider(db.Model):
     user_id = db.Column(db.String(36), db.ForeignKey("users.id"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     
-    # 2. SERVICE TYPE (Required for Search Filters)
-    service_type = db.Column(db.Enum(ServiceType), nullable=False)
-
     # 3. AVAILABILITY (For Booking System)
     opening_time = db.Column(db.Time, nullable=False, default=time(9, 0)) 
     closing_time = db.Column(db.Time, nullable=False, default=time(17, 0))
@@ -38,20 +55,6 @@ class ServiceProvider(db.Model):
     phone = db.Column(db.String(25), nullable=True)
     email = db.Column(db.String(120), nullable=True) # Public contact email
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    @validates("service_type")
-    def validate_service_type(self, key, value):
-        # 1. Allow passing the Enum object directly (e.g., ServiceType.GROOMING)
-        if isinstance(value, ServiceType):
-            return value
-
-        # 2. Allow passing the string value (e.g., "Grooming")
-        if isinstance(value, str):
-            for member in ServiceType:
-                if member.value == value:
-                    return member
-            
-        raise ValueError(f"Invalid service type: '{value}'. Must be one of {[e.value for e in ServiceType]}")
 
     # =====================
     # RELATIONSHIPS
@@ -67,7 +70,7 @@ class ServiceProvider(db.Model):
         lazy=True,
         cascade="all, delete-orphan",
     )
-
+    services = db.relationship("ProviderService", back_populates="provider", cascade="all, delete-orphan")
     # =====================
     # VALIDATORS
     # =====================

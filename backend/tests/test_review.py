@@ -1,13 +1,13 @@
 import unittest
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, time, date
 from flask import Flask
 from sqlalchemy.exc import IntegrityError
 from app.extensions import db
 from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, GenderEnum
-from app.models.appointment import Appointment
+from app.models.appointment import Appointment, AppointmentStatus
 from app.models.review import Review
-from app.models.service_provider import ServiceProvider, ServiceType
+from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
 
 
 class TestReviewModel(unittest.TestCase):
@@ -38,14 +38,21 @@ class TestReviewModel(unittest.TestCase):
             provider = ServiceProvider(
                 user_id=self.user_id,
                 name="Happy Paws",
-                service_type=ServiceType.VET_CONSULTATIONS,
                 description="Friendly vet care"
             )
             db.session.add(provider)
-            db.session.commit()
+            db.session.flush()
             self.provider_id = provider.id
 
-            # 3. Create Pet 
+            #3. Add a Service (Using the new table)
+            service = ProviderService(
+                provider_id=self.provider_id,
+                service_type=ServiceType.VET_CONSULTATIONS
+            )
+            db.session.add(service)
+            db.session.commit()
+            
+            # 4. Create Pet 
             pet = Pet(
                 owner_id=self.user_id,
                 name="Buddy",
@@ -58,11 +65,13 @@ class TestReviewModel(unittest.TestCase):
             db.session.commit()
             self.pet_id = pet.id
 
-            # 4. Create Appointment
+            # 5. Create Appointment
             appointment = Appointment(
                 pet_id=self.pet_id,
                 provider_id=self.provider_id,
-                date_time=datetime.now(timezone.utc) + timedelta(days=1)
+                date_time=datetime.now(timezone.utc) + timedelta(days=1),
+                status=AppointmentStatus.COMPLETED,
+                service_type=ServiceType.VET_CONSULTATIONS
             )
             db.session.add(appointment)
             db.session.commit()

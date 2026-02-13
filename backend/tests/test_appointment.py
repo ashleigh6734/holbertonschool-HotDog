@@ -5,7 +5,7 @@ from flask import Flask
 from app.extensions import db
 from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, DogBreedEnum, GenderEnum
-from app.models.service_provider import ServiceProvider, ServiceType
+from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
 from app.models.appointment import Appointment, AppointmentStatus
 from app.services.appointment_service import AppointmentService
 
@@ -47,17 +47,16 @@ def create_pet(owner_id: str): # str due to uuid set up
         desexed=True,
         date_of_birth=None,
         weight=None,
-        medical_notes=None,
+        notes=None,
     )
     db.session.add(pet)
     db.session.commit()
     return pet
 
-def create_provider(user_id: str):
+def create_provider(user_id: str, service_type: ServiceType = ServiceType.VACCINATIONS):
     service_provider = ServiceProvider(
-        user_id=user_id, #required here as ServiceProvider has FK to User model
+        user_id=user_id,  # required here as ServiceProvider has FK to User model
         name="Friendly Vet Clinic",
-        service_type=ServiceType.VACCINATIONS,
         opening_time=time(9, 0),
         closing_time=time(17, 0),
         slot_duration=30,
@@ -67,7 +66,13 @@ def create_provider(user_id: str):
         email=None,
     )
     db.session.add(service_provider)
+    db.session.flush()
+
+    # attach at least one offered service to the provider
+    svc = ProviderService(provider_id=service_provider.id, service_type=service_type)
+    db.session.add(svc)
     db.session.commit()
+
     return service_provider
 
 
@@ -111,6 +116,7 @@ class TestAppointmentModel(unittest.TestCase):
                 "pet_id": pet.id,
                 "provider_id": provider.id,
                 "date_time": past_dt(),
+                "service_type": ServiceType.VACCINATIONS.value,
             })
 
     def test_cant_book_without_timezone(self):
@@ -125,6 +131,7 @@ class TestAppointmentModel(unittest.TestCase):
                 provider_id=provider.id,
                 date_time=naive_future_dt(),        # validation check should reject
                 status=AppointmentStatus.CONFIRMED,
+                service_type=ServiceType.VACCINATIONS,
             )
             db.session.add(appt)
             db.session.commit()
@@ -143,6 +150,7 @@ class TestAppointmentModel(unittest.TestCase):
             "pet_id": pet1.id,
             "provider_id": provider.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         with self.assertRaisesRegex(ValueError, r"(no longer available|not available|already booked|time slot)"):
@@ -150,6 +158,7 @@ class TestAppointmentModel(unittest.TestCase):
                 "pet_id": pet2.id,
                 "provider_id": provider.id,
                 "date_time": slot,
+                "service_type": ServiceType.VACCINATIONS.value,
             })
 
     def test_can_book_same_time_different_provider(self):
@@ -167,12 +176,14 @@ class TestAppointmentModel(unittest.TestCase):
             "pet_id": pet.id,
             "provider_id": provider1.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         appt2 = AppointmentService.create_appointment({
             "pet_id": pet.id,
             "provider_id": provider2.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         self.assertIsNotNone(appt1.id)
@@ -191,6 +202,7 @@ class TestAppointmentModel(unittest.TestCase):
             "pet_id": pet.id,
             "provider_id": provider.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         cancelled = AppointmentService.cancel_appointment(appt.id)
@@ -212,6 +224,7 @@ class TestAppointmentModel(unittest.TestCase):
             "pet_id": pet1.id,
             "provider_id": provider.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         AppointmentService.cancel_appointment(appt1.id)
@@ -220,6 +233,7 @@ class TestAppointmentModel(unittest.TestCase):
             "pet_id": pet2.id,
             "provider_id": provider.id,
             "date_time": slot,
+            "service_type": ServiceType.VACCINATIONS.value,
         })
 
         self.assertIsNotNone(appt2.id)

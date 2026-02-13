@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
+from typing import Optional
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.pet import Pet
 from app.models.service_provider import ServiceProvider
-
+from app.services.email_service import EmailService
 
 def utccurrent():
     return datetime.now(timezone.utc)
@@ -51,6 +52,9 @@ class AppointmentService:
         """
         Check appointment must be in the future and timezone-aware
         """
+        if date_time.tzinfo is None or date_time.tzinfo.utcoffset(date_time) is None:
+            raise ValueError("date_time must include timezone information")
+
         if date_time <= utccurrent():
             raise ValueError("Appointment time must be in the future")
         
@@ -66,7 +70,7 @@ class AppointmentService:
         conflicting_appointment_query = Appointment.query.filter(
             Appointment.provider_id == provider_id,
             Appointment.date_time == date_time,
-            Appointment.status == AppointmentStatus.CONFIRMED,
+            Appointment.status != AppointmentStatus.CANCELLED,
         )
 
         if exclude_appointment_id is not None:
@@ -81,7 +85,13 @@ class AppointmentService:
         provider_id = data.get("provider_id")
         raw_datetime= data.get("date_time")
         notes= data.get("notes")
-        
+        service_type_str = data.get("service_type")
+        # normalize enum input
+        if hasattr(service_type_str, "value"):
+            service_type_str = service_type_str.value
+
+        if not service_type_str:
+            raise ValueError("Service type is required")
         # Allow service to accept either datetime or iso string
         if isinstance(raw_datetime, str):
             date_time = AppointmentService.parse_iso_datetime(raw_datetime)
@@ -90,30 +100,78 @@ class AppointmentService:
 
         # Existence checks
         AppointmentService._check_entity_exists(Pet, pet_id, "pet_id")
-        AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
+        provider = AppointmentService._check_entity_exists(ServiceProvider, provider_id, "provider_id")
 
         # Business checks
         AppointmentService._validate_date_time(date_time)
         AppointmentService._check_double_booking(provider_id, date_time)
 
+        offered_services = [s.service_type.value for s in provider.services] if provider.services else []
+        if offered_services and service_type_str not in offered_services:
+            raise ValueError(f"Provider does not offer service: {service_type_str}")
+         
         appointment = Appointment(
             pet_id=pet_id,
             provider_id=provider_id,
             date_time=date_time,
             notes=notes,
-            status=AppointmentStatus.CONFIRMED,
+            status=AppointmentStatus.PENDING,
+            service_type=service_type_str
         )
 
         db.session.add(appointment)
         db.session.commit()
         return appointment
     
+    # confirm appointment method that sends email once
     @staticmethod
-    def get_appointment_by_id(appointment_id: str) -> Appointment | None:
+    def confirm_appointment(appointment_id: str) -> Optional[Appointment]:
+        appointment = db.session.get(Appointment, appointment_id)
+        if not appointment:
+            return None
+        if appointment.status == AppointmentStatus.CANCELLED:
+            raise ValueError("Cannot confirm a cancelled appointment")
+        #  if already confirmed and emailed then do nothing
+        if appointment.status == AppointmentStatus.CONFIRMED and appointment.confirmation_sent_at:
+            return appointment
+        # change status to confirmed
+        appointment.status = AppointmentStatus.CONFIRMED
+        
+        # get owner's email through relationship chain
+        owner = appointment.pet.owner
+        if not owner or not getattr(owner, "email", None):
+            raise ValueError("Owner email not found")
+
+        # email template
+        subject = "Your appointment is confirmed."
+        html = f"""
+        <p>Hello!</p>
+        <p>Your appointment is confirmed. Thanks for choosing HotDog 💙</p>
+        <ul>
+            <li>When: {appointment.date_time.isformat()}</li>
+            <li>Service: {appointment.service_type.value if hasattr(appointment.service_type, "value") else appointment.service_type}</li>
+            <li>Status: {appointment.status.value}</li>
+        </ul>
+        <p>See you soon!</p>
+        """
+        
+        if appointment.confirmation_sent_at is None:
+            EmailService.send_booking_confirmation(
+                to_email=to_email,
+                subject=subject,
+                html_content=html
+            )
+            appointment.confirmation_sent_at = utccurrent()
+            
+        db.session.commit()
+        return appointment
+
+    @staticmethod
+    def get_appointment_by_id(appointment_id: str) -> Optional[Appointment]:
         return db.session.get(Appointment, appointment_id)
 
     @staticmethod
-    def cancel_appointment(appointment_id: str) -> Appointment | None:
+    def cancel_appointment(appointment_id: str) -> Optional[Appointment]:
         appointment = db.session.get(Appointment, appointment_id)
         if not appointment:
             return None

@@ -3,9 +3,10 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy import func
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
-from app.models.service_provider import ServiceProvider
+from app.services.appointment_service import AppointmentService
+from app.models.service_provider import ServiceType
 
-appointments_bp = Blueprint("appointments", __name__, url_prefix="api/appointments")
+appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
 
 # -------------------------
 # Helpers
@@ -18,6 +19,7 @@ def appointment_to_dict(appt: Appointment) -> dict:
         "provider_id": appt.provider_id,
         "date_time": appt.date_time.isoformat() if appt.date_time else None,
         "status": appt.status.value if appt.status else None,
+        "service_type": appt.service_type.value if appt.service_type else None,
         "notes": appt.notes,
         "created_at": appt.created_at.isoformat() if appt.created_at else None,
         "confirmation_sent_at": appt.confirmation_sent_at.isoformat() if appt.confirmation_sent_at else None,
@@ -25,7 +27,7 @@ def appointment_to_dict(appt: Appointment) -> dict:
     }
 
 # standardise error message across routes
-def error_response(message: str, status_code: int = 400, extra: dict | None = None):
+def error_response(message: str, status_code: int = 400, extra=None):
     payload = {"error": message}
     if extra:
         payload.update(extra)
@@ -35,7 +37,7 @@ def error_response(message: str, status_code: int = 400, extra: dict | None = No
 # -------------------------
 # Routes
 # -------------------------
-@appointments_bp.route("", methods=["POST"])
+@appointments_bp.route("/", methods=["POST"])
 def create_appointment():
     """
     Create an appointment
@@ -45,7 +47,7 @@ def create_appointment():
     data = request.get_json(silent=True) or {}
 
     # quick check for required fields
-    required_fields = ["pet_id", "provider_id", "date_time"]
+    required_fields = ["pet_id", "provider_id", "date_time", "service_type"]
     missing = [f for f in required_fields if data.get(f) in (None, "")]
     if missing:
         return error_response("Missing required fields", 400, {"missing": missing})
@@ -58,8 +60,9 @@ def create_appointment():
             pet_id=data["pet_id"],
             provider_id=data["provider_id"],
             date_time=appointment_time,
+            service_type=data["service_type"],
             notes=data.get("notes"),
-            # status defaults to CONFIRMED in model
+            # status defaults to PENDING in model and becomes CONFIRMED once confirmation email is sent
         )
 
         db.session.add(appt)
@@ -105,7 +108,7 @@ def list_appointments():
     # filter by service type (JOIN)
     if q_service:
         service = q_service.strip().lower()
-        query = (query.join(Appointment.service_provider).filter(func.lower(ServiceProvider.service_type) == service))
+        query = query.filter(func.lower(Appointment.service_type) == service)
         
     # sort appointments by asc
     appointments = query.order_by(Appointment.date_time.asc()).all()
@@ -117,7 +120,7 @@ def list_appointments():
 
 
 @appointments_bp.route("/<string:appointment_id>", methods=["GET"])
-def get_appointment(appointment_id: int):
+def get_appointment(appointment_id: str):
     """
     Get a single appointment by ID
     """
@@ -127,9 +130,27 @@ def get_appointment(appointment_id: int):
 
     return jsonify({"appointment": appointment_to_dict(appointment)}), 200
 
+@appointments_bp.route("/<string:appointment_id>/confirm", methods=["PATCH"])
+def confirm_booking(appointment_id: str):
+    """
+    Confirm appointment by ID and send confirmation email once
+    """
+    try:
+        appointment = AppointmentService.confirm_appointment(appointment_id)
+        if appointment is None:
+            return jsonify({"error": "Appointment not found"}), 404
+        return jsonify({
+            "message": "Appointment confirmed",
+            "appointment": appointment_to_dict(appointment)
+            }), 200
+        
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception:
+        return error_response("Internal server error", 500)
 
 @appointments_bp.route("/<string:appointment_id>/cancel", methods=["DELETE"])
-def cancel_appointment(appointment_id: int):
+def cancel_appointment(appointment_id: str):
     """
     Cancel an appointment by ID
     """
@@ -139,7 +160,7 @@ def cancel_appointment(appointment_id: int):
 
     # block cancelling twice
     if appointment.status == AppointmentStatus.CANCELLED:
-        return error_response("Booking is already cancelled", 400)
+        return error_response("Appointment is already cancelled", 400)
 
     try:
         appointment.status = AppointmentStatus.CANCELLED
