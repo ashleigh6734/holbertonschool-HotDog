@@ -1,6 +1,11 @@
 import "./PetCard.css";
+import { useState } from "react";
+import ConfirmModal from "../../components/modals/ConfirmModal";
 
 export default function PetCard() {
+  // SHOW MODAL ON DELETE ACCOUNT
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="pet-card">
       <div className="pet-card-left">
@@ -11,10 +16,6 @@ export default function PetCard() {
         <h6>Overview</h6>
 
         <div className="pet-info-grid">
-          <div className="pet-info-group">
-            <p className="pet-info-title">Pet Name</p>
-            <p className="pet-info-input">Miss Poodle</p>
-          </div>
           <div className="pet-info-group">
             <p className="pet-info-title">D.O.B</p>
             <p className="pet-info-input">09/12/1995</p>
@@ -32,23 +33,46 @@ export default function PetCard() {
             <p className="pet-info-input">Dog</p>
           </div>
           <div className="pet-info-group">
+            <p className="pet-info-title">Breed</p>
+            <p className="pet-info-input">Poodle</p>
+          </div>
+          <div className="pet-info-group">
             <p className="pet-info-title">Gender</p>
             <p className="pet-info-input">Female</p>
           </div>
         </div>
 
         <div className="pet-card-footer">
-          <div className="last-visit-label">
-            <span>Last visit:</span>
+          <div className="notes-label">
+            <span>Notes</span>
           </div>
-          <div className="last-visit-value">23/01/2026</div>
+          <div className="notes-value">23/01/2026</div>
 
           <div className="pet-card-actions">
             <button className="btn-yellow">Edit</button>
-            <button className="btn-navy">Delete</button>
+            <button
+              className="btn-navy"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
+      <ConfirmModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+        heading="Delete Pet"
+        body={
+          <>
+            Are you sure you want to permanently remove this pet? <br />
+          </>
+        }
+        secondaryButton="Close"
+        primaryButton="Delete Pet"
+      />
     </div>
   );
 }
