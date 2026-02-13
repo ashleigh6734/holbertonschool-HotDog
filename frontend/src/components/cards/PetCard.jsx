@@ -1,6 +1,7 @@
 import "./PetCard.css";
 import { useState } from "react";
 import ConfirmModal from "../../components/modals/ConfirmModal";
+import BasicPopover from "../popovers/BasicPopover";
 
 export default function PetCard() {
   // SHOW MODAL ON DELETE ACCOUNT
@@ -44,9 +45,16 @@ export default function PetCard() {
 
         <div className="pet-card-footer">
           <div className="notes-label">
-            <span>Notes</span>
+            <BasicPopover
+              placement="right"
+              heading="Notes"
+              body="See useful notes and reminders about your pet here!"
+              buttonText="See Notes"
+              headerClassName="popover-header"
+              buttonClassName="popover-button"
+              bodyClassName="popover-body"
+            />
           </div>
-          <div className="notes-value">23/01/2026</div>
 
           <div className="pet-card-actions">
             <button className="btn-yellow">Edit</button>

@@ -87,28 +87,16 @@
   margin: 0;
 }
 
+/*PET CARD FOOTER*/
 .pet-card-footer {
   display: flex;
   flex-direction: row;
 }
 
 .notes-label {
-  font-size: 0.9rem;
   font-family:
     Open Sans,
     sans-serif;
-  color: #1f3a5f;
-  font-weight: bold;
-  margin-top: auto;
-}
-
-.notes-value {
-  font-size: 0.9rem;
-  font-family:
-    Open Sans,
-    sans-serif;
-  margin-top: auto;
-  margin-left: 0.3rem;
 }
 
 .pet-card-actions {
@@ -117,11 +105,35 @@
   margin-left: auto;
 }
 
-.pet-card-actions button {
+.pet-card-footer button {
   border-radius: 10px;
   border: none;
   font-size: 0.8rem;
-  width: 4rem;
+  width: 5rem;
   font-weight: bold;
   padding: 0.3rem;
+}
+
+/*'SEE NOTES' POPOVER*/
+
+.popover-header.popover-header {
+  background-color: #757677;
+  color: white;
+  font-weight: bold;
+}
+
+.btn.btn-primary.popover-button {
+  background-color: #757677;
+  color: white;
+  font-weight: bold;
+}
+
+.btn.btn-primary.popover-button:hover {
+  background-color: #999b9d;
+}
+
+.popover-body.popover-body {
+  font-family:
+    Open Sans,
+    sans-serif;
 }
