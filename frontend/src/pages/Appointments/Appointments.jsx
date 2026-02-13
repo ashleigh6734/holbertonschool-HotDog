@@ -38,6 +38,11 @@ export default function Appointments() {
         </div>
         <div className="bookings">
           <div className="bookings-banner">Make a booking</div>
+          <form action="/action_page.php">
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday" />
+            <input type="submit" />
+          </form>
         </div>
         /* PLACEHOLDER FOR REVIEWS */
       </div>
