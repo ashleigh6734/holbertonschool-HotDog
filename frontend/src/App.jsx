@@ -1,4 +1,7 @@
 import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header/Header.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Home from "./pages/Home.jsx";
@@ -14,23 +17,25 @@ import Appointments from "./pages/Appointments/Appointments.jsx";
 export default function App() {
   return (
     <>
-      {/* Grace Header here */}
-      <Avatar user={{}} />
+      <Header />
+        {/* Grace Header here */}
+        <Avatar user={{}} />
 
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit individual pet
-        <Route path="/pets" element={<AllPets />} /> // all pets
-        <Route path="/user" element={<UserProfile />} />
-        <Route path="/appointments" element={<Appointments />} />
-        {/* more pages coming ... */}
-      </Routes>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit individual pet
+          <Route path="/pets" element={<AllPets />} /> // all pets
+          <Route path="/user" element={<UserProfile />} />
+          <Route path="/appointments" element={<Appointments />} />
+          {/* more pages coming ... */}
+        </Routes>
 
-      {/* Grace Footer here */}
+        {/* Grace Footer here */}
+      <Footer />
     </>
   );
 }
