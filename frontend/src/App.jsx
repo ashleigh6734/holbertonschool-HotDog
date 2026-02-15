@@ -10,6 +10,7 @@ import Avatar from "./components/avatar/Avatar.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
+import ReviewDemo from "./pages/ReviewDemo.jsx";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/pets" element={<AllPets />} /> // all pets
         <Route path="/user" element={<UserProfile />} />
         <Route path="/appointments/:id" element={<Appointments />} />
+        <Route path="/review-demo" element={<ReviewDemo />} />
         {/* more pages coming ... */}
       </Routes>
 
