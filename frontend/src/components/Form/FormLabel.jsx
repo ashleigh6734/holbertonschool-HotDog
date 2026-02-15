@@ -5,7 +5,10 @@ export default function FormLabel({
   controlId,
   type,
   placeholder,
-  name,
+  name, // stays as label text
+  inputName, //for FORM state key
+  value,
+  onChange,
   id,
   disabled,
   readOnly,
@@ -15,7 +18,10 @@ export default function FormLabel({
       <Form.Label>{name}</Form.Label>
       <Form.Control
         type={type}
+        name={inputName}
+        value={value}
         placeholder={placeholder}
+        onChange={onChange}
         disabled={disabled}
         readOnly={readOnly}
       />
