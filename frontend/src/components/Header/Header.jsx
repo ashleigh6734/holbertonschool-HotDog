@@ -1,5 +1,5 @@
 import React from "react";
-import "./Hooter.css";
+import "./Header.css";
 
 function Header() {
   return (
@@ -8,9 +8,15 @@ function Header() {
 
       <nav>
         <ul className="nav-links">
-          <li><a href="/">List Your Practice</a></li>
-          <li><a href="/About">About Us</a></li>
-          <li><a href="/Services">Services</a></li>
+          <li>
+            <a href="/">List Your Practice</a>
+          </li>
+          <li>
+            <a href="/About">About Us</a>
+          </li>
+          <li>
+            <a href="/Services">Services</a>
+          </li>
         </ul>
       </nav>
 
@@ -18,10 +24,8 @@ function Header() {
         <button className="login">Login</button>
         <button className="signup">Sign Up</button>
       </div>
-
     </header>
   );
 }
 
 export default Header;
-
