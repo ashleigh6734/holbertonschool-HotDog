@@ -7,12 +7,16 @@ import DashboardBanner from '../../components/Dashboard/DashboardBanner';
 import PetStylistReviews from '../../components/Dashboard/PetStylistReviews';
 
 import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Dashboard() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="dash">
       <div className="dash-container">
-        <DashboardHero name="Annie" />
+        <DashboardHero name={user?.first_name || "User"} />
 
         <DashboardSearch
           onSearch={(query) => {
