@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -6,6 +7,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const API_BASE = "http://localhost:5000";
+    const navigate = useNavigate();
 
     // fetch logged in user using token, to persist session
     const fetchUser = async (token) => {
@@ -46,6 +48,7 @@ export function AuthProvider({ children }) {
     const logout = () => {
         localStorage.removeItem("token");
         setUser(null);
+        navigate('/');
     }
 
     return (

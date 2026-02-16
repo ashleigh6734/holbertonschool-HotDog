@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import avatarIcon from "../../assets/icons/user-avatar.png";
 import "./Avatar.css";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function Avatar({ user }) {
+export default function Avatar() {
   const [open, setOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <div className="avatar-container">
@@ -22,8 +24,15 @@ export default function Avatar({ user }) {
           <Link to="/medical-history">Pet Medical History</Link>
           <Link to="/pet-profile">Profile</Link>
           <Link to="/account">Account</Link>
-          <button className="logout">Logout</button>
-        </div>
+          <button 
+          className="logout"
+          onClick={() => {
+            logout(); // call context for logout function
+            setOpen(false); // close menu after logout
+          }}
+          >
+            Logout</button>
+        </div> 
       )}
     </div>
   );
