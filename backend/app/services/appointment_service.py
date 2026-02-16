@@ -152,10 +152,12 @@ class AppointmentService:
 
         # get provider's details
         provider = appointment.service_provider
-        provider_name = provider.name if provider else "Provider Error"
-        provider_address = provider.address if provider else "N/A"
-        provider_phone = provider.phone if provider else "N/A"
-        provider_email = provider.email if provider else "N/A"
+        if not provider or not provider.name or not provider.address or not provider.phone or not provider.email:
+            return None
+        provider_name = provider.name
+        provider_address = provider.address
+        provider_phone = provider.phone
+        provider_email = provider.email
         
         # email template
         subject = "Your appointment is confirmed."
@@ -163,7 +165,7 @@ class AppointmentService:
         <p>Hello {owner_name}!</p>
         <p>Your appointment is confirmed. Please find details as below:</p>
         <ul>
-            <li><strong>When:</strong> {dt_display}</li>
+            <li><strong>When: </strong>{dt_display}</li>
             <li><strong>With:</strong> {provider_name}</li>
             <li><strong>Address:</strong> {provider_address}</li>
             <li><strong>Phone:</strong> {provider_phone}</li>
