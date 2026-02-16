@@ -13,6 +13,7 @@ import Avatar from "./components/avatar/Avatar.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
+import ReviewDemo from "./pages/ReviewDemo.jsx";
 
 export default function App() {
   return (
