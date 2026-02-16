@@ -4,7 +4,6 @@ from sqlalchemy import func
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.services.appointment_service import AppointmentService
-from app.models.service_provider import ServiceType
 
 appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
 
@@ -146,8 +145,8 @@ def confirm_booking(appointment_id: str):
         
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
-    except Exception:
-        return error_response("Internal server error", 500)
+    except Exception as e:
+        return error_response(f"Internal server error: {e}", 500)
 
 @appointments_bp.route("/<string:appointment_id>/cancel", methods=["DELETE"])
 def cancel_appointment(appointment_id: str):
@@ -176,3 +175,30 @@ def cancel_appointment(appointment_id: str):
         "message": "Appointment cancelled",
         "appointment": appointment_to_dict(appointment)
     }), 200
+    
+
+# @appointments_bp.route("/env-check", methods=["GET"])
+# def env_check():
+#     return {
+#         "has_key": bool(os.getenv("SENDGRID_API_KEY")),
+#         "from_email": os.getenv("FROM_EMAIL"),
+#     }
+    
+# @appointments_bp.route("/test-email", methods=["POST"])
+# def test_email():
+#     from app.services.email_service import EmailService
+#     data = request.get_json(silent=True) or {}
+#     to_email = data.get("to_email")  # define to_email first
+#     print("RAW to_email value:", to_email)
+#     print("TYPE of to_email:", type(to_email))
+
+#     status = EmailService.send_booking_confirmation(
+#         to_email=to_email,
+#         subject="SendGrid test",
+#         html_content="<p>Hello from HotDog ✅</p>",
+#     )
+
+#     return jsonify({
+#         "message": "sent",
+#         "sendgrid_status": status
+#     }), 200
