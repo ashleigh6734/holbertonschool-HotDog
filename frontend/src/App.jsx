@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useContext } from "react";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 
@@ -14,13 +15,16 @@ import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
 import ReviewDemo from "./pages/ReviewDemo.jsx";
+import { AuthContext } from "./context/AuthContext.jsx";
 
 export default function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
       <Header />
         {/* Grace Header here */}
-        <Avatar user={{}} />
+        <Avatar user={user} />
 
         <Routes>
           <Route path="/register" element={<Register />} />
