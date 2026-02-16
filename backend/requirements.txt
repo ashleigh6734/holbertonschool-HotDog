@@ -4,3 +4,5 @@ Flask-CORS
 Flask-bcrypt
 flask-jwt-extended
 sendgrid
+python-dotenv # make sure env vars loaded
+certifi

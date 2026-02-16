@@ -129,30 +129,51 @@ class AppointmentService:
         appointment = db.session.get(Appointment, appointment_id)
         if not appointment:
             return None
+        
         if appointment.status == AppointmentStatus.CANCELLED:
             raise ValueError("Cannot confirm a cancelled appointment")
+        
         #  if already confirmed and emailed then do nothing
         if appointment.status == AppointmentStatus.CONFIRMED and appointment.confirmation_sent_at:
             return appointment
         # change status to confirmed
         appointment.status = AppointmentStatus.CONFIRMED
         
-        # get owner's email through relationship chain
-        owner = appointment.pet.owner
-        if not owner or not getattr(owner, "email", None):
-            raise ValueError("Owner email not found")
+        # get owner's details sourcing from pet model
+        owner = appointment.pet.owner if appointment.pet else None
+        # get owner's email
+        to_email = getattr(owner, "email", None) if owner else None
+        if not to_email:
+            raise ValueError("Owner email not found for this appointment")
+        # create owner_name variable and assign owner to it which souces from appointment.pet.owner above
+        owner_name = f"{owner.first_name}" if owner else "there"
+        # display-friendly date/time (stored UTC, but shown as Day DD/MM/YYYY HH:MM UTC)
+        dt_display = appointment.date_time.strftime("%a %d/%m/%Y %H:%M UTC")
 
+        # get provider's details
+        provider = appointment.service_provider
+        if not provider or not provider.name or not provider.address or not provider.phone or not provider.email:
+            return None
+        provider_name = provider.name
+        provider_address = provider.address
+        provider_phone = provider.phone
+        provider_email = provider.email
+        
         # email template
         subject = "Your appointment is confirmed."
         html = f"""
-        <p>Hello!</p>
-        <p>Your appointment is confirmed. Thanks for choosing HotDog 💙</p>
+        <p>Hello {owner_name}!</p>
+        <p>Your appointment is confirmed. Please find details as below:</p>
         <ul>
-            <li>When: {appointment.date_time.isformat()}</li>
-            <li>Service: {appointment.service_type.value if hasattr(appointment.service_type, "value") else appointment.service_type}</li>
-            <li>Status: {appointment.status.value}</li>
+            <li><strong>When: </strong>{dt_display}</li>
+            <li><strong>With:</strong> {provider_name}</li>
+            <li><strong>Address:</strong> {provider_address}</li>
+            <li><strong>Phone:</strong> {provider_phone}</li>
+            <li><strong>Email:</strong> {provider_email}</li>
+            <li><strong>Service:</strong> {appointment.service_type.value if hasattr(appointment.service_type, "value") else appointment.service_type}</li>
+            <li><strong>Status:</strong> {appointment.status.value}</li>
         </ul>
-        <p>See you soon!</p>
+        <p>Thanks for choosing HotDog 💙<br>See you soon!</p>
         """
         
         if appointment.confirmation_sent_at is None:
