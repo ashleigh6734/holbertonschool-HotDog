@@ -4,6 +4,8 @@ import FormLabel from "../../components/Form/FormLabel";
 import FormNav from "../../components/Form/FormNav";
 import SuccessToast from "../../components/toasts/successToast";
 import ConfirmModal from "../../components/modals/ConfirmModal";
+import Header from "../../components/Header/Header.jsx";
+import "../../components/Header/Header.css";
 import "./UserProfile.css";
 import "../../styles/common.css";
 
