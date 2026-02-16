@@ -32,7 +32,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
-          {/* Private routes - Protected */}
+          {/* Private routes - commented out for now to avoid redirects */}
           {/* <Route element={<ProtectedRoute />}> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/booking" element={<Booking />} />
