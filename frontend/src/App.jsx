@@ -16,6 +16,7 @@ import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
 import ReviewDemo from "./pages/ReviewDemo.jsx";
 import { AuthContext } from "./context/AuthContext.jsx";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
 export default function App() {
   const { user } = useContext(AuthContext);
@@ -27,15 +28,19 @@ export default function App() {
         <Avatar user={user} />
 
         <Routes>
+          {/* Public routes */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit individual pet
-          <Route path="/pets" element={<AllPets />} /> // all pets
-          <Route path="/user" element={<UserProfile />} />
-          <Route path="/appointments" element={<Appointments />} />
+          {/* Private routes - Protected */}
+          {/* <Route element={<ProtectedRoute />}> */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/edit-pet/:petId" element={<EditPetDetails />} /> //edit individual pet
+            <Route path="/pets" element={<AllPets />} /> // all pets
+            <Route path="/user" element={<UserProfile />} />
+            <Route path="/appointments" element={<Appointments />} />
+          {/* </Route> */}
           {/* more pages coming ... */}
         </Routes>
 
