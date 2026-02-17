@@ -5,7 +5,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #e9ecf0;
+  background-color: white;
 }
 
 .appointment-container {
@@ -69,4 +69,66 @@
   padding: 0rem 1rem;
   min-height: 3rem;
   align-content: center;
+}
+
+.bookings-container {
+  /* display: flex;
+  flex-direction: column; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+.time-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 40px);
+  gap: 0.5rem;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-button {
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: lightgray;
+  color: #1f3a5f;
+}
+
+.action-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.action-btn-format {
+  width: 80px;
+  max-height: 30px;
+  border-radius: 10px;
+  padding: 3px;
+  text-align: center;
+  border: none;
+}
+
+.grey-btn {
+  background-color: lightgray;
+}
+
+.navy-btn {
+  background-color: #1f3a5f;
+  color: #ffc72c;
+}
+
+.active-btn {
+  background-color: #ffc72c;
 }
