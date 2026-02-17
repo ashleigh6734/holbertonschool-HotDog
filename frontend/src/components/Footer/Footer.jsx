@@ -1,14 +1,16 @@
 import React from "react";
-import "./Footer.css";
+import "./components/Footer/Footer.css";
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
 
-        <div className="footer-logo">
-          <div className="logo-placeholder"></div>
-        </div>
+          <img
+            src="../../assets/logo/hotdog_logo_blue_background.svg"
+            alt="HotDog Logo"
+            className="footer-logo"
+          />
 
         <div className="footer-columns">
           <ul className="footer-links">
