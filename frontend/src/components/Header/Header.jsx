@@ -17,8 +17,8 @@ function Header({ isLoggedIn }) {
         {isLoggedIn ? <UserHeader /> : <GuestHeader />}
       </nav>
 
-
-      {/* profile icon*/}
+      {/* EMILY, I'M HERE*/}
+      {/* profile icon */}
       {isLoggedIn ? (
         <img
           src="../../assets/icons/account-profile.png"
