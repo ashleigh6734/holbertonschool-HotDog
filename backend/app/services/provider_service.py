@@ -1,5 +1,7 @@
+from sqlalchemy import func
 from app.extensions import db
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService as ProviderServiceModel
+from app.models.review import Review
 from datetime import time
 
 class ServiceProviderService:
@@ -106,3 +108,42 @@ class ServiceProviderService:
     
         db.session.commit()
         return provider
+    
+    @staticmethod
+    def get_top_rated_providers(limit=6):
+        """
+        Fetches providers sorted by average rating (highest first).
+        Only includes providers with at least one review.
+        """
+        # 1. Query the database for Provider, Avg Rating, and Count
+        results = db.session.query(
+            ServiceProvider,
+            func.avg(Review.rating).label('avg_rating'),
+            func.count(Review.id).label('review_count')
+        ).join(Review, ServiceProvider.reviews) \
+         .group_by(ServiceProvider.id) \
+         .order_by(func.avg(Review.rating).desc()) \
+         .limit(limit) \
+         .all()
+
+        # 2. Format the output cleanly
+        top_rated = []
+        for provider, avg_rating, count in results:
+            
+            # Get the main service to show on the dashboard card
+            main_service = "General"
+            if provider.services and len(provider.services) > 0:
+                main_service = provider.services[0].service_type.value
+
+            provider_data = {
+                "id": provider.id,
+                "name": provider.name,
+                "address": provider.address,
+                # Round to 1 decimal place (e.g., 4.7)
+                "rating": round(avg_rating, 1), 
+                "review_count": count,
+                "main_service": main_service
+            }
+            top_rated.append(provider_data)
+
+        return top_rated
