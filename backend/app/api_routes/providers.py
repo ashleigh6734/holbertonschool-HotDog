@@ -54,6 +54,25 @@ def get_providers():
         for p in providers
     ]), 200
 
+# =====================
+# GET TOP RATED PROVIDERS (DASHBOARD)
+# =====================
+@providers_bp.route("/top-rated", methods=["GET"])
+def get_top_rated():
+    """
+    Returns the top 6 highest-rated providers for the user dashboard.
+    """
+    try:
+        # Fetch the top 6 providers
+        top_providers = ServiceProviderService.get_top_rated_providers(limit=6)
+        
+        return jsonify({
+            "count": len(top_providers),
+            "providers": top_providers
+        }), 200
+    except Exception as e:
+        # In production, log this error
+        return jsonify({"error": "Failed to fetch top rated providers"}), 500
 
 # =====================
 # GET SINGLE PROVIDER
