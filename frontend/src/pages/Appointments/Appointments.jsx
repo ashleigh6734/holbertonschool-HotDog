@@ -5,6 +5,13 @@ import DateStep from "./DateStep";
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(null); // store selected date
 
+  // DUMMY AVAILABLE TIME SLOTS
+  const dummyTimes = {
+    "2026-02-01": ["9:00AM", "10:30AM"],
+    "2026-02-17": ["1:00PM", "2:30PM", "4:00PM"],
+    "2026-02-18": ["9:30AM", "11:00AM", "3:30PM"],
+  };
+
   return (
     <div className="appointment-page">
       <div className="appointment-container">
