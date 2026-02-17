@@ -1,27 +1,39 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import GuestHeader from "./GuestHeader";
+import UserHeader from "./UserHeader";
 import "./Header.css";
 
-function Header() {
+function Header({ isLoggedIn }) {
   return (
-    <header>
-      <h1>HotDog</h1>
-
+    <header> 
+      {/* Logo */}
+      <img 
+        src="../../assets/logo/hotdog_logo_yellow_background.svg" alt="HotDog Logo" 
+        className="hotdog-logo"
+      />
+      
+      {/* Navigation */}
       <nav>
-        <ul className="nav-links">
-          <li><a href="/">List Your Practice</a></li>
-          <li><a href="/About">About Us</a></li>
-          <li><a href="/Services">Services</a></li>
-        </ul>
+        {isLoggedIn ? <UserHeader /> : <GuestHeader />}
       </nav>
 
-      <div className="access-btn">
-        <button className="login">Login</button>
-        <button className="signup">Sign Up</button>
-      </div>
+
+      {/* profile icon*/}
+      {isLoggedIn ? (
+        <img
+          src="../../assets/icons/account-profile.png"
+          alt="Profile"
+          className="profile-icon"
+        />
+      ) : (
+        <div className="access-btn">
+          <button className="login">Login</button>
+          <button className="signup">Sign Up</button>
+        </div>
+      )}
 
     </header>
   );
 }
 
 export default Header;
-
