@@ -76,6 +76,7 @@
   flex-direction: column; */
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
 }
 
 .date-container {
@@ -87,9 +88,17 @@
 }
 
 .time-container {
-  display: flex;
-  flex-direction: row;
-  max-width: 400px;
-  width: 100%;
-  height: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 40px);
+  gap: 0.5rem;
+  margin-top: 10px;
+}
+
+.time-button {
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffc72c;
+  color: #1f3a5f;
 }
