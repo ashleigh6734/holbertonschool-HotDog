@@ -3,7 +3,7 @@ import "./Appointments.css";
 import DateStep from "./DateStep";
 
 export default function Appointments() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null); // store selected date
 
   return (
     <div className="appointment-page">
