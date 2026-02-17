@@ -9,6 +9,9 @@ export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
+  const [isActive, setIsActive] = useState(false);
+  console.log(isActive, "debug");
+  console.log(selectedTime, "selectedTime");
 
   useEffect(() => {
     const fetchAvailableTimes = async () => {
@@ -39,7 +42,7 @@ export default function Appointments() {
         : [];
       const timeSlot = dateSlot.slots ? dateSlot.slots : [];
       setAvailableTimes(timeSlot);
-      setSelectedTime("");
+      setSelectedTime(""); //set selectedTime back to nothing when user clicks on a new date
     };
     fetchAvailableTimes();
   }, [selectedDate]);
@@ -87,7 +90,8 @@ export default function Appointments() {
             </div>
             <div className="time-container">
               <TimeStep
-                className="time-button"
+                onSelect={setIsActive}
+                className={isActive ? "active-btn time-button" : "time-button"}
                 onClick={setSelectedTime}
                 times={availableTimes}
               />
@@ -96,8 +100,8 @@ export default function Appointments() {
           </div>
           {selectedTime != "" && (
             <div className="action-btn-container">
-              <button>Cancel</button>
-              <button>Book</button>
+              <button className="action-btn-format grey-btn">Cancel</button>
+              <button className="action-btn-format navy-btn">Book</button>
             </div>
           )}
         </div>

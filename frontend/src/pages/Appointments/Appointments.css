@@ -93,12 +93,42 @@
   grid-template-rows: repeat(6, 40px);
   gap: 0.5rem;
   margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .time-button {
   height: 30px;
   border: none;
   border-radius: 10px;
-  background-color: #ffc72c;
+  background-color: lightgray;
   color: #1f3a5f;
+}
+
+.action-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.action-btn-format {
+  width: 80px;
+  max-height: 30px;
+  border-radius: 10px;
+  padding: 3px;
+  text-align: center;
+  border: none;
+}
+
+.grey-btn {
+  background-color: lightgray;
+}
+
+.navy-btn {
+  background-color: #1f3a5f;
+  color: #ffc72c;
+}
+
+.active-btn {
+  background-color: #ffc72c;
 }
