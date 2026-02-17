@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Appointments.css";
-import "./DateStep.jsx";
+import DateStep from "./DateStep";
 
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -43,7 +43,9 @@ export default function Appointments() {
         <div className="bookings">
           <div className="bookings-banner">Make a booking</div>
           <div className="booking-container">
-            <DateStep value={selectedDate} onChange={setSelectedDate} />
+            <div className="date-container">
+              <DateStep value={selectedDate} onChange={setSelectedDate} />
+            </div>
           </div>
         </div>
         /* PLACEHOLDER FOR REVIEWS */
