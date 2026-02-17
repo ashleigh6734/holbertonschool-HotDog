@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Appointments.css";
 import DateStep from "./DateStep";
+import TimeStep from "./TimeStep";
 
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(null); // store selected date
+  const [availableTimes, setAvailableTimes] = useState([]);
 
-  // DUMMY AVAILABLE TIME SLOTS
-  const dummyTimes = {
-    "2026-02-01": ["9:00AM", "10:30AM"],
-    "2026-02-17": ["1:00PM", "2:30PM", "4:00PM"],
-    "2026-02-18": ["9:30AM", "11:00AM", "3:30PM"],
-  };
+  useEffect(() => {
+    const fetchAvailableTimes = async () => {
+      // DUMMY AVAILABLE TIME SLOTS
+      const dummyTimes = [
+        { date: "2026-02-01", slots: ["9:00AM", "10:30AM"] },
+        { date: "2026-02-17", slots: ["1:00PM", "2:30PM", "4:00PM"] },
+        { date: "2026-02-18", slots: ["9:30AM", "11:00AM", "3:30PM"] },
+      ];
+      // Fetch available time slots based on selectedDate
+      // if selectedDate is in the dummyTimes, return those slots, otherwise return an empty array
+      if (selectedDate === null) return null;
+      const formattedDate = selectedDate.format("YYYY-MM-DD");
+      console.log(formattedDate, "debug");
+      const dateSlot = dummyTimes.find((d) => d.date === formattedDate);
+      setAvailableTimes(dateSlot.slots);
+    };
+    fetchAvailableTimes();
+  }, [selectedDate]);
 
   return (
     <div className="appointment-page">
@@ -53,6 +67,12 @@ export default function Appointments() {
             <div className="date-container">
               <DateStep value={selectedDate} onChange={setSelectedDate} />
             </div>
+            <div className="time-container">
+              {availableTimes.map((item) => (
+                <TimeStep time={item} />
+              ))}
+            </div>
+            {/* <p>{JSON.stringify(selectedDate)}</p> */}
           </div>
         </div>
         /* PLACEHOLDER FOR REVIEWS */
