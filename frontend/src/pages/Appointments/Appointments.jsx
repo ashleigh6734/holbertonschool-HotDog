@@ -1,7 +1,10 @@
+import { useState } from "react";
 import "./Appointments.css";
 import "./DateStep.jsx";
 
 export default function Appointments() {
+  const [selectedDate, setSelectedDate] = useState(null);
+
   return (
     <div className="appointment-page">
       <div className="appointment-container">
@@ -39,7 +42,9 @@ export default function Appointments() {
         </div>
         <div className="bookings">
           <div className="bookings-banner">Make a booking</div>
-          <DateStep />
+          <div className="booking-container">
+            <DateStep value={selectedDate} onChange={setSelectedDate} />
+          </div>
         </div>
         /* PLACEHOLDER FOR REVIEWS */
       </div>
