@@ -3,7 +3,7 @@ import DesexingImage from "../../assets/images/portrait-happy-couple-home-with-d
 import DentalCare from "../../assets/images/vet-is-checking-cat-s-teeth.jpg";
 import NailTrimingImage from "../../assets/images/51531.jpg";
 
-const cardDetails = [
+const card_Data = [
   {
     id: 1,
     img: VetConsultationsImage,
@@ -27,4 +27,4 @@ const cardDetails = [
 
 ];
 
-export default cardDetails;
+export default card_Data;
