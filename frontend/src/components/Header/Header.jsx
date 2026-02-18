@@ -3,12 +3,17 @@ import GuestHeader from "./GuestHeader";
 import UserHeader from "./UserHeader";
 import "./Header.css";
 
+//images
+import logoHeader from "../../assets/logo/hotdog_logo_yellow background.svg";
+import profileIcon from "../../assets/icons/account-profile.png";
+
 function Header({ isLoggedIn }) {
   return (
     <header> 
       {/* Logo */}
       <img 
-        src="../../assets/logo/hotdog_logo_yellow_background.svg" alt="HotDog Logo" 
+        src={logoHeader}
+        alt="HotDog Logo" 
         className="hotdog-logo"
       />
       
@@ -21,7 +26,7 @@ function Header({ isLoggedIn }) {
       {/* profile icon */}
       {isLoggedIn ? (
         <img
-          src="../../assets/icons/account-profile.png"
+          src={profileIcon}
           alt="Profile"
           className="profile-icon"
         />
