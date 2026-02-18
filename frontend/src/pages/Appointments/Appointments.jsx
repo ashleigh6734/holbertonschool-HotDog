@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Appointments.css";
 import DateStep from "./DateStep";
 import TimeStep from "./TimeStep";
+import { ReviewList } from "../../components/Review";
 
 export default function Appointments() {
   const today = dayjs();
@@ -105,6 +106,7 @@ export default function Appointments() {
             </div>
           )}
         </div>
+        <ReviewList />
         /* PLACEHOLDER FOR REVIEWS */
       </div>
     </div>
