@@ -1,6 +1,6 @@
 import React from "react";
 import "./Footer.css";
-
+import yellowLogo from "../../assets/logo/hotdog_logo_blue_background.svg";
 
 function Footer() {
   return (
@@ -8,7 +8,7 @@ function Footer() {
       <div className="footer-container">
 
           <img
-            src="../../assets/logo/hotdog_logo_blue_background.svg"
+            src={yellowLogo}
             alt="HotDog Logo"
             className="footer-logo"
           />
