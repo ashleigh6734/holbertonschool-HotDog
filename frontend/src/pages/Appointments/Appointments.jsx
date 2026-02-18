@@ -10,37 +10,36 @@ export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
-  const [isActive, setIsActive] = useState(false);
   // Dummy reviews data - this would come from backend API
   const [reviews, setReviews] = useState([
     {
-      userName: 'John Smith',
-      review: 'Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.',
-      rating: 5
+      userName: "John Smith",
+      review:
+        "Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.",
+      rating: 5,
     },
     {
-      userName: 'Sarah Johnson',
-      review: 'Good experience overall. Clean facility and friendly team. Highly recommended!',
-      rating: 4
+      userName: "Sarah Johnson",
+      review:
+        "Good experience overall. Clean facility and friendly team. Highly recommended!",
+      rating: 4,
     },
     {
-      userName: 'Mike Davis',
-      review: 'Excellent veterinary care. They took time to explain everything clearly.',
-      rating: 5
-    }
+      userName: "Mike Davis",
+      review:
+        "Excellent veterinary care. They took time to explain everything clearly.",
+      rating: 5,
+    },
   ]);
   const [hasAppointment] = useState(true); // This is to check if user has completed appointment
-
-  console.log(isActive, "debug");
-  console.log(selectedTime, "selectedTime");
 
   useEffect(() => {
     const fetchAvailableTimes = async () => {
       // DUMMY AVAILABLE TIME SLOTS
       const dummyTimes = [
-        { date: "2026-02-01", slots: ["9:00AM", "10:30AM"] },
+        { date: "2026-02-19", slots: ["9:00AM", "10:30AM"] },
         {
-          date: "2026-02-17",
+          date: "2026-02-20",
           slots: [
             "9:00AM",
             "9:30AM",
@@ -52,7 +51,7 @@ export default function Appointments() {
             "5:00PM",
           ],
         },
-        { date: "2026-02-18", slots: ["9:30AM", "11:00AM", "3:30PM"] },
+        { date: "2026-02-21", slots: ["9:30AM", "11:00AM", "3:30PM"] },
       ];
       // Fetch available time slots based on selectedDate
       // if selectedDate is in the dummyTimes, return those slots, otherwise return an empty array
@@ -70,15 +69,15 @@ export default function Appointments() {
 
   const handleAddReview = (reviewData) => {
     // This function should send the review data to the backend API
-    console.log('New review submitted:', reviewData);
-    
+    console.log("New review submitted:", reviewData);
+
     // For demo purposes, add to local state
     const newReview = {
-      userName: 'Current User', // This would come from logged-in user
+      userName: "Current User", // This would come from logged-in user
       review: reviewData.comment,
-      rating: reviewData.rating
+      rating: reviewData.rating,
     };
-    
+
     setReviews([...reviews, newReview]);
   };
 
@@ -125,23 +124,28 @@ export default function Appointments() {
             </div>
             <div className="time-container">
               <TimeStep
-                onSelect={setIsActive}
-                className={isActive ? "active-btn time-button" : "time-button"}
-                onClick={setSelectedTime}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
                 times={availableTimes}
               />
             </div>
-            {/* <p>{JSON.stringify(selectedDate)}</p> */}
           </div>
           {selectedTime != "" && (
             <div className="action-btn-container">
-              <button className="action-btn-format grey-btn">Cancel</button>
+              <button
+                className="action-btn-format grey-btn"
+                onClick={() => {
+                  setSelectedTime("");
+                }}
+              >
+                Cancel
+              </button>
               <button className="action-btn-format navy-btn">Book</button>
             </div>
           )}
         </div>
         {/* Reviews section - only show if user has completed appointment */}
-        <ReviewList 
+        <ReviewList
           title="All Things Pets Clinic Reviews"
           reviews={reviews}
           hasAppointment={hasAppointment}

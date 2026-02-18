@@ -10,11 +10,12 @@
 
 .appointment-container {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: auto 450px auto;
   max-width: 800px;
   width: 100%;
   /* outline: solid; */
   min-height: 100%;
+  height: auto;
 }
 
 .provider-content {

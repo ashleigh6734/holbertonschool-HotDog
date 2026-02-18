@@ -5,7 +5,11 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 export default function DateStep({ value, onChange }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar value={value} onChange={(newDate) => onChange(newDate)} />
+      <DateCalendar
+        value={value}
+        onChange={(newDate) => onChange(newDate)}
+        disablePast={true}
+      />
     </LocalizationProvider>
   );
 }
