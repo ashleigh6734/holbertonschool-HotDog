@@ -11,6 +11,26 @@ export default function Appointments() {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
   const [isActive, setIsActive] = useState(false);
+  // Dummy reviews data - this would come from backend API
+  const [reviews, setReviews] = useState([
+    {
+      userName: 'John Smith',
+      review: 'Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.',
+      rating: 5
+    },
+    {
+      userName: 'Sarah Johnson',
+      review: 'Good experience overall. Clean facility and friendly team. Highly recommended!',
+      rating: 4
+    },
+    {
+      userName: 'Mike Davis',
+      review: 'Excellent veterinary care. They took time to explain everything clearly.',
+      rating: 5
+    }
+  ]);
+  const [hasAppointment] = useState(true); // This is to check if user has completed appointment
+
   console.log(isActive, "debug");
   console.log(selectedTime, "selectedTime");
 
@@ -47,6 +67,20 @@ export default function Appointments() {
     };
     fetchAvailableTimes();
   }, [selectedDate]);
+
+  const handleAddReview = (reviewData) => {
+    // This function should send the review data to the backend API
+    console.log('New review submitted:', reviewData);
+    
+    // For demo purposes, add to local state
+    const newReview = {
+      userName: 'Current User', // This would come from logged-in user
+      review: reviewData.comment,
+      rating: reviewData.rating
+    };
+    
+    setReviews([...reviews, newReview]);
+  };
 
   return (
     <div className="appointment-page">
@@ -106,8 +140,13 @@ export default function Appointments() {
             </div>
           )}
         </div>
-        <ReviewList />
-        /* PLACEHOLDER FOR REVIEWS */
+        {/* Reviews section - only show if user has completed appointment */}
+        <ReviewList 
+          title="All Things Pets Clinic Reviews"
+          reviews={reviews}
+          hasAppointment={hasAppointment}
+          onAddReview={handleAddReview}
+        />
       </div>
     </div>
   );
