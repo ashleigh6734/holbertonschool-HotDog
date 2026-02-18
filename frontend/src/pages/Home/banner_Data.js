@@ -1,3 +1,5 @@
+import BannerImage from "../../assets/images/Banner-image.png";
+
 const bannerDetails = [
   {
     id: 1,
@@ -6,7 +8,7 @@ const bannerDetails = [
   },
   {
     id: 2,
-    img: "../../assets/images/Banner-image.png",
+    img: BannerImage,
     showButton: false,
   },
 ];

@@ -15,11 +15,9 @@ import Login from "./pages/Login/Login.jsx";
 import EditPetDetails from "./pages/PetProfile/editPetDetails.jsx";
 import PetProfile from "./pages/PetProfile/PetProfile.jsx";
 import Register from "./pages/Register/Register.jsx";
-import Avatar from "./components/avatar/Avatar.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
-import ReviewDemo from "./pages/ReviewDemo.jsx";
 import { AuthContext } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 

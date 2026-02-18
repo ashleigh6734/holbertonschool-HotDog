@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import fetch_Data from "./fetch_Data";
 import service_Lists from "./services_Lists";
+import "./searchbar.css";
 
 
 function SearchButton({ onServiceChange, onSearchChange, onSearch, service, searchValue }) {

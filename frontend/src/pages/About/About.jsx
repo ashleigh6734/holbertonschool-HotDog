@@ -11,7 +11,7 @@ import PracticeTestimonials_Card from "./PracticeTestimonials_Card.jsx";
 import practicetestimonials_Data from "./practicetestimonials_Data.js";
 import AvatarImages from "../../components/AvatarImages/AvatarImages.jsx";
 import "./aboutStyle.css";
-import "../../styles/avatarStyle.css";
+import "../../components/AvatarImages/avatarStyle.css";
 
 
 // Function for main banner
