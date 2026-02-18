@@ -10,28 +10,29 @@ export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
-  const [isActive, setIsActive] = useState(false);
   // Dummy reviews data - this would come from backend API
   const [reviews, setReviews] = useState([
     {
-      userName: 'John Smith',
-      review: 'Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.',
-      rating: 5
+      userName: "John Smith",
+      review:
+        "Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.",
+      rating: 5,
     },
     {
-      userName: 'Sarah Johnson',
-      review: 'Good experience overall. Clean facility and friendly team. Highly recommended!',
-      rating: 4
+      userName: "Sarah Johnson",
+      review:
+        "Good experience overall. Clean facility and friendly team. Highly recommended!",
+      rating: 4,
     },
     {
-      userName: 'Mike Davis',
-      review: 'Excellent veterinary care. They took time to explain everything clearly.',
-      rating: 5
-    }
+      userName: "Mike Davis",
+      review:
+        "Excellent veterinary care. They took time to explain everything clearly.",
+      rating: 5,
+    },
   ]);
   const [hasAppointment] = useState(true); // This is to check if user has completed appointment
 
-  console.log(isActive, "debug");
   console.log(selectedTime, "selectedTime");
 
   useEffect(() => {
@@ -70,15 +71,15 @@ export default function Appointments() {
 
   const handleAddReview = (reviewData) => {
     // This function should send the review data to the backend API
-    console.log('New review submitted:', reviewData);
-    
+    console.log("New review submitted:", reviewData);
+
     // For demo purposes, add to local state
     const newReview = {
-      userName: 'Current User', // This would come from logged-in user
+      userName: "Current User", // This would come from logged-in user
       review: reviewData.comment,
-      rating: reviewData.rating
+      rating: reviewData.rating,
     };
-    
+
     setReviews([...reviews, newReview]);
   };
 
@@ -133,13 +134,20 @@ export default function Appointments() {
           </div>
           {selectedTime != "" && (
             <div className="action-btn-container">
-              <button className="action-btn-format grey-btn">Cancel</button>
+              <button
+                className="action-btn-format grey-btn"
+                onClick={() => {
+                  setSelectedTime("");
+                }}
+              >
+                Cancel
+              </button>
               <button className="action-btn-format navy-btn">Book</button>
             </div>
           )}
         </div>
         {/* Reviews section - only show if user has completed appointment */}
-        <ReviewList 
+        <ReviewList
           title="All Things Pets Clinic Reviews"
           reviews={reviews}
           hasAppointment={hasAppointment}
