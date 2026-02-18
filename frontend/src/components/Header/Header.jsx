@@ -12,7 +12,6 @@ import profileIcon from "../../assets/icons/account-profile.png";
 function Header({ isLoggedIn }) {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-<<<<<<< HEAD
     <header> 
       {/* Logo */}
       <img 
@@ -20,27 +19,14 @@ function Header({ isLoggedIn }) {
         alt="HotDog Logo" 
         className="hotdog-logo"
       />
-      
-=======
-    <header>
-      <img src={logoHeader} alt="HotDog Logo" className="hotdog-logo" />
 
->>>>>>> origin/main
       {/* Navigation */}
       <nav>{isLoggedIn ? <UserHeader /> : <GuestHeader />}</nav>
 
       {/* EMILY, I'M HERE*/}
 
       {isLoggedIn ? (
-<<<<<<< HEAD
-        <img
-          src={profileIcon}
-          alt="Profile"
-          className="profile-icon"
-        />
-=======
         <Avatar />
->>>>>>> origin/main
       ) : (
         <div className="access-btn">
           <button className="login">Login</button>
