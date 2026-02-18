@@ -1,30 +1,29 @@
-import VetConsultationsImage from "../../assets/images/2149314374.jpg";
-import DesexingImage from "../../assets/images/portrait-happy-couple-home-with-dog.jpg";
-import DentalCare from "../../assets/images/vet-is-checking-cat-s-teeth.jpg";
-import NailTrimingImage from "../../assets/images/51531.jpg";
+import ManWithCat from "../../assets/images/man-with-cat.jpg";
 
 const card_Data = [
   {
     id: 1,
-    img: VetConsultationsImage,
+    img: ManWithCat,
     title: "Vet Consultations"
   },
   {
     id: 2,
-    img: DesexingImage,
+    img: ManWithCat,
     title: "Desexing & Surgical Procedures"
   },
   {
     id: 3,
-    img: DentalCare,
+    img: ManWithCat,
     title: "Dental Care"
   },
   {
     id: 6,
-    img: NailTrimingImage,
+    img: ManWithCat,
     title: "Nail Trimming"
   },
 
 ];
 
 export default card_Data;
+
+import ManWithCat from "../../assets/images/man-with-cat.jpg";
