@@ -125,13 +125,11 @@ export default function Appointments() {
             </div>
             <div className="time-container">
               <TimeStep
-                onSelect={setIsActive}
-                className={isActive ? "active-btn time-button" : "time-button"}
-                onClick={setSelectedTime}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
                 times={availableTimes}
               />
             </div>
-            {/* <p>{JSON.stringify(selectedDate)}</p> */}
           </div>
           {selectedTime != "" && (
             <div className="action-btn-container">
