@@ -10,9 +10,6 @@ export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
-  const [isActive, setIsActive] = useState(false);
-  console.log(isActive, "debug");
-  console.log(selectedTime, "selectedTime");
 
   useEffect(() => {
     const fetchAvailableTimes = async () => {
@@ -91,13 +88,11 @@ export default function Appointments() {
             </div>
             <div className="time-container">
               <TimeStep
-                onSelect={setIsActive}
-                className={isActive ? "active-btn time-button" : "time-button"}
-                onClick={setSelectedTime}
+                selectedTime={selectedTime}
+                setSelectedTime={setSelectedTime}
                 times={availableTimes}
               />
             </div>
-            {/* <p>{JSON.stringify(selectedDate)}</p> */}
           </div>
           {selectedTime != "" && (
             <div className="action-btn-container">
