@@ -2,7 +2,7 @@
 
 export default function TimeStep({ times, setSelectedTime, selectedTime }) {
   if (times.length === 0) {
-    return "No times available for this date";
+    return "No times available";
   }
 
   return times.map((time) => {

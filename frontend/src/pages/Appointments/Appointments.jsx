@@ -33,15 +33,13 @@ export default function Appointments() {
   ]);
   const [hasAppointment] = useState(true); // This is to check if user has completed appointment
 
-  console.log(selectedTime, "selectedTime");
-
   useEffect(() => {
     const fetchAvailableTimes = async () => {
       // DUMMY AVAILABLE TIME SLOTS
       const dummyTimes = [
-        { date: "2026-02-01", slots: ["9:00AM", "10:30AM"] },
+        { date: "2026-02-19", slots: ["9:00AM", "10:30AM"] },
         {
-          date: "2026-02-17",
+          date: "2026-02-20",
           slots: [
             "9:00AM",
             "9:30AM",
@@ -53,7 +51,7 @@ export default function Appointments() {
             "5:00PM",
           ],
         },
-        { date: "2026-02-18", slots: ["9:30AM", "11:00AM", "3:30PM"] },
+        { date: "2026-02-21", slots: ["9:30AM", "11:00AM", "3:30PM"] },
       ];
       // Fetch available time slots based on selectedDate
       // if selectedDate is in the dummyTimes, return those slots, otherwise return an empty array
