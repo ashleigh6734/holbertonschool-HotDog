@@ -1,7 +1,10 @@
+import WomanWithDog from "../../assets/images/woman-with-dog.jpg";
+import ManWithCat from "../../assets/images/man-with-cat.jpg";
+
 const bannerSlideShow = [
   {
     id: 1,
-    img: "../../assets/images/woman-with-dog.jpg",
+    img: WomanWithDog,
     name: "Anastasie Stevens",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
@@ -9,7 +12,7 @@ const bannerSlideShow = [
   },
   {
     id: 2,
-    img: "../../assets/images/man-with-cat.jpg",
+    img: ManWithCat,
     name: "Monique Tims",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
