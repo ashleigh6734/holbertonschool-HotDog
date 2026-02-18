@@ -8,8 +8,8 @@ import BannerSlideShow from "./BannerSlideShow.jsx";
 import bannerSlideShow_Data from "./bannerSlideShow_Data.js";
 import AvatarImages from "../../components/AvatarImages/AvatarImages.jsx";
 import "./homeStyle.css";
-import "../../styles/searchbar.css";
-import "../../styles/avatarStyle.css";
+import "../../components/SearchBar/searchbar.css";
+import "../../components/AvatarImages/avatarStyle.css";
 
 // Function service cards
 function createCard(props) {
