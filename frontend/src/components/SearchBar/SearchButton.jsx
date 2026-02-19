@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import fetch_Data from "./fetch_Data";
-import service_Lists from "./services_Lists";
+import providername_Data from "./providername_Data.js";
+import service_Lists from "./services_Lists.js";
 import "./searchbar.css";
 
 
@@ -48,12 +48,6 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     onSearchChange?.("");
 
     setTimeout(() => setShowServices(false), 0);
-
-    // if (location.pathname === "/") {
-    //   const params = new URLSearchParams();
-    //   params.append("search", service);
-    //   navigate(`/search?${params.toString()}`);
-    // }
   };
   
 
@@ -73,7 +67,7 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
       return;
     }
 
-    const filtered = fetch_Data.filter((provider) =>
+    const filtered = providername_Data.filter((provider) =>
       provider.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -89,12 +83,6 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     onServiceChange?.("");
 
     setShowProviders(false);
-
-    // if (location.pathname === "/") {
-    //   const params = new URLSearchParams();
-    //   params.append("provider", provider);
-    //   navigate(`/services?${params.toString()}`)
-    // }
   };
 
   //search button
@@ -150,10 +138,9 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
         <button className="search-btn" onClick={handleSearch}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
             viewBox="0 0 16 16"
             fill="currentColor"
+            className="searchbar-icon"
           >
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
           </svg>
