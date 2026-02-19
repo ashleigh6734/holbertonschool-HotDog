@@ -8,54 +8,55 @@ body {
 }
 
 /* Page container */
-.container {
-  max-width: 1000px;
-  min-height: 100vh;
-  margin: 50px auto; 
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* center all child content horizontally */
+.home-container {
+  max-width: 1000px !important;
+  min-height: 100vh !important;
+  margin: 50px auto !important; 
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* center all child content horizontally */
 }
 
-.heading {
+.home-heading {
   font-weight: 900;
   font-size: 35px;
   text-align: center;
   color: #1f3a5f;
-  font-family: "nunito";
+  font-family: "nunito" !important;
   line-height: 1.2;
 }
 
-.subheading {
-  font-size: 20px;
+.home-subheading {
+  font-size: 20px !important;
   font-weight: 500;
   text-align: center;
   color: #333333;
   margin-top: 15px;
   margin-bottom: 40px;
-  font-family: "Open Sans";
+  font-family: "Open Sans" !important;
   line-height: 1.2;
 }
 
-/* Card */
-.title-card-container {
+
+/* TOP SERACHES CARD SECTION*/
+.topsearchs-title-card-container {
   width: 100%;
   display: flex;
   justify-content: flex-start;
 }
 
-.card-title {
+.topsearchs-card-title {
   font-family: "Open Sans";
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 700;
   text-align: left;
   color: #1f3a5f;
   margin-top: 25px;
   margin-bottom: 10px;
 }
 
-.cards-container {
+.topsearchs-cards-container {
   display: grid;
   width: 100%;
   height: auto;
@@ -65,7 +66,7 @@ body {
   margin-bottom: 50px;
 }
 
-.card {
+.topsearchs-card {
   border-radius: 25px;
   position: relative;
   width: 100%;
@@ -81,18 +82,18 @@ body {
   transition: 0.3s;
 }
 
-.overlay {
+.topsearchs-overlay {
   border-radius: 0 0 25px 25px;
   height: 40px;
   width: 100%;
-  background-color: rgba(31, 58, 95, 0.9);
+  background-color: rgba(31, 58, 95, 0.9) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 10px; 
 }
 
-.title {
+.topsearchs-servicestitle {
   font-family: "Open Sans";
   font-size: 15px;
   color: white;
@@ -101,11 +102,12 @@ body {
   line-height: 1.2;
 }
 
-/* Card Banner */
-.banner-container {
+
+/* FASTER BOOKINGS BANNER SECTION*/
+.home-banner-container {
   display: grid;
   width: 100%;
-  height: 500px;
+  height: 350px;
   max-height: 500px;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
@@ -114,7 +116,7 @@ body {
   overflow: hidden;
 }
 
-.banner-card {
+.home-banner-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -122,7 +124,7 @@ body {
   justify-content: center;
 }
 
-.banner-h1 {
+.home-banner-h1 {
   color: #1f3a5f;
   font-family: "nunito";
   font-weight: 900;
@@ -133,13 +135,13 @@ body {
   line-height: 1.2;
 }
 
-.banner-img {
-  width: 60%;
+.home-banner-img {
+  width: 65%;
   height: auto;
   object-fit: cover;
 }
 
-.banner-btn {
+.home-banner-btn {
   background-color: #1f3a5f;
   color: #FFC72C;
   font-family: "Open Sans";
@@ -154,13 +156,13 @@ body {
   margin-left: 50px;
 }
 
-.banner-btn:hover {
+.home-banner-btn:hover {
   color: white;
   background-color: #16325b;
 }
 
-/* Silde show */
-.banner-slide-showcontainer {
+/* ADVERT CARD */
+.banner-advert-container {
   width: 100vw;
   max-width: none;
   height: 400px;
@@ -173,7 +175,7 @@ body {
   background-color: #e8eaee;
 }
 
-.bannershow-card {
+.advert-banner-card {
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -183,7 +185,23 @@ body {
   box-sizing: border-box;
 }
 
-.bannershow-h1 {
+.advert-name {
+  color: #1f3a5f;
+  font-family: "nunito";
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.advert-description {
+  color: #333333;
+  font-family: "Open Sans";
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.advert-h1 {
   color: #1f3a5f;
   font-family: "nunito";
   font-weight: 900;
@@ -191,7 +209,7 @@ body {
   line-height: 1.2;
 }
 
-.banner-subtitle {
+.advert-subtitle {
   color: #FFC72C;
   font-family: "nunito";
   font-weight: 900;
@@ -200,7 +218,7 @@ body {
   line-height: 1.2;
 }
 
-.allthingspetsbanner-btn {
+.advert-btn {
   background-color: #1f3a5f;
   color: #FFC72C;
   font-family: "Open Sans";
@@ -214,24 +232,8 @@ body {
   transition: 0.2;
 }
 
-.allthingspetsbanner-btn:hover {
+.advert-btn:hover {
   color: white;
   background-color: #16325b;
-}
-
-.banner-name {
-  color: #1f3a5f;
-  font-family: "nunito";
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.banner-description {
-  color: #333333;
-  font-family: "Open Sans";
-  font-size: 15px;
-  line-height: 1.5;
-  max-width: 300px;
 }
 

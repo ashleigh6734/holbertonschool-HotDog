@@ -4,8 +4,8 @@ import Card from "./Card.jsx";
 import card_Data from "./card_Data.js";
 import CardBanner from "./CardBanner.jsx";
 import banner_Data from "./banner_Data.js";
-import BannerSlideShow from "./BannerSlideShow.jsx";
-import bannerSlideShow_Data from "./bannerSlideShow_Data.js";
+import Advert from "./Advert.jsx";
+import advert_Data from "./advert_Data.js";
 import AvatarImages from "../../components/AvatarImages/AvatarImages.jsx";
 import "./homeStyle.css";
 import "../../components/SearchBar/searchbar.css";
@@ -35,9 +35,9 @@ function bannerCard(props) {
 }
 
 // Function slide show banners
-function slideShow(props) {
+function advertBanner(props) {
   return (
-    <BannerSlideShow
+    <Advert
     key={props.id}
     img={props.img}
     name={props.name}
@@ -52,37 +52,36 @@ function slideShow(props) {
 
 function Home() {
   return (
-    <div className="container">
+    <div className="home-container">
       {/* Main Heading */}
-      <h1 className="heading">
+      <h1 className="home-heading">
           Book your next healthcare <br /> visit in just a few clicks
       </h1>
 
       {/* Subheading */}
-      <p className="subheading">
+      <p className="home-subheading">
         Everything your pet needs, all in one platform
       </p>
 
       <SearchBar />
 
-      {/* Top Searches Title */}
-      <div className="title-card-container">
-        <p className="card-title">Top Searches</p>
+      {/* Top Searches Card Section */}
+      <div className="topsearchs-title-card-container">
+        <p className="topsearchs-card-title">Top Searches</p>
       </div>
 
-      {/* Card Grid */}
-      <div className="cards-container">
+      <div className="topsearchs-cards-container">
         {card_Data.map(createCard)}
       </div>
 
-      {/* Banner Section */}
-      <div className="banner-container">
+      {/* Faster Booking Banner Section */}
+      <div className="home-banner-container">
         {banner_Data.map(bannerCard)}
       </div>
 
-      {/* Banner Slide Show */}
-      <div className="banner-slide-showcontainer">
-        {bannerSlideShow_Data.map(slideShow)}
+      {/* Advert card */}
+      <div className="banner-advert-container">
+        {advert_Data.map(advertBanner)}
       </div>
 
 
