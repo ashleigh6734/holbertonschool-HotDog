@@ -21,34 +21,31 @@ import Appointments from "./pages/Appointments/Appointments.jsx";
 import { AuthContext } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
-export default function App({ isLoggedIn }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // const { user } = useContext(AuthContext);
+export default function App() {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
-
-      {/* <Avatar user={user} /> */}
-
-      {/* <Avatar user={{}} /> */}
+      <Header />
 
       <main className="main">
         <Routes>
+          {/* Public Routes */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/booking" element={<Booking />} />
-          {/* //edit individual pet */}
-          <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
-          {/* // all pets */}
-          <Route path="/pets" element={<AllPets />} />
-          <Route path="/user" element={<UserProfile />} />
-          <Route path="/appointments" element={<Appointments />} />
+          {/* Private routes - commented out for now to avoid redirects || DO NOT DELETE */}
+          {/* <Route element={<ProtectedRoute />}> */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/booking" element={<Booking />} />
+            {/* //edit individual pet */}
+            <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
+            {/* // all pets */}
+            <Route path="/pets" element={<AllPets />} />
+            <Route path="/user" element={<UserProfile />} />
+            <Route path="/appointments" element={<Appointments />} />
+          {/* </Route> */}
           {/* more pages coming ... */}
           <Route path="*" element={<h1>404 — Route Not Found</h1>} />
         </Routes>
