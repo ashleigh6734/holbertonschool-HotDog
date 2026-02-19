@@ -64,12 +64,19 @@
 }
 
 .bookings-banner {
+  display: flex;
   max-width: 100%;
   background-color: #ffc72c;
   font-size: 1.5rem;
   padding: 0rem 1rem;
   min-height: 3rem;
   align-content: center;
+}
+
+.bookings-banner h3 {
+  color: #1f3a5f;
+  align-self: center;
+  margin-bottom: 0;
 }
 
 .bookings-container {

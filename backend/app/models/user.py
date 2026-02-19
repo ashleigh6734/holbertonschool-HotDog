@@ -61,7 +61,7 @@ class User(db.Model):
     
     @validates('phone_number')
     def validate_phone_number(self, key, value):
-        if value is None:
+        if not value:
             return None
         if not isinstance(value, str):
             raise TypeError("Phone number must be a string")
