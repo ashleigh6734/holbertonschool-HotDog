@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './editPetDetails.css';
+import './EditPetDetails.css';
 
 export default function EditPetDetails() {
   const { petId } = useParams();

@@ -12,7 +12,7 @@ import Services from "./pages/ServicesPage/Services.jsx";
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Login from "./pages/Login/Login.jsx";
-import EditPetDetails from "./pages/PetProfile/editPetDetails.jsx";
+import EditPetDetails from "./pages/PetProfile/EditPetDetails.jsx";
 import PetProfile from "./pages/PetProfile/PetProfile.jsx";
 import Register from "./pages/Register/Register.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
