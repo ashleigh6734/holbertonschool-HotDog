@@ -1,4 +1,4 @@
-const fetch_Data = [
+const providername_Data = [
 
   "Green Cross",
   "Lort Smith",
@@ -7,4 +7,4 @@ const fetch_Data = [
   
 ];
 
-export default fetch_Data;
+export default providername_Data;

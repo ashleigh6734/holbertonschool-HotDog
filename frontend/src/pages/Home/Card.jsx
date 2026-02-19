@@ -3,13 +3,13 @@ import React from "react";
 function Card(props) {
   return (
     <div
-      className="card"
+      className="topsearchs-card"
       style={{
         backgroundImage: `url(${props.img})`,
       }}
     >
-      <div className="overlay">
-        <p className="title">{props.title}</p>
+      <div className="topsearchs-overlay">
+        <p className="topsearchs-servicestitle ">{props.title}</p>
       </div>
     </div>
   );

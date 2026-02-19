@@ -1,7 +1,9 @@
+import HolbertonLogo from "../../assets/icons/holberton_logo.png";
+
 const sponsored_Data = [
   {
     id: 1,
-    img: "../../assets/icons/holberton_logo.png",
+    img: HolbertonLogo,
   },
   {
     id: 2,

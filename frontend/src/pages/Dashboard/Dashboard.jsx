@@ -1,12 +1,12 @@
 import './Dashboard.css';
 
-import DashboardHero from '../../components/Dashboard/DashboardHero';
-import DashboardSearch from '../../components/Dashboard/DashboardSearch';
-import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents';
-import DashboardBanner from '../../components/Dashboard/DashboardBanner';
-import PetStylistReviews from '../../components/Dashboard/PetStylistReviews';
+import DashboardHero from '../../components/dashboard/DashboardHero.jsx';
+import DashboardSearch from '../../components/dashboard/DashboardSearch.jsx';
+import TopServicesAndEvents from '../../components/dashboard/TopServicesAndEvents.jsx';
+import DashboardBanner from '../../components/dashboard/DashboardBanner.jsx';
+import PetStylistReviews from '../../components/dashboard/PetStylistReviews.jsx';
 
-import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData';
+import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData.js';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 

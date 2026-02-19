@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import Days from "../../assets/icons/calendar-icon.png";
+import Time from "../../assets/icons/clockicon.png";
+import Locationicon from "../../assets/icons/location.png";
 
 function ServicesFilters_Card(props) {
   return (
@@ -13,13 +15,21 @@ function ServicesFilters_Card(props) {
 
         <div className="service-header-text">
           <p className="service-name">{props.title}</p>
-          <p className="service-address">{props.address}</p>
+          <div className="location-container">
+            <div className="address-and-icon">
+              <img src={Locationicon} width="20" />
+            </div>
+
+            <div className="address-and-icon">
+              <p className="service-address">{props.address}</p>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Opening hours*/}
-      <div className="service-info-row">
-        <div className="service-header-text">
+      <div className="service-info-row middle-row">
+        <div className="AvgRating">
           <p className="label">Avg rating</p>
           <p className="rating">{props.avgrating}</p>
         </div>
@@ -28,8 +38,17 @@ function ServicesFilters_Card(props) {
           <p className="opening-container">
             ● Opening hours
           </p>
-          <p className="service-name">{props.days}</p>
-          <p className="service-address">{props.times}</p>
+          <div className="opening-hours">
+            <div className="hours-items">
+              <img src={Days} width="20" />
+              <img src={Time} width="20" />
+            </div>
+
+            <div className="hours-items">
+              <p className="service-days">{props.days}</p>
+              <p className="service-times">{props.times}</p>
+            </div>
+          </div>
         </div>
       </div>
 

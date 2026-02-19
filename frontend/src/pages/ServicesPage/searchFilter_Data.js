@@ -1,7 +1,12 @@
+import GreenCross from "../../assets/images/greencross-logo.jpg";
+import LortSmith from "../../assets/images/lortsmith-icon.png";
+import PetStock from "../../assets/images/petstock-logo.png";
+import RSPCA from "../../assets/images/rspca-logo.svg";
+
 const searchFilter_Data = [
   {
     id: 1,
-    img: "../../assets/images/greencross-logo.jpg",
+    img: GreenCross,
     title: "Green Cross",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",
@@ -13,7 +18,7 @@ const searchFilter_Data = [
   },
   {
     id: 2,
-    img: "../../assets/images/lortsmith-icon.png",
+    img: LortSmith,
     title: "Lort Smith",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",
@@ -25,7 +30,7 @@ const searchFilter_Data = [
   },
   {
     id: 3,
-    img: "../../assets/images/petstock-logo.png",
+    img: PetStock,
     title: "Pet Stock",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",
@@ -37,7 +42,7 @@ const searchFilter_Data = [
   },
   {
     id: 4,
-    img: "../../assets/images/rspca-logo.svg",
+    img: RSPCA,
     title: "South Paws Specialty Surgery For Animals",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",
@@ -49,7 +54,7 @@ const searchFilter_Data = [
   },
   {
     id: 5,
-    img: "../../assets/images/greencross-logo.jpg",
+    img: GreenCross,
     title: "Green Cross",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",
@@ -61,7 +66,7 @@ const searchFilter_Data = [
   },
   {
     id: 6,
-    img: "../../assets/images/lortsmith-icon.png",
+    img: LortSmith,
     title: "Lort Smith",
     address: "2/4 Here St, South Melbourne",
     days: "Monday - Saturday",

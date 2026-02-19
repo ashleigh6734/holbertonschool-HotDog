@@ -1,27 +1,27 @@
 import React from "react";
 import Avatar from "../../components/AvatarImages/AvatarImages.jsx";
 
-function BannerSlideShow(props) {
+function Advert(props) {
   return (
-    <div className="bannershow-card">
+    <div className="advert-banner-card">
       {/* Profile */}
       {props.img && <Avatar img={props.img} />}
       {/* Banner slide show */}
       {props.name && props.description && (
         <>
-          <p className="banner-name">{props.name}</p>
-          <p className="banner-description">{props.description}</p>
+          <p className="advert-name">{props.name}</p>
+          <p className="advert-description">{props.description}</p>
         </>
       )}
 
       {/* banner Heading */}
       {props.title && props.subtitle && (
         <>
-          <h1 className="bannershow-h1">{props.title}</h1>
-          <p className="banner-subtitle">{props.subtitle}</p>
+          <h1 className="advert-h1">{props.title}</h1>
+          <p className="advert-subtitle">{props.subtitle}</p>
 
           {props.showButton && (
-          <button className="allthingspetsbanner-btn">Book Us Now!</button>
+          <button className="advert-btn">Book Us Now!</button>
           )}
         </>
       )}
@@ -32,5 +32,5 @@ function BannerSlideShow(props) {
 }
 
 
-export default BannerSlideShow;
+export default Advert;
 

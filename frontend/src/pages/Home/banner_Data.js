@@ -1,4 +1,4 @@
-import BannerImage from "../../assets/images/Banner-image.png";
+import HomeBannerImage from "../../assets/images/Banner-image.png";
 
 const bannerDetails = [
   {
@@ -8,7 +8,7 @@ const bannerDetails = [
   },
   {
     id: 2,
-    img: BannerImage,
+    img: HomeBannerImage,
     showButton: false,
   },
 ];

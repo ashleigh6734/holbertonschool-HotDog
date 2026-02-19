@@ -1,7 +1,7 @@
 import WomanWithDog from "../../assets/images/woman-with-dog.jpg";
 import ManWithCat from "../../assets/images/man-with-cat.jpg";
 
-const bannerSlideShow = [
+const advert_Data = [
   {
     id: 1,
     img: WomanWithDog,
@@ -26,4 +26,4 @@ const bannerSlideShow = [
   },
 ];
 
-export default bannerSlideShow;
+export default advert_Data;

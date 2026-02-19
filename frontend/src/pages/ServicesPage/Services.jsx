@@ -19,13 +19,11 @@ function Services() {
 
   const [serviceType, setServiceType] = useState(initialService);
   const [query, setQuery] = useState(initialProvider);
-  const [filteredData, setFilteredData] = useState(searchFilter_Data);
-  // const [query, setQuery] = useState("");
-  // const [serviceType, setServiceType] = useState("");
-  // const [filteredData, setFilteredData] = useState(searchFilter_Data);
 
-  // const handleSearchChange = (value) => setQuery(value);
-  // const handleServiceChange = (value) => setServiceType(value);
+  const [inputService, setInputService] = useState(initialService);
+  const [inputQuery, setInputQuery] = useState(initialProvider);
+
+  const [filteredData, setFilteredData] = useState(searchFilter_Data);
 
 
   useEffect(() => {
@@ -37,38 +35,29 @@ function Services() {
       const matchesService = serviceType ? item.servicetype === serviceType : true;
       return matchesQuery && matchesService;
     });
+
     setFilteredData(results);
   }, [query, serviceType]);
 
-  const handleServiceChange = (value) => setServiceType(value);
-  const handleSearchChange = (value) => setQuery(value);
+  const handleServiceChange = (value) => setInputService(value);
+  const handleSearchChange = (value) => setInputQuery(value);
 
   const handleSearch = () => {
+    setServiceType(inputService);
+    setQuery(inputQuery);
+
     const params = new URLSearchParams();
-    if (serviceType) params.append("service", serviceType);
-    if (query) params.append("provider", query);
+    if (inputService) params.append("service", inputService);
+    if (inputQuery) params.append("provider", inputQuery);
     navigate(`/services?${params.toString()}`);
   };
 
 
-  // const handleSearch = () => {
-  //   const keyword = query.toLowerCase();
-  //   const results = searchFilter_Data.filter((item) => {
-  //     const matchesQuery =
-  //       item.title.toLowerCase().includes(keyword) ||
-  //       item.address.toLowerCase().includes(keyword);
-  //     const matchesService = serviceType ? item.servicetype === serviceType : true;
-  //     return matchesQuery && matchesService;
-  //   });
-
-  //   setFilteredData(results);
-  // };
-
   return (
     <div className="service-container">
       <SearchButton
-        service={serviceType}
-        searchValue={query}
+        service={inputService}
+        searchValue={inputQuery}
         onServiceChange={handleServiceChange}
         onSearchChange={handleSearchChange}
         onSearch={handleSearch}
