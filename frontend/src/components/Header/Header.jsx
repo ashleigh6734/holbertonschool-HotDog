@@ -1,27 +1,24 @@
-import { Link } from "react-router-dom";
 import GuestHeader from "./GuestHeader";
 import UserHeader from "./UserHeader";
 import Avatar from "../avatar/Avatar.jsx";
 import "./Header.css";
 
 import blueLogo from "../../assets/logo/hotdog_logo_blue_background.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.jsx";
 
-function Header({ isLoggedIn }) {
+function Header() {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) return null; // prevents flicker
+
   return (
     <header>
       <img src={blueLogo} alt="HotDog Logo" className="hotdog-logo" />
 
-      <nav>{isLoggedIn ? <UserHeader /> : <GuestHeader />}</nav>
-
-      {/* FOR EMILY */}
-      {isLoggedIn ? (
-        <Avatar />
-      ) : (
-        <div className="access-btn">
-          <button className="login">Login</button>
-          <button className="signup">Sign Up</button>
-        </div>
-      )}
+      <div className="header-content">
+        {user ? <UserHeader /> : <GuestHeader />}
+      </div>
     </header>
   );
 }
