@@ -87,6 +87,7 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
 
   //search button
   const handleSearch = () => {
+    if (!serviceInput.trim() && !providerInput.trim()) return;
     if (onSearch) onSearch();
 
     if (location.pathname === "/") {
