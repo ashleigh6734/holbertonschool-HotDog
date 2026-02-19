@@ -68,7 +68,7 @@ npm install # or yarn install
 ```bash
 npm run dev
 ```
-> The frontend server should now be running at: http://localhost:3000
+> The frontend server should now be running at: http://localhost:5173
 
 
 ## License
