@@ -81,7 +81,7 @@
   top: calc(100% + 6px); 
   left: 0;
   width: 37%;
-  max-width: 100%; 
+  max-width: 105%; 
   height: auto;
   margin-left: 100px;
   padding: 10px;
@@ -92,6 +92,13 @@
   list-style: none;
   z-index: 999;
 }
+
+/* .service-results:hover {
+  width: 60%;
+  margin-left: 50px;
+  left: 0;
+  transition: all 0.2 ease;
+} */
 
 .service-item {
   padding: 10px 10px;
