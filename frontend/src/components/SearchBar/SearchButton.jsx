@@ -105,6 +105,29 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
 
       {/* Search bar */}
       <div className="search-bar">
+
+        <div>
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`dropdown-icon ${showServices ? "open" : ""}`}
+          onClick={() => {
+              if (showServices) setShowServices(false);
+              else {
+                setServiceResults(service_Lists);
+                setShowServices(true);
+              }
+            }}
+          >
+            <polyline points="6 9 12 3 18 9"></polyline>
+          </svg>
+        </div>
+        
+
         {/* Service selector */}
         <input
           type="text"

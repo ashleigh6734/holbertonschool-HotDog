@@ -146,13 +146,16 @@
 }
 
 
-
-.service-item {
-  font-size: 15;
-  padding: 10px 10px;
+.dropdown-icon {
+  justify-content: center;
+  color: #333333;
+  margin-left: 15px;
   cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 
