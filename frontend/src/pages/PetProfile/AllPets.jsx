@@ -1,7 +1,27 @@
 import "./AllPets.css";
 import PetCard from "../../components/cards/PetCard";
+import { useEffect, useState } from "react";
+import { getMyPets } from "../../api/pet";
 
 export default function AllPets() {
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.log("No token found");
+      return;
+    }
+
+    getMyPets(token)
+      .then(data => {
+        console.log("Fetched pets:", data);
+        setPets(data);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
     <div className="all-pets-container">
       <div className="all-pets-content">
@@ -9,12 +29,14 @@ export default function AllPets() {
           <h2>Your Pet(s)</h2>
         </div>
         <div className="all-pets-actions">
-          <div>All(3)</div>
+          <div>All({pets.length})</div>
           <button className="btn-yellow">+ Add Pet(s)</button>
         </div>
-        <PetCard />
-        <PetCard />
-        <PetCard />
+
+        {pets.map(pet => (
+          <PetCard key={pet.id} pet={pet} />
+        ))}
+
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ export default function DateStep({ value, onChange }) {
         value={value}
         onChange={(newDate) => onChange(newDate)}
         disablePast={true}
+        // sx={{ width: "100%" }}
       />
     </LocalizationProvider>
   );
