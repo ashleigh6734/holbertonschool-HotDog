@@ -4,12 +4,19 @@ import "./Appointments.css";
 import DateStep from "./DateStep";
 import TimeStep from "./TimeStep";
 import { ReviewList } from "../../components/Review";
+import { useParams } from "react-router-dom";
+import LocationIcon from "../../assets/icons/geo-alt.svg";
+import EmailIcon from "../../assets/icons/email.svg";
+import PhoneIcon from "../../assets/icons/phone.svg";
 
 export default function Appointments() {
+  const providerID = useParams();
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
+  const [provider, setProvider] = useState({});
+
   // Dummy reviews data - this would come from backend API
   const [reviews, setReviews] = useState([
     {
@@ -33,6 +40,28 @@ export default function Appointments() {
   ]);
   const [hasAppointment] = useState(true); // This is to check if user has completed appointment
 
+  // FETCH SERVICE PROVIDER DETAILS
+  useEffect(() => {
+    const fetchProviderDetails = async () => {
+      const API_URL = `http://127.0.0.1:5000/api/providers/${providerID.id}`;
+      try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setProvider(result);
+        console.log(result, "result");
+      } catch (error) {
+        console.error(error.message, "error");
+      }
+    };
+    fetchProviderDetails();
+  }, [providerID]);
+
+  // FETCH AVAILABLE TIME SLOTS
   useEffect(() => {
     const fetchAvailableTimes = async () => {
       // DUMMY AVAILABLE TIME SLOTS
@@ -85,39 +114,31 @@ export default function Appointments() {
     <div className="appointment-page">
       <div className="appointment-container">
         <div className="provider-content">
-          <h1>All Things Pets Clinic</h1>
+          <h1>{provider.name}</h1>
           <div className="provider-img-container">
-            <img
-              src="src/assets/images/vet-clinic-1.jpg"
-              alt="provider-image"
-            />
+            <img src={provider.img} alt="provider-image" />
           </div>
 
           <div className="provider-info">
             <div className="provider-address flex-gap">
-              <img src="src/assets/icons/geo-alt.svg" alt="Bootstrap" />
-              <span>12 South Street, Melbourne 3000</span>
+              <img src={LocationIcon} alt="Bootstrap" />
+              <span>{provider.address}</span>
             </div>
             <div className="provider-email flex-gap">
-              <img src="src/assets/icons/email.svg" alt="Bootstrap" />
-              <span> allthingspetsclinic@businessemail.com</span>
+              <img src={EmailIcon} alt="Bootstrap" />
+              <span> {provider.email}</span>
             </div>
             <div className="provider-number flex-gap">
-              <img src="src/assets/icons/phone.svg" alt="Bootstrap" />
-              <span>0427 272 783</span>
+              <img src={PhoneIcon} alt="Bootstrap" />
+              <span>{provider.phone}</span>
             </div>
           </div>
-          <div className="provider-details">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
-            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-            consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
-            velit esse
-          </div>
+          <div className="provider-details">{provider.description}</div>
         </div>
         <div className="bookings">
-          <div className="bookings-banner">Make a booking</div>
+          <div className="bookings-banner">
+            <h3>Make a booking</h3>
+          </div>
           <div className="bookings-container">
             <div className="date-container">
               <DateStep value={selectedDate} onChange={setSelectedDate} />
@@ -146,7 +167,8 @@ export default function Appointments() {
         </div>
         {/* Reviews section - only show if user has completed appointment */}
         <ReviewList
-          title="All Things Pets Clinic Reviews"
+          title={`${provider.name} Reviews`}
+          Reviews
           reviews={reviews}
           hasAppointment={hasAppointment}
           onAddReview={handleAddReview}

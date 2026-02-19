@@ -22,7 +22,6 @@ import { AuthContext } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
 export default function App() {
-
   return (
     <>
       <Header />
@@ -37,14 +36,14 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           {/* Private routes - commented out for now to avoid redirects || DO NOT DELETE */}
           {/* <Route element={<ProtectedRoute />}> */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/booking" element={<Booking />} />
-            {/* //edit individual pet */}
-            <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
-            {/* // all pets */}
-            <Route path="/pets" element={<AllPets />} />
-            <Route path="/user" element={<UserProfile />} />
-            <Route path="/appointments" element={<Appointments />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/booking" element={<Booking />} />
+          {/* //edit individual pet */}
+          <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
+          {/* // all pets */}
+          <Route path="/pets" element={<AllPets />} />
+          <Route path="/user" element={<UserProfile />} />
+          <Route path="/appointments/:id" element={<Appointments />} />
           {/* </Route> */}
           {/* more pages coming ... */}
           <Route path="*" element={<h1>404 — Route Not Found</h1>} />
