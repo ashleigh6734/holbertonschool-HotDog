@@ -61,7 +61,7 @@ def get_my_pets():
 # =====================
 # GET SINGLE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["GET"])
+@pets_bp.route("/<pet_id>", methods=["GET"])
 @jwt_required()
 def get_pet(pet_id):
     owner_id = get_jwt_identity()
@@ -87,7 +87,7 @@ def get_pet(pet_id):
 # =====================
 # UPDATE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["PATCH"])
+@pets_bp.route("/<pet_id>", methods=["PATCH"])
 @jwt_required()
 def update_pet(pet_id):
     owner_id = get_jwt_identity()
@@ -108,7 +108,7 @@ def update_pet(pet_id):
 # =====================
 # DELETE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["DELETE"])
+@pets_bp.route("/<pet_id>", methods=["DELETE"])
 @jwt_required()
 def delete_pet(pet_id):
     owner_id = get_jwt_identity()
