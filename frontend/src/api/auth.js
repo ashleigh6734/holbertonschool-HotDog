@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/users/";
+const API_URL = "http://127.0.0.1:5000/api/users/";
 
 export async function registerUser(userData) {
     const response = await fetch(`${API_URL}`, {
@@ -18,7 +18,7 @@ export async function registerUser(userData) {
     return data;
 }
 
-const API_LOGIN_URL = "http://localhost:5000/api/auth/login"
+const API_LOGIN_URL = "http://127.0.0.1:5000/api/auth/login"
 
 export async function loginUser(credentials) {
     const response = await fetch(`${API_LOGIN_URL}`, {
