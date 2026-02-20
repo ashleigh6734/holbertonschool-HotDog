@@ -11,7 +11,6 @@ import PhoneIcon from "../../assets/icons/phone.svg";
 
 export default function Appointments() {
   const providerID = useParams();
-  console.log(providerID, "providerID");
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
