@@ -11,6 +11,7 @@ import PhoneIcon from "../../assets/icons/phone.svg";
 
 export default function Appointments() {
   const providerID = useParams();
+  console.log(providerID, "providerID");
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today); // store selected date
   const [availableTimes, setAvailableTimes] = useState([]);
@@ -43,7 +44,7 @@ export default function Appointments() {
   // FETCH SERVICE PROVIDER DETAILS
   useEffect(() => {
     const fetchProviderDetails = async () => {
-      const API_URL = `http://127.0.0.1:5000/api/providers/${providerID.id}`;
+      const API_URL = `http://localhost:5000/api/providers/${providerID.id}`;
       try {
         const response = await fetch(API_URL);
 
