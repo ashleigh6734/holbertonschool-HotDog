@@ -1,10 +1,10 @@
 import './Dashboard.css';
 
-import DashboardHero from '../../components/dashboard/DashboardHero.jsx';
-import DashboardSearch from '../../components/dashboard/DashboardSearch.jsx';
-import TopServicesAndEvents from '../../components/dashboard/TopServicesAndEvents.jsx';
-import DashboardBanner from '../../components/dashboard/DashboardBanner.jsx';
-import PetStylistReviews from '../../components/dashboard/PetStylistReviews.jsx';
+import DashboardHero from '../../components/Dashboard/DashboardHero.jsx';
+import DashboardSearch from '../../components/Dashboard/DashboardSearch.jsx';
+import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents.jsx';
+import DashboardBanner from '../../components/Dashboard/DashboardBanner.jsx';
+import PetStylistReviews from '../../components/Dashboard/PetStylistReviews.jsx';
 
 import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData.js';
 import { useContext } from 'react';
