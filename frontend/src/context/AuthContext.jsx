@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const API_BASE = "http://localhost:5000";
+    const API_BASE = "http://127.0.0.1:5000";
     const navigate = useNavigate();
 
     // fetch logged in user using token, to persist session
