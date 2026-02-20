@@ -1,0 +1,239 @@
+body {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 0 16px;
+}
+
+/* Page container */
+.home-container {
+  max-width: 1000px !important;
+  min-height: 100vh !important;
+  margin: 50px auto !important; 
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important; /* center all child content horizontally */
+}
+
+.home-heading {
+  font-weight: 900;
+  font-size: 35px;
+  text-align: center;
+  color: #1f3a5f;
+  font-family: "nunito" !important;
+  line-height: 1.2;
+}
+
+.home-subheading {
+  font-size: 20px !important;
+  font-weight: 500;
+  text-align: center;
+  color: #333333;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  font-family: "Open Sans" !important;
+  line-height: 1.2;
+}
+
+
+/* TOP SERACHES CARD SECTION*/
+.topsearchs-title-card-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.topsearchs-card-title {
+  font-family: "Open Sans";
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  color: #1f3a5f;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.topsearchs-cards-container {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.topsearchs-card {
+  border-radius: 25px;
+  position: relative;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* keep title at the bottom overlay */
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: white;
+  transition: 0.3s;
+}
+
+.topsearchs-overlay {
+  border-radius: 0 0 25px 25px;
+  height: 40px;
+  width: 100%;
+  background-color: rgba(31, 58, 95, 0.9) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px; 
+}
+
+.topsearchs-servicestitle {
+  font-family: "Open Sans";
+  font-size: 15px;
+  color: white;
+  margin: 0;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+/* FASTER BOOKINGS BANNER SECTION*/
+.home-banner-container {
+  display: grid;
+  width: 100%;
+  height: 350px;
+  max-height: 500px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 50px;
+  background-color: #FFC72C;
+  overflow: hidden;
+}
+
+.home-banner-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  justify-content: center;
+}
+
+.home-banner-h1 {
+  color: #1f3a5f;
+  font-family: "nunito";
+  font-weight: 900;
+  text-align: left;
+  font-size: 35px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.home-banner-img {
+  width: 65%;
+  height: auto;
+  object-fit: cover;
+}
+
+.home-banner-btn {
+  background-color: #1f3a5f;
+  color: #FFC72C;
+  font-family: "Open Sans";
+  font-size: 15px;
+  font-weight: 600;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  transition: all 0.2s ease;
+  transition: 0.2;
+  margin-left: 50px;
+}
+
+.home-banner-btn:hover {
+  color: white;
+  background-color: #16325b;
+}
+
+/* ADVERT CARD */
+.banner-advert-container {
+  width: 100vw;
+  max-width: none;
+  height: 400px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 0 !important;
+  margin: 30px calc(50% - 50vw) 0;
+  padding: 0 max(50px, calc((100vw - 1000px) / 2));
+  background-color: #e8eaee;
+}
+
+.advert-banner-card {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.advert-name {
+  color: #1f3a5f;
+  font-family: "nunito";
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.advert-description {
+  color: #333333;
+  font-family: "Open Sans";
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.advert-h1 {
+  color: #1f3a5f;
+  font-family: "nunito";
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.advert-subtitle {
+  color: #FFC72C;
+  font-family: "nunito";
+  font-weight: 900;
+  font-size: 35px;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.advert-btn {
+  background-color: #1f3a5f;
+  color: #FFC72C;
+  font-family: "Open Sans";
+  font-size: 15px;
+  font-weight: 600;
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  transition: all 0.2s ease;
+  transition: 0.2;
+}
+
+.advert-btn:hover {
+  color: white;
+  background-color: #16325b;
+}
+

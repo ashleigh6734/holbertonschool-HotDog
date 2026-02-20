@@ -1,18 +1,22 @@
 import './Dashboard.css';
 
-import DashboardHero from '../../components/Dashboard/DashboardHero';
-import DashboardSearch from '../../components/Dashboard/DashboardSearch';
-import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents';
-import DashboardBanner from '../../components/Dashboard/DashboardBanner';
-import PetStylistReviews from '../../components/Dashboard/PetStylistReviews';
+import DashboardHero from '../../components/Dashboard/DashboardHero.jsx';
+import DashboardSearch from '../../components/Dashboard/DashboardSearch.jsx';
+import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents.jsx';
+import DashboardBanner from '../../components/Dashboard/DashboardBanner.jsx';
+import PetStylistReviews from '../../components/Dashboard/PetStylistReviews.jsx';
 
-import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData';
+import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData.js';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Dashboard() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="dash">
       <div className="dash-container">
-        <DashboardHero name="Annie" />
+        <DashboardHero name={user?.first_name || "User"} />
 
         <DashboardSearch
           onSearch={(query) => {

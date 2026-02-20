@@ -5,6 +5,13 @@ from app.services.pet_service import PetService
 pets_bp = Blueprint("pets", __name__, url_prefix="/api/pets")
 
 
+def format_text(value):
+    """Ensure first letter uppercase, rest lowercase."""
+    if not value:
+        return None
+    return value.strip().capitalize()
+
+
 # =====================
 # CREATE PET
 # =====================
@@ -21,10 +28,10 @@ def create_pet():
         pet = PetService.create_pet(owner_id, data)
         return jsonify({
             "id": pet.id,
-            "name": pet.name,
-            "species": pet.species.value,
-            "breed": pet.breed,
-            "gender": pet.gender.value,
+            "name": format_text(pet.name),
+            "species": format_text(pet.species.value),
+            "breed": format_text(pet.breed),
+            "gender": format_text(pet.gender.value),
             "desexed": pet.desexed,
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
@@ -47,11 +54,14 @@ def get_my_pets():
     return jsonify([
         {
             "id": pet.id,
-            "name": pet.name,
-            "species": pet.species.value,
-            "breed": pet.breed,
-            "gender": pet.gender.value,
+            "name": format_text(pet.name),
+            "species": format_text(pet.species.value),
+            "breed": format_text(pet.breed),
+            "gender": format_text(pet.gender.value),
             "desexed": pet.desexed,
+            "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
+            "weight": pet.weight,
+            "notes": pet.notes,
             "age": pet.age_display
         }
         for pet in pets
@@ -61,7 +71,7 @@ def get_my_pets():
 # =====================
 # GET SINGLE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["GET"])
+@pets_bp.route("/<pet_id>", methods=["GET"])
 @jwt_required()
 def get_pet(pet_id):
     owner_id = get_jwt_identity()
@@ -72,10 +82,10 @@ def get_pet(pet_id):
 
     return jsonify({
         "id": pet.id,
-        "name": pet.name,
-        "species": pet.species.value,
-        "breed": pet.breed,
-        "gender": pet.gender.value,
+        "name": format_text(pet.name),
+        "species": format_text(pet.species.value),
+        "breed": format_text(pet.breed),
+        "gender": format_text(pet.gender.value),
         "desexed": pet.desexed,
         "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
         "weight": pet.weight,
@@ -87,7 +97,7 @@ def get_pet(pet_id):
 # =====================
 # UPDATE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["PATCH"])
+@pets_bp.route("/<pet_id>", methods=["PATCH"])
 @jwt_required()
 def update_pet(pet_id):
     owner_id = get_jwt_identity()
@@ -108,7 +118,7 @@ def update_pet(pet_id):
 # =====================
 # DELETE PET
 # =====================
-@pets_bp.route("/<int:pet_id>", methods=["DELETE"])
+@pets_bp.route("/<pet_id>", methods=["DELETE"])
 @jwt_required()
 def delete_pet(pet_id):
     owner_id = get_jwt_identity()

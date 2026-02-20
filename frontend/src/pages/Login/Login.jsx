@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { Form, Button } from "react-bootstrap";
@@ -6,10 +6,12 @@ import FormLabel from "../../components/Form/FormLabel";
 import FormRadio from "../../components/Form/FormRadio";
 import ToggleSwitch from "../../components/buttons/ToggleSwitch";
 import { loginUser } from "../../api/auth";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
 
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   // State for form inputs and error messages
   const [formData, setFormData] = useState({
@@ -17,6 +19,7 @@ export default function Login() {
     password: ""
   })
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Handle change update
   const handleChange = (e) => {
@@ -34,10 +37,12 @@ export default function Login() {
     console.log("FORM DATA:", formData);
 
     try {
+      setLoading(true);
+      
       const response = await loginUser(formData);
 
-      // if loginUser returns a token
-        localStorage.setItem("token", response.access_token);
+      // use context login instead of manual Storage
+        login(response.access_token);
         navigate("/dashboard");
     } catch (err) {
       setError(err.message || "Login failed");

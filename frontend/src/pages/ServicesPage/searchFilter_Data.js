@@ -1,0 +1,81 @@
+import GreenCross from "../../assets/images/greencross-logo.jpg";
+import LortSmith from "../../assets/images/lortsmith-icon.png";
+import PetStock from "../../assets/images/petstock-logo.png";
+import RSPCA from "../../assets/images/rspca-logo.svg";
+
+const searchFilter_Data = [
+  {
+    id: 1,
+    img: GreenCross,
+    title: "Green Cross",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Vet Consultations",
+  },
+  {
+    id: 2,
+    img: LortSmith,
+    title: "Lort Smith",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Vet Consultations",
+  },
+  {
+    id: 3,
+    img: PetStock,
+    title: "Pet Stock",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Desexing & Surgical Procedures",
+  },
+  {
+    id: 4,
+    img: RSPCA,
+    title: "South Paws Specialty Surgery For Animals",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Dental Care",
+  },
+  {
+    id: 5,
+    img: GreenCross,
+    title: "Green Cross",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Dental Care",
+  },
+  {
+    id: 6,
+    img: LortSmith,
+    title: "Lort Smith",
+    address: "2/4 Here St, South Melbourne",
+    days: "Monday - Saturday",
+    times: "8:00am - 19:00pm",
+    avgrating: 4.5,
+    availability: "9:00 9:15 10:15 12:15",
+    booknowbtn: true,
+    servicetype: "Nail Trimming",
+  },
+];
+
+export default searchFilter_Data;

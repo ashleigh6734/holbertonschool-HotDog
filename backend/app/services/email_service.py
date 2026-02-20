@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, timezone
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import Mail, To, Email
 
 def utccurrent():
     return datetime.now(timezone.utc)
@@ -20,12 +20,17 @@ class EmailService:
             raise ValueError("Recipient email is required")
         
         message = Mail(
-            from_email=from_email,
-            to_emails=to_email,
+            from_email=Email(from_email),
+            to_emails=To(to_email),
             subject=subject,
             html_content=html_content,
         )
         
-        sg = SendGridAPIClient(api_key)
-        sg.send(message)
-        
+        response = SendGridAPIClient(api_key).send(message)
+
+        print("SENDGRID STATUS:", response.status_code)
+        print("SENDGRID BODY:", response.body)
+        print("SENDGRID HEADERS:", response.headers)
+
+        return response.status_code
+

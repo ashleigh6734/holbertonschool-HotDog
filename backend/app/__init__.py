@@ -1,5 +1,7 @@
 import os
+import certifi
 from flask import Flask
+from dotenv import load_dotenv # make sure env vars loaded
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from .config import Config
@@ -14,6 +16,9 @@ from app.api_routes.reviews import reviews_bp
 from app.api_routes.appointments import appointments_bp
 
 def create_app():
+    load_dotenv() # make sure Flask can read .env
+    os.environ["SSL_CERT_FILE"] = certifi.where()
+
     # initialise flask app
     app = Flask(__name__)
 

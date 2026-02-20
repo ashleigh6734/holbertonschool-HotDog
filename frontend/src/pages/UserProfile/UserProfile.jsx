@@ -1,9 +1,10 @@
 import { Form } from "react-bootstrap";
 import { useState } from "react";
-import FormLabel from "../../components/Form/FormLabel";
-import FormNav from "../../components/Form/FormNav";
-import SuccessToast from "../../components/toasts/successToast";
-import ConfirmModal from "../../components/modals/ConfirmModal";
+
+import FormLabel from "../../components/Form/FormLabel.jsx";
+import FormNav from "../../components/Form/FormNav.jsx";
+import SuccessToast from "../../components/toasts/SuccessToast.jsx";
+import ConfirmModal from "../../components/modals/ConfirmModal.jsx";
 import Header from "../../components/Header/Header.jsx";
 import "../../components/Header/Header.css";
 import "./UserProfile.css";
