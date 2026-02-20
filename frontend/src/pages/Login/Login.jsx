@@ -82,6 +82,9 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
           />
+          {/* Error message pops up for invalid credentials */}
+          {error && <p style={{ color: 'red'}}>{error}</p>}
+
           <Button className="login-btn" type="submit">
             Login
           </Button>

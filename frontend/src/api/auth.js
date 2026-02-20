@@ -21,6 +21,22 @@ export async function registerUser(userData) {
 const API_LOGIN_URL = "http://localhost:5000/api/auth/login";
 
 export async function loginUser(credentials) {
+    const response = await fetch(`${API_LOGIN_URL}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Invalid email or password");
+    }
+
+    return data;
+}
   const response = await fetch(`${API_LOGIN_URL}`, {
     method: "POST",
     headers: {

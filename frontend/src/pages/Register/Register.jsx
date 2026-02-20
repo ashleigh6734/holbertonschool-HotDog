@@ -34,7 +34,15 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    const phoneRegex = /^\+[1-9]\d{8,14}$/;
 
+    // if phone number is not following format
+    if (formData.phone_number && !phoneRegex.test(formData.phone_number)) {
+      setError("Phone number must be in format +61412345678");
+      return;
+    }
+
+    // if passwords do not match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -71,6 +79,9 @@ export default function Register() {
           <p className="mb-5 sub-text">
             Keep on top of your pet's appointments and create an account!{" "}
           </p>
+
+          {error && <p style={{ color: 'red'}}>{error}</p>}
+
           <Row className="mb-3">
             <FormLabel
               className="justify-left"
