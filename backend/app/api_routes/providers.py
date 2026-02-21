@@ -47,6 +47,7 @@ def get_providers():
             "name": p.name,
             "services": [s.service_type.value for s in p.services],
             "address": p.address,
+            "img_url": p.img_url,
             "opening_time": p.opening_time.strftime("%H:%M"),
             "closing_time": p.closing_time.strftime("%H:%M"),
             "slot_duration": p.slot_duration
@@ -93,6 +94,7 @@ def get_provider(provider_id):
         "address": provider.address,
         "phone": provider.phone,
         "email": provider.email,
+        "img_url": provider.img_url,
         "opening_time": provider.opening_time.strftime("%H:%M"),
         "closing_time": provider.closing_time.strftime("%H:%M"),
         "slot_duration": provider.slot_duration,
