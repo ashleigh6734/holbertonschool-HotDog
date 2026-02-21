@@ -15,6 +15,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
             "address": "123 High St, Melbourne VIC",
@@ -27,6 +28,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Bob", "last": "Groomer", "email": "bob@grooming.com"},
         "business": {
             "name": "Sparkle Paws Grooming",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
             "address": "45 Dogwood Ln, Sydney NSW",
@@ -39,6 +41,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Charlie", "last": "Walker", "email": "charlie@walks.com"},
         "business": {
             "name": "Happy Tails Dog Walking",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
             "address": "78 Park Ave, Brisbane QLD",
@@ -51,6 +54,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Diana", "last": "Trainer", "email": "diana@train.com"},
         "business": {
             "name": "Good Boy Puppy School",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
             "address": "101 Training Crt, Perth WA",
@@ -63,6 +67,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Evan", "last": "Surgeon", "email": "evan@desex.com"},
         "business": {
             "name": "Safe Hands Desexing Clinic",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
             "address": "202 Safety Rd, Adelaide SA",
@@ -75,6 +80,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Fiona", "last": "Dentist", "email": "fiona@teeth.com"},
         "business": {
             "name": "Canine Smiles Dental",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
             "address": "303 Molar St, Hobart TAS",
@@ -163,7 +169,7 @@ with app.app_context():
         provider = ServiceProvider(
             user_id=owner.id,
             name=data["business"]["name"],
-            # Removed service_type here
+            img_url=data["business"].get("img_url"),
             description=data["business"]["description"],
             address=data["business"]["address"],
             phone=data["business"]["phone"],
