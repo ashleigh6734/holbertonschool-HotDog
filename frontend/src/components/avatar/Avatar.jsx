@@ -21,6 +21,7 @@ export default function Avatar() {
       {open && (
         <div className="avatar-menu">
           <Link to="/booking" onClick={() => setOpen(false)}>Booking</Link>
+          <Link to="/manage-appointments" onClick={() => setOpen(false)}>Manage Appointments</Link>
           <Link to="/pets" onClick={() => setOpen(false)}>Pet(s)</Link>
           <Link to="/user" onClick={() => setOpen(false)}>Account</Link>
           <button 

@@ -18,6 +18,7 @@ import Register from "./pages/Register/Register.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
 import AllPets from "./pages/PetProfile/AllPets.jsx";
 import Appointments from "./pages/Appointments/Appointments.jsx";
+import ManageAppointments from "./pages/ManageAppointments/ManageAppointments.jsx";
 import { AuthContext } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/pets" element={<AllPets />} />
           <Route path="/user" element={<UserProfile />} />
           <Route path="/appointments/:id" element={<Appointments />} />
+          <Route path="/manage-appointments" element={<ManageAppointments />} />
           {/* </Route> */}
           {/* more pages coming ... */}
           <Route path="*" element={<h1>404 — Route Not Found</h1>} />
