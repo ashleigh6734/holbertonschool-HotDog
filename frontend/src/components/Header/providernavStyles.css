@@ -1,0 +1,98 @@
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
+/* html {
+  font-family: "nunito", "Open Sans";
+} */
+
+/* body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+} */
+
+/* .main {
+  margin-left: 25px;
+  padding: 20px;
+} */
+
+
+/* DONE! */
+/* .bluehotdog-logo {
+  width: 150px;
+  height: auto;
+  object-fit: cover;
+} */
+/* DONE! */
+
+
+/* Navigation */
+/* .nav-links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  background-color:#1f3a5f;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 50px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.nav-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+.nav-links li a {
+  text-decoration: none;
+  font-family: "Open Sans";
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color:  white !important;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a:hover {
+  font-weight: 700;
+  color: #ffc72c !important;
+} */
+
+
+/* DONE! */
+/* .logout {
+  width: 150px;
+  position: absolute;
+  bottom: 0;
+  background-color: #ffc72c;
+  border: 3px solid #ffc72c;
+  color: #1f3a5f;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 18px;
+  margin-bottom: 80px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.logout:hover {
+  background-color: #ffc72c;
+  border: 3px solid #ffc72c;
+  color: white;
+} */
