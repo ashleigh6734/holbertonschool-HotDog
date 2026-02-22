@@ -17,33 +17,15 @@ export default function Appointments() {
   const [selectedTime, setSelectedTime] = useState("");
   const [provider, setProvider] = useState({});
 
-  // Dummy reviews data - this would come from backend API
-  const [reviews, setReviews] = useState([
-    {
-      userName: "John Smith",
-      review:
-        "Great service! The staff was very professional and caring. My pet felt comfortable throughout the appointment.",
-      rating: 5,
-    },
-    {
-      userName: "Sarah Johnson",
-      review:
-        "Good experience overall. Clean facility and friendly team. Highly recommended!",
-      rating: 4,
-    },
-    {
-      userName: "Mike Davis",
-      review:
-        "Excellent veterinary care. They took time to explain everything clearly.",
-      rating: 5,
-    },
-  ]);
-  const [hasAppointment] = useState(true); // This is to check if user has completed appointment
+  // Start with an empty array so we don't flash dummy data before the real data loads
+  const [reviews, setReviews] = useState([]);
+  const [hasAppointment, setHasAppointment] = useState(false); 
+  const [validAppointmentId, setValidAppointmentId] = useState("");
 
   // FETCH SERVICE PROVIDER DETAILS
   useEffect(() => {
     const fetchProviderDetails = async () => {
-      const API_URL = `http://localhost:5000/api/providers/${providerID.id}`;
+      const API_URL = `/api/providers/${providerID.id}`;
       try {
         const response = await fetch(API_URL);
 
@@ -96,19 +78,106 @@ export default function Appointments() {
     fetchAvailableTimes();
   }, [selectedDate]);
 
-  const handleAddReview = (reviewData) => {
-    // This function should send the review data to the backend API
-    console.log("New review submitted:", reviewData);
+  // FETCH REAL REVIEWS FOR THIS PROVIDER (NEW!)
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const API_URL = `/api/reviews/provider/${providerID.id}`; 
+      
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch reviews: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // The "Translator": Map the backend keys to the frontend keys
+        const formattedReviews = data.map((backendReview) => ({
+          userName: backendReview.author_name,
+          review: backendReview.comment,
+          rating: backendReview.rating,
+        }));
+        
+        // Update the screen with the newly mapped data
+        setReviews(formattedReviews); 
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+    
+    fetchReviews();
+  }, [providerID]);
 
-    // For demo purposes, add to local state
-    const newReview = {
-      userName: "Current User", // This would come from logged-in user
-      review: reviewData.comment,
-      rating: reviewData.rating,
+  // 4. SUBMIT A NEW REVIEW
+  const handleAddReview = async (reviewData) => {
+    const token = localStorage.getItem("token");
+    
+    // Hardcoded for testing (Butters' completed appointment)
+    const appointmentId = validAppointmentId;
+
+    try {
+      const response = await fetch('/api/reviews/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          appointment_id: appointmentId,
+          rating: reviewData.rating,
+          comment: reviewData.comment
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✅ Review successfully sent to the database!");
+        
+        // Instantly update the UI so the user sees their new review without refreshing
+        const newReview = {
+          userName: "You", 
+          review: reviewData.comment,
+          rating: reviewData.rating,
+        };
+        setReviews([...reviews, newReview]);
+        setHasAppointment(false); // Hide the "Add a Review" button after submission
+      } else {
+        alert("❌ Backend rejected it: " + (data.error || data.msg || "Unknown error"));
+      }
+    } catch (error) {
+      console.error("Network error submitting review:", error);
+      alert("❌ Network Error. Is your Flask backend running?");
+    }
+  };
+
+  // CHECK FOR COMPLETED APPOINTMENT
+  useEffect(() => {
+    const checkAppointmentStatus = async () => {
+      try {
+        const response = await fetch('/api/appointments/list');
+        if (!response.ok) throw new Error("Failed to fetch appointments");
+
+        const data = await response.json();
+
+        // Hunt for an appointment that matches THIS provider AND is COMPLETED
+        const completedAppt = data.appointments.find(
+          (appt) => appt.provider_id === providerID.id && appt.status === "COMPLETED"
+        );
+
+        if (completedAppt) {
+          setHasAppointment(true); // Reveals the "Add a Review" button
+          setValidAppointmentId(completedAppt.id); // Saves the real ID!
+        } else {
+          setHasAppointment(false); // Hides the button if they haven't visited
+        }
+      } catch (error) {
+        console.error("Error checking appointments:", error);
+      }
     };
 
-    setReviews([...reviews, newReview]);
-  };
+    checkAppointmentStatus();
+  }, [providerID]);
 
   return (
     <div className="appointment-page">
