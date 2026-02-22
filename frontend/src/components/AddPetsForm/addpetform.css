@@ -1,0 +1,76 @@
+body {
+  background-color: white;
+  text-align: center;
+
+}
+
+.form-container {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  transition: transform 0.2s;
+  width: 500px;
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+}
+
+
+lable {
+  font-size: 15px;
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 5px;
+  text-align: left;
+  color: #1f3a5f;
+  font-weight: bold;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #1f3a5f;
+  border-radius: 3px;
+  font-size: 15px;
+}
+
+input[type="radio"] {
+  display: inline;
+  width: 10%;
+}
+
+select {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #1f3a5f;
+  border-radius: 3px;
+}
+
+textarea {
+  resize: none;
+  width: 98%;
+  min-height: 100px;
+  max-height: 150px;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 15px;
+  border: none;
+  color: #ffc72c;
+  background-color: #1f3a5f;
+  width: 40%;
+  font-size: 15px;
+}
+
+button:hover {
+  color: white;
+}
