@@ -1,0 +1,12 @@
+# Ignore artifacts
+build
+coverage
+dist
+node_modules
+
+# Ignore files
+*.min.js
+*.min.css
+.env
+.env.local
+.env.*.local

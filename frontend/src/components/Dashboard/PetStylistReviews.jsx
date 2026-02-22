@@ -26,7 +26,7 @@ export default function PetStylistReviews({ stylists = [], onBookClick }) {
         </div>
 
         <div className="cta-row">
-          <button className="primary-btn" type="button" onClick={onBookClick}>
+          <button className="primary-btn" type="button" onClick={onBookClick} link="/appointments/:id">
             Book appointment
           </button>
         </div>
