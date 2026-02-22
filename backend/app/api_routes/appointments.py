@@ -213,28 +213,3 @@ def get_user_appointments():
     }), 200
     
 
-# @appointments_bp.route("/env-check", methods=["GET"])
-# def env_check():
-#     return {
-#         "has_key": bool(os.getenv("SENDGRID_API_KEY")),
-#         "from_email": os.getenv("FROM_EMAIL"),
-#     }
-    
-# @appointments_bp.route("/test-email", methods=["POST"])
-# def test_email():
-#     from app.services.email_service import EmailService
-#     data = request.get_json(silent=True) or {}
-#     to_email = data.get("to_email")  # define to_email first
-#     print("RAW to_email value:", to_email)
-#     print("TYPE of to_email:", type(to_email))
-
-#     status = EmailService.send_booking_confirmation(
-#         to_email=to_email,
-#         subject="SendGrid test",
-#         html_content="<p>Hello from HotDog ✅</p>",
-#     )
-
-#     return jsonify({
-#         "message": "sent",
-#         "sendgrid_status": status
-#     }), 200
