@@ -1,9 +1,11 @@
 from app import create_app
+from app.api_routes import providers
 from app.extensions import db
 from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
-from datetime import date, time
+from app.models.appointment import Appointment, AppointmentStatus
+from datetime import date, time, datetime, timedelta, timezone
 
 app = create_app()
 
@@ -193,3 +195,53 @@ with app.app_context():
 
     db.session.commit()
     print("✅ Database seeded successfully with Users, Pets, and 6 Providers!")
+
+    # =====================
+    # 4. Seed Appointments for John -- testing Sylvia's manage appointments frontend
+    # =====================
+    # Can delete these seed data if Crystal creates real bookings / appointments through the frontend.
+    
+    # Query all providers from database
+    providers = ServiceProvider.query.all()
+    
+    if providers and pet1 and pet2:
+        # Create appointments for user1's pets
+        # Note: Appointment times are set to on the hour or half past
+        appointments = [
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=3, hours=10),
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Check-up for Butters"
+            ),
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[1].id,  # Sparkle Paws Grooming
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=5, hours=14),
+                service_type=ServiceType.HAIRCUTS_COAT,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Grooming session"
+            ),
+            Appointment(
+                pet_id=pet2.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=7, hours=11),
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Annual check-up for Snom"
+            ),
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[2].id,  # Happy Tails Dog Walking
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.DOG_WALKING,
+                status=AppointmentStatus.CONFIRMED,
+                notes="30-minute walk"
+            ),
+        ]
+        
+        db.session.add_all(appointments)
+        db.session.commit()
+        print("✅ Appointments seeded successfully!")
