@@ -39,7 +39,12 @@ def create_app():
     print(f"✅ Database URI:  {app.config['SQLALCHEMY_DATABASE_URI']}")
 
     # enable CORS
-    CORS(app)
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": "http://localhost:5173"}},
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    )
 
     # initialise extensions
     db.init_app(app)
