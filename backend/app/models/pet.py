@@ -58,7 +58,7 @@ class Pet(db.Model):
     # =====================
     
     owner = relationship("User", back_populates='pets')
-    appointments = relationship("Appointment", back_populates="pet")
+    appointments = relationship("Appointment", back_populates="pet", cascade="all,delete-orphan")
 
     # =====================
     # VALIDATORS
