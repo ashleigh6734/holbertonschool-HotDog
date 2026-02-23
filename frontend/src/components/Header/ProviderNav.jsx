@@ -1,33 +1,33 @@
-// import { Link } from "react-router-dom";
-// // import Avatar from "../avatar/Avatar.jsx";
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
-// import "./providernavStyles.css";
-// import yellowLogo from "../../assets/logo/hotdog_logo_yellow_background.svg";
+import { Link } from "react-router-dom";
+// import Avatar from "../avatar/Avatar.jsx";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import "./providernavStyles.css";
+import yellowLogo from "../../assets/logo/hotdog_logo_yellow_background.svg";
 
-// function ProviderNav() {
-//   const { user } = useContext(AuthContext);
+function ProviderNav() {
+  const { user } = useContext(AuthContext);
 
-//   return (
-//       <ul className="nav-links">
-//         <img src={yellowLogo} alt="HotDog Logo" className="bluehotdog-logo" />
-//         <li><Link to="/ProviderDashboard">Dashboard</Link></li>
-//         <li><Link to="/ProvideBookings">Booking</Link></li>
-//         <li><Link to="/PatientList">Patient List</Link></li>
-//         <li><Link to="/Reminders">Reminders</Link></li>
-//         <li><Link to="/Account">Account</Link></li>
-//         <li>
-//           <button 
-//             className="logout"
-//             onClick={() => {
-//               logout(); // call context for logout function
-//               setOpen(false); // close menu after logout
-//             }}
-//             >
-//               Logout</button>
-//         </li>
-//       </ul>
-//   );
-// }
+  return (
+      <ul className="nav-links">
+        <img src={yellowLogo} alt="HotDog Logo" className="bluehotdog-logo" />
+        <li><Link to="/ProviderDashboard">Dashboard</Link></li>
+        <li><Link to="/ProvideBookings">Booking</Link></li>
+        <li><Link to="/PatientList">Patient List</Link></li>
+        <li><Link to="/Reminders">Reminders</Link></li>
+        <li><Link to="/Account">Account</Link></li>
+        <li>
+          <button 
+            className="logout"
+            onClick={() => {
+              logout(); // call context for logout function
+              setOpen(false); // close menu after logout
+            }}
+            >
+              Logout</button>
+        </li>
+      </ul>
+  );
+}
 
-// export default ProviderNav;
+export default ProviderNav;

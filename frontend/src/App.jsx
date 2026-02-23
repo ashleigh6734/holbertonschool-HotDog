@@ -15,7 +15,7 @@ import Services from "./pages/ServicesPage/Services.jsx";
 import PatientList from "./pages/ProviderPages/PaitentList/PatientList.jsx";
 import ProviderEditPetDetails from "./pages/ProviderPages/PaitentList/ProviderEditPetDetails.jsx";
 import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetProfile.jsx";
-// import ProviderBookings from "./pages/ProviderPages/ProviderDashboard/ProviderBookings.jsx";
+// import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
 
@@ -46,8 +46,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
 
           {/* PROVIDER PAGES */}
-          {/* <Route path="/ProviderDashboard" element={<Dashboard />} /> */}
-          {/* <Route path="/ProviderBookings" element={<Booking />} /> */}
+          {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
+          {/* <Route path="/ProviderBookings" element={<ProviderBookings />} /> */}
           <Route path="/PatientList" element={<PatientList />} />
           <Route path="/ProviderEditPetDetails/:petId" element={<ProviderEditPetDetails />} />
           <Route path="/ProviderPetProfile/:petId" element={<ProviderPetProfile/>} />

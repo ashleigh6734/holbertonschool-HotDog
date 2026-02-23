@@ -42,8 +42,14 @@ export default function Login() {
       const response = await loginUser(formData);
 
       // use context login instead of manual Storage
-        login(response.access_token);
+      const userData = await login(response.access_token);
+
+      if (userData.role === "provider") {
+        // curretnly navigating to patientlist as provider dashboard not ready
+        navigate("/PatientList")
+      } else {
         navigate("/dashboard");
+      }
     } catch (err) {
       setError(err.message || "Login failed");
       console.log(err);
