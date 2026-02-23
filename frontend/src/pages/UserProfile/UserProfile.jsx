@@ -30,22 +30,23 @@ export default function UserProfile() {
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
-  // useEffect((user) => {
+  // // Handle Delete User
+  // useEffect(() => {
   //   const token = localStorage.getItem("token");
 
-  //   const handleDelete = async (token) => {
-  //     try {
-  //       const response = await deleteUser(user, token);
-  //       console.log(response, "response");
-  //       console.log(user.id, "user_id");
-  //     } catch (error) {
-  //       console.error(error.message, "error");
-  //     }
-  //   };
-  //   handleDelete();
+  //   if (!token) {
+  //     console.log("No token found");
+  //     return;
+  //   }
+
+  //   deleteUser(token)
+  //     .then((data) => {
+  //       console.log("Fetched pets:", data);
+  //     })
+  //     .catch((err) => console.error(err));
   // }, []);
 
-  useEffect(() => {
+  (useEffect(() => {
     const token = localStorage.getItem("token");
     console.log(token, "token");
     console.log(user.id, "user_id");
@@ -70,7 +71,8 @@ export default function UserProfile() {
       return data;
     };
     deleteUser();
-  });
+  }),
+    []);
 
   return (
     <div className="profile-page">
