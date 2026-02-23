@@ -1,8 +1,10 @@
 from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request, jsonify
 from sqlalchemy import func
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
+from app.models.pet import Pet
 from app.services.appointment_service import AppointmentService
 
 appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
@@ -23,6 +25,10 @@ def appointment_to_dict(appt: Appointment) -> dict:
         "created_at": appt.created_at.isoformat() if appt.created_at else None,
         "confirmation_sent_at": appt.confirmation_sent_at.isoformat() if appt.confirmation_sent_at else None,
         "reminder_24h_sent_at": appt.reminder_24h_sent_at.isoformat() if appt.reminder_24h_sent_at else None,
+        # Add fields needed for front-end ManageAppointments page
+        "pet_name": appt.pet.name if appt.pet else None,
+        "provider_name": appt.service_provider.name if appt.service_provider else None,
+        "provider_address": appt.service_provider.address if appt.service_provider else None,
     }
 
 # standardise error message across routes
@@ -175,30 +181,35 @@ def cancel_appointment(appointment_id: str):
         "message": "Appointment cancelled",
         "appointment": appointment_to_dict(appointment)
     }), 200
+
+
+# =====================
+#  Get all appointments for ManageAppointments page
+@appointments_bp.route("/user/me", methods=["GET"])
+@jwt_required()
+def get_user_appointments():
+    """Get all appointments for the logged-in user"""
+    from app.services.user_service import UserService
+    
+    user_id = get_jwt_identity()
+    user = UserService.get_user_by_id(user_id)
+    
+    if not user:
+        return error_response("User not found", 404)
+    
+    # Get all appointments for user's pets (excluding CANCELLED)
+    user_pets = Pet.query.filter_by(owner_id=user_id).all()
+    
+    appointments = []
+    for pet in user_pets:
+        pet_appointments = Appointment.query.filter_by(pet_id=pet.id).filter(
+            Appointment.status != AppointmentStatus.CANCELLED
+        ).order_by(Appointment.date_time.asc()).all()
+        appointments.extend(pet_appointments)
+    
+    return jsonify({
+        "count": len(appointments),
+        "appointments": [appointment_to_dict(a) for a in appointments]
+    }), 200
     
 
-# @appointments_bp.route("/env-check", methods=["GET"])
-# def env_check():
-#     return {
-#         "has_key": bool(os.getenv("SENDGRID_API_KEY")),
-#         "from_email": os.getenv("FROM_EMAIL"),
-#     }
-    
-# @appointments_bp.route("/test-email", methods=["POST"])
-# def test_email():
-#     from app.services.email_service import EmailService
-#     data = request.get_json(silent=True) or {}
-#     to_email = data.get("to_email")  # define to_email first
-#     print("RAW to_email value:", to_email)
-#     print("TYPE of to_email:", type(to_email))
-
-#     status = EmailService.send_booking_confirmation(
-#         to_email=to_email,
-#         subject="SendGrid test",
-#         html_content="<p>Hello from HotDog ✅</p>",
-#     )
-
-#     return jsonify({
-#         "message": "sent",
-#         "sendgrid_status": status
-#     }), 200

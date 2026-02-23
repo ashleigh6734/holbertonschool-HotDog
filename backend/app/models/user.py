@@ -70,7 +70,7 @@ class User(db.Model):
         stripped = re.sub(r"[^\d+]", "", value.strip())
 
         # enforce E.164 format 
-        phone_regex = r'^\+[1-9]\d{1,14}$'
+        phone_regex = r'^\+[1-9]\d{8,14}$'
 
         if not re.match(phone_regex, stripped):
             raise ValueError(

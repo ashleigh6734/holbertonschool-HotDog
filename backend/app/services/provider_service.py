@@ -23,6 +23,7 @@ class ServiceProviderService:
             address=data.get("address"),
             phone=data.get("phone"),
             email=data.get("email"),
+            img_url=data.get("img_url", "https://via.placeholder.com/800x400?text=Clinic+Image"),
             opening_time=parse_time(opening),
             closing_time=parse_time(closing),
             slot_duration=int(data.get("slot_duration", 30))
@@ -105,6 +106,7 @@ class ServiceProviderService:
         if "address" in data: provider.address = data["address"]
         if "phone" in data: provider.phone = data["phone"]
         if "slot_duration" in data: provider.slot_duration = int(data["slot_duration"])
+        if "img_url" in data: provider.img_url = data["img_url"]
     
         db.session.commit()
         return provider
@@ -142,6 +144,7 @@ class ServiceProviderService:
                 # Round to 1 decimal place (e.g., 4.7)
                 "rating": round(avg_rating, 1), 
                 "review_count": count,
+                "img_url": provider.img_url,
                 "main_service": main_service
             }
             top_rated.append(provider_data)

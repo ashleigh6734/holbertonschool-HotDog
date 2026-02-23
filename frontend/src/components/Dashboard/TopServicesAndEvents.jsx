@@ -27,7 +27,7 @@ export default function TopServicesAndEvents({
   return (
     <section className="grid-2col">
       <div className="panel">
-        <h2 className="panel-title">Our Popular Services</h2>
+        <h2 className="panel-title">Top Search Services </h2>
 
         <div className="service-grid">
           {topServices.map((service) => (

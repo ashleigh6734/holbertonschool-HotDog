@@ -1,9 +1,11 @@
 from app import create_app
+from app.api_routes import providers
 from app.extensions import db
 from app.models.user import User
 from app.models.pet import Pet, SpeciesEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
-from datetime import date, time
+from app.models.appointment import Appointment, AppointmentStatus
+from datetime import date, time, datetime, timedelta, timezone
 
 app = create_app()
 
@@ -15,6 +17,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
             "address": "123 High St, Melbourne VIC",
@@ -27,6 +30,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Bob", "last": "Groomer", "email": "bob@grooming.com"},
         "business": {
             "name": "Sparkle Paws Grooming",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
             "address": "45 Dogwood Ln, Sydney NSW",
@@ -39,6 +43,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Charlie", "last": "Walker", "email": "charlie@walks.com"},
         "business": {
             "name": "Happy Tails Dog Walking",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
             "address": "78 Park Ave, Brisbane QLD",
@@ -51,6 +56,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Diana", "last": "Trainer", "email": "diana@train.com"},
         "business": {
             "name": "Good Boy Puppy School",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
             "address": "101 Training Crt, Perth WA",
@@ -63,6 +69,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Evan", "last": "Surgeon", "email": "evan@desex.com"},
         "business": {
             "name": "Safe Hands Desexing Clinic",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
             "address": "202 Safety Rd, Adelaide SA",
@@ -75,6 +82,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Fiona", "last": "Dentist", "email": "fiona@teeth.com"},
         "business": {
             "name": "Canine Smiles Dental",
+            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
             "address": "303 Molar St, Hobart TAS",
@@ -163,7 +171,7 @@ with app.app_context():
         provider = ServiceProvider(
             user_id=owner.id,
             name=data["business"]["name"],
-            # Removed service_type here
+            img_url=data["business"].get("img_url"),
             description=data["business"]["description"],
             address=data["business"]["address"],
             phone=data["business"]["phone"],
@@ -187,3 +195,53 @@ with app.app_context():
 
     db.session.commit()
     print("✅ Database seeded successfully with Users, Pets, and 6 Providers!")
+
+    # =====================
+    # 4. Seed Appointments for John -- testing Sylvia's manage appointments frontend
+    # =====================
+    # Can delete these seed data if Crystal creates real bookings / appointments through the frontend.
+    
+    # Query all providers from database
+    providers = ServiceProvider.query.all()
+    
+    if providers and pet1 and pet2:
+        # Create appointments for user1's pets
+        # Note: Appointment times are set to on the hour or half past
+        appointments = [
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=3, hours=10),
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Check-up for Butters"
+            ),
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[1].id,  # Sparkle Paws Grooming
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=5, hours=14),
+                service_type=ServiceType.HAIRCUTS_COAT,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Grooming session"
+            ),
+            Appointment(
+                pet_id=pet2.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=7, hours=11),
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Annual check-up for Snom"
+            ),
+            Appointment(
+                pet_id=pet1.id,
+                provider_id=providers[2].id,  # Happy Tails Dog Walking
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.DOG_WALKING,
+                status=AppointmentStatus.CONFIRMED,
+                notes="30-minute walk"
+            ),
+        ]
+        
+        db.session.add_all(appointments)
+        db.session.commit()
+        print("✅ Appointments seeded successfully!")
