@@ -1,5 +1,8 @@
 import { Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.jsx";
+import { deleteUser } from "../../api/user.js";
 
 import FormLabel from "../../components/Form/FormLabel.jsx";
 import FormNav from "../../components/Form/FormNav.jsx";
@@ -11,6 +14,8 @@ import "./UserProfile.css";
 import "../../styles/common.css";
 
 export default function UserProfile() {
+  const { user } = useContext(AuthContext);
+
   //ACTIVE TAB STATE
   const [activeTab, setActiveTab] = useState("details"); //details | password | account
 
@@ -24,6 +29,48 @@ export default function UserProfile() {
 
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
+
+  // useEffect((user) => {
+  //   const token = localStorage.getItem("token");
+
+  //   const handleDelete = async (token) => {
+  //     try {
+  //       const response = await deleteUser(user, token);
+  //       console.log(response, "response");
+  //       console.log(user.id, "user_id");
+  //     } catch (error) {
+  //       console.error(error.message, "error");
+  //     }
+  //   };
+  //   handleDelete();
+  // }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token, "token");
+    console.log(user.id, "user_id");
+
+    const deleteUser = async (token) => {
+      const API_DELETE_URL = `http://localhost:5000/api/users/${user.id}`;
+      //console.log(API_DELETE_URL, "login endpoint");
+      const response = await fetch(`${API_DELETE_URL}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to delete user");
+      }
+
+      return data;
+    };
+    deleteUser();
+  });
 
   return (
     <div className="profile-page">
@@ -72,6 +119,7 @@ export default function UserProfile() {
                       name="First Name"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user.first_name}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -80,6 +128,7 @@ export default function UserProfile() {
                       name="Last Name"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user.last_name}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -88,6 +137,7 @@ export default function UserProfile() {
                       name="Email"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user.email}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -96,14 +146,16 @@ export default function UserProfile() {
                       name="Mobile Number"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      // value={user.phone_number}
                     />
                     <FormLabel
                       className="justify-left mb-3"
                       controlId="emergencyNumber"
-                      type="secondaryNumber"
-                      name="Secondary Phone Number"
+                      type="emergencyNumber"
+                      name="Emergency Phone Number"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      // value={user.emergency_number}
                     />
                   </Form>
 
