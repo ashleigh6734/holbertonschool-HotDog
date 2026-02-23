@@ -31,7 +31,7 @@ export default function TopServicesAndEvents({
 
         <div className="service-grid">
           {topServices.map((service) => (
-            <div key={service.id} className="service-card">
+            <div key={service.id} className="top-service-card">
               <img
                 className="service-img"
                 src={SERVICE_IMAGES[service.id]}
