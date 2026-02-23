@@ -6,11 +6,10 @@ import "./providernavStyles.css";
 import yellowLogo from "../../assets/logo/hotdog_logo_yellow_background.svg";
 
 function ProviderNav() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
       <ul className="nav-links">
-        <img src={yellowLogo} alt="HotDog Logo" className="bluehotdog-logo" />
         <li><Link to="/ProviderDashboard">Dashboard</Link></li>
         <li><Link to="/ProvideBookings">Booking</Link></li>
         <li><Link to="/PatientList">Patient List</Link></li>

@@ -1,5 +1,6 @@
 import GuestHeader from "./GuestHeader";
 import UserHeader from "./UserHeader";
+import ProviderNav from "./ProviderNav.jsx";
 import Avatar from "../avatar/Avatar.jsx";
 import "./Header.css";
 
@@ -17,7 +18,9 @@ function Header() {
       <img src={blueLogo} alt="HotDog Logo" className="hotdog-logo" />
 
       <div className="header-content">
-        {user ? <UserHeader /> : <GuestHeader />}
+        {!user && <GuestHeader />}
+        {user?.role === "user" && <UserHeader />}
+        {user?.role === "provider" && <ProviderNav />}
       </div>
     </header>
   );
