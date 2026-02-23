@@ -1,20 +1,22 @@
 import { Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { deleteUser } from "../../api/user.js";
+import { updateUser } from "../../api/user.js";
 
 import FormLabel from "../../components/Form/FormLabel.jsx";
 import FormNav from "../../components/Form/FormNav.jsx";
 import SuccessToast from "../../components/toasts/SuccessToast.jsx";
 import ConfirmModal from "../../components/modals/ConfirmModal.jsx";
-import Header from "../../components/Header/Header.jsx";
 import "../../components/Header/Header.css";
 import "./UserProfile.css";
 import "../../styles/common.css";
 
 export default function UserProfile() {
   const { user, logout } = useContext(AuthContext);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   //ACTIVE TAB STATE
   const [activeTab, setActiveTab] = useState("details"); //details | password | account
@@ -33,7 +35,32 @@ export default function UserProfile() {
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
-  // Handle Delete User
+  // HANDLE PASSWORD STATE
+  const handleUpdateUser = async (newPassword, confirmPassword) => {
+    const token = localStorage.getItem("token");
+    if (newPassword === confirmPassword) {
+      console.log("Passwords match");
+      try {
+        const body = {};
+        if (newPassword) {
+          body.password = newPassword;
+        }
+
+        // if (userName) {
+        //   body.username = userName;
+        // }
+
+        const result = await updateUser(token, user, body);
+        console.log(result.message);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      alert("Passwords do not match");
+    }
+  };
+
+  // HANDLE DELETE USER
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
 
@@ -178,18 +205,25 @@ export default function UserProfile() {
                       controlId="newPassword"
                       type="password"
                       name="New Password"
+                      onChange={(e) => {
+                        setNewPassword(e.target.value);
+                      }}
                     />
                     <FormLabel
                       className="justify-left mb-3"
                       controlId="confirmPassword"
                       type="password"
                       name="Confirm New Password"
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                      }}
                     />
                   </Form>
                   <button
                     className="btn-layout btn-yellow"
                     onClick={() => {
-                      setShowToast(true);
+                      handleUpdateUser(newPassword, confirmPassword);
+                      // setShowToast(true);
                     }}
                   >
                     Change my password
