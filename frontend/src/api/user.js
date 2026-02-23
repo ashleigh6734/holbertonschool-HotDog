@@ -23,3 +23,23 @@ export async function deleteUser(user, token) {
   }
   return { status: "unknown", message: "Unknown response" };
 }
+
+export async function updateUser(token, user, body) {
+  const API_UPDATE_USER_URL = `http://localhost:5000/api/users/${user.id}`;
+
+  const response = await fetch(`${API_UPDATE_USER_URL}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to update password");
+  }
+
+  return data;
+}
