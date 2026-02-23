@@ -1,10 +1,7 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../context/AuthContext";
-
 export async function deleteUser(user, token) {
-  const API_LOGIN_URL = `http://localhost:5000/api/users/${user.id}`;
-  console.log(user.id, "user_id");
-  const response = await fetch(`${API_LOGIN_URL}`, {
+  const API_DELETE_URL = `http://localhost:5000/api/users/${user.id}`;
+
+  const response = await fetch(`${API_DELETE_URL}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -15,8 +12,14 @@ export async function deleteUser(user, token) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || "Failed to delete user");
+    if (data.error === "User not found") {
+      return { status: "not-found", message: "No User Found" };
+    }
+    return { status: "failed", message: data.error || "Delete failed" };
   }
 
-  return data;
+  if (data.message === "User successfully deleted") {
+    return { status: "success", message: "User deleted successfully" };
+  }
+  return { status: "unknown", message: "Unknown response" };
 }

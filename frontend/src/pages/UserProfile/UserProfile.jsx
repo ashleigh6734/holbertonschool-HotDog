@@ -14,7 +14,7 @@ import "./UserProfile.css";
 import "../../styles/common.css";
 
 export default function UserProfile() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   //ACTIVE TAB STATE
   const [activeTab, setActiveTab] = useState("details"); //details | password | account
@@ -27,52 +27,33 @@ export default function UserProfile() {
   // SHOW TOAST ON PASSWORD SAVE
   const [showToast, setShowToast] = useState(false);
 
+  // SHOW TOAST ON DELETE SUCCESS
+  const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
+
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
-  // // Handle Delete User
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (!token) {
-  //     console.log("No token found");
-  //     return;
-  //   }
-
-  //   deleteUser(token)
-  //     .then((data) => {
-  //       console.log("Fetched pets:", data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
-
-  (useEffect(() => {
+  // Handle Delete User
+  const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    console.log(token, "token");
-    console.log(user.id, "user_id");
 
-    const deleteUser = async (token) => {
-      const API_DELETE_URL = `http://localhost:5000/api/users/${user.id}`;
-      //console.log(API_DELETE_URL, "login endpoint");
-      const response = await fetch(`${API_DELETE_URL}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    if (!token) {
+      console.log("No token found");
+      return;
+    }
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to delete user");
-      }
-
-      return data;
-    };
-    deleteUser();
-  }),
-    []);
+    try {
+      const result = await deleteUser(user, token);
+      console.log(result.message);
+      setShowModal(false);
+      setShowDeleteSuccess(true);
+      setTimeout(() => {
+        logout(); // log the usr out after account is deleted
+      }, 1500); // Delay logout for 1.5 seconds to show toast
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -121,7 +102,7 @@ export default function UserProfile() {
                       name="First Name"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user.first_name}
+                      value={user ? user.first_name : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -130,7 +111,7 @@ export default function UserProfile() {
                       name="Last Name"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user.last_name}
+                      value={user ? user.last_name : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -139,7 +120,7 @@ export default function UserProfile() {
                       name="Email"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user.email}
+                      value={user ? user.email : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -148,7 +129,7 @@ export default function UserProfile() {
                       name="Mobile Number"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      // value={user.phone_number}
+                      value={user ? user.phone_number : ""}
                     />
                     <FormLabel
                       className="justify-left mb-3"
@@ -228,8 +209,10 @@ export default function UserProfile() {
                 </h6>
                 <div className="form-block mb-3">
                   <p>
-                    We're sorry to see you go! Note that this action cannot be
-                    undone and will result to a loss of all data.
+                    We're sorry to see you go 😢 <br />
+                    <br />
+                    Note that this action cannot be undone and will result in a
+                    loss of all data.
                   </p>
                   <button
                     type="button"
@@ -245,6 +228,12 @@ export default function UserProfile() {
             )}
 
             <SuccessToast
+              showToast={showDeleteSuccess}
+              onClose={() => setShowDeleteSuccess(false)}
+              message="Your account was deleted successfully!"
+            />
+
+            <SuccessToast
               showToast={showToast}
               onClose={() => setShowToast(false)}
               message="Your password was updated successfully!"
@@ -253,12 +242,12 @@ export default function UserProfile() {
             <ConfirmModal
               show={showModal}
               handleClose={() => setShowModal(false)}
+              handlePrimary={handleDelete}
               heading="Delete Account"
               body={
                 <>
                   Are you sure you want to permanently delete your account?{" "}
                   <br />
-                  All data will be erased after 30 days.
                 </>
               }
               secondaryButton="Close"
