@@ -49,7 +49,7 @@ export default function TopServicesAndEvents({
           <button
             className="tab"
             type="button"
-            onClick={() => navigate('/appointments')}
+            onClick={() => navigate('/manage-appointments')}
           >
             More…
           </button>
