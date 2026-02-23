@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditPetDetails.css';
+import { getPetById } from '../../api/pet';
 
 export default function EditPetDetails() {
   const { petId } = useParams();
@@ -9,6 +10,7 @@ export default function EditPetDetails() {
   const [formData, setFormData] = useState({
     name: '',
     species: '',
+    breed: '',
     gender: '',
     desexed: false,
     date_of_birth: '',
@@ -19,20 +21,39 @@ export default function EditPetDetails() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Mock fetch for development - will replace with API call
-    const mockPet = {
-      id: petId || 1,
-      name: 'Miss Poodle',
-      species: 'cat',
-      gender: 'female',
-      desexed: true,
-      date_of_birth: '2025-06-28',
-      weight: 8,
-      notes: '',
+    const fetchPetData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('No authentication token found');
+          setLoading(false);
+          return;
+        }
+
+        const petData = await getPetById(petId, token);
+        console.log('Pet data from API:', petData); // check API response structure, especially breed
+        setPet(petData);
+        setFormData({
+          name: petData.name || '',
+          species: (petData.species || '').toLowerCase(),
+          breed: petData.breed || '',
+          gender: (petData.gender || '').toLowerCase(),
+          desexed: petData.desexed || false,
+          date_of_birth: petData.date_of_birth || '',
+          weight: petData.weight || '',
+          notes: petData.notes || '',
+        });
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching pet:', err);
+      } finally {
+        setLoading(false);
+      }
     };
-    setPet(mockPet);
-    setFormData(mockPet);
-    setLoading(false);
+
+    if (petId) {
+      fetchPetData();
+    }
   }, [petId]);
 
   const handleInputChange = (e) => {
@@ -44,14 +65,14 @@ export default function EditPetDetails() {
   };
 
   const handleSave = async () => {
-    // TODO: wire up API save
+    // TODO Integration: wire up API save
     console.log('Saving pet data:', formData);
     navigate(-1);
   };
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
-      // TODO: wire up API delete
+      // TODO Integration: wire up API delete
       console.log('Deleting pet:', petId);
       navigate(-1);
     }
@@ -97,7 +118,7 @@ export default function EditPetDetails() {
               </div>
             )}
             <button className="delete-btn" onClick={handleDelete}>
-              Delete Pet Profile
+              Delete Pet
             </button>
           </div>
         </div>
@@ -135,6 +156,20 @@ export default function EditPetDetails() {
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
             </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="breed" className="form-label">
+              Breed
+            </label>
+            <input
+              type="text"
+              id="breed"
+              name="breed"
+              value={formData.breed}
+              onChange={handleInputChange}
+              className="form-input"
+            />
           </div>
 
           <div className="form-group">

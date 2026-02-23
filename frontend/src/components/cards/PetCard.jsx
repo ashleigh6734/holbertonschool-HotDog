@@ -1,9 +1,11 @@
 import "./PetCard.css";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import ConfirmModal from "../../components/modals/ConfirmModal";
 import BasicPopover from "../popovers/BasicPopover";
 
 export default function PetCard({ pet }) {
+  const navigate = useNavigate();
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
@@ -69,7 +71,7 @@ export default function PetCard({ pet }) {
           </div>
 
           <div className="pet-card-actions">
-            <button className="btn-yellow">Edit</button>
+            <button className="btn-yellow" onClick={() => navigate(`/edit-pet/${pet.id}`)}>Edit</button>
             <button
               className="btn-navy"
               onClick={() => {
