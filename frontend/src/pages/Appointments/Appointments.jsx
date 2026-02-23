@@ -19,7 +19,7 @@ export default function Appointments() {
 
   // Start with an empty array so we don't flash dummy data before the real data loads
   const [reviews, setReviews] = useState([]);
-  const [hasAppointment, setHasAppointment] = useState(false); 
+  const [hasAppointment, setHasAppointment] = useState(false);
   const [validAppointmentId, setValidAppointmentId] = useState("");
 
   // FETCH SERVICE PROVIDER DETAILS
@@ -48,9 +48,9 @@ export default function Appointments() {
     const fetchAvailableTimes = async () => {
       // DUMMY AVAILABLE TIME SLOTS
       const dummyTimes = [
-        { date: "2026-02-19", slots: ["9:00AM", "10:30AM"] },
+        { date: "2026-02-26", slots: ["9:00AM", "10:30AM"] },
         {
-          date: "2026-02-20",
+          date: "2026-02-27",
           slots: [
             "9:00AM",
             "9:30AM",
@@ -62,7 +62,7 @@ export default function Appointments() {
             "5:00PM",
           ],
         },
-        { date: "2026-02-21", slots: ["9:30AM", "11:00AM", "3:30PM"] },
+        { date: "2026-02-28", slots: ["9:30AM", "11:00AM", "3:30PM"] },
       ];
       // Fetch available time slots based on selectedDate
       // if selectedDate is in the dummyTimes, return those slots, otherwise return an empty array
@@ -81,69 +81,72 @@ export default function Appointments() {
   // FETCH REAL REVIEWS FOR THIS PROVIDER (NEW!)
   useEffect(() => {
     const fetchReviews = async () => {
-      const API_URL = `/api/reviews/provider/${providerID.id}`; 
-      
+      const API_URL = `/api/reviews/provider/${providerID.id}`;
+
       try {
         const response = await fetch(API_URL);
         if (!response.ok) {
           throw new Error(`Failed to fetch reviews: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
+
         // The "Translator": Map the backend keys to the frontend keys
         const formattedReviews = data.map((backendReview) => ({
           userName: backendReview.author_name,
           review: backendReview.comment,
           rating: backendReview.rating,
         }));
-        
+
         // Update the screen with the newly mapped data
-        setReviews(formattedReviews); 
+        setReviews(formattedReviews);
       } catch (error) {
         console.error("Error fetching reviews:", error);
       }
     };
-    
+
     fetchReviews();
   }, [providerID]);
 
   // 4. SUBMIT A NEW REVIEW
   const handleAddReview = async (reviewData) => {
     const token = localStorage.getItem("token");
-    
+
     // Hardcoded for testing (Butters' completed appointment)
     const appointmentId = validAppointmentId;
 
     try {
-      const response = await fetch('/api/reviews/', {
-        method: 'POST',
+      const response = await fetch("/api/reviews/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           appointment_id: appointmentId,
           rating: reviewData.rating,
-          comment: reviewData.comment
-        })
+          comment: reviewData.comment,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert("✅ Review successfully sent to the database!");
-        
+
         // Instantly update the UI so the user sees their new review without refreshing
         const newReview = {
-          userName: "You", 
+          userName: "You",
           review: reviewData.comment,
           rating: reviewData.rating,
         };
         setReviews([...reviews, newReview]);
         setHasAppointment(false); // Hide the "Add a Review" button after submission
       } else {
-        alert("❌ Backend rejected it: " + (data.error || data.msg || "Unknown error"));
+        alert(
+          "❌ Backend rejected it: " +
+            (data.error || data.msg || "Unknown error"),
+        );
       }
     } catch (error) {
       console.error("Network error submitting review:", error);
@@ -155,14 +158,15 @@ export default function Appointments() {
   useEffect(() => {
     const checkAppointmentStatus = async () => {
       try {
-        const response = await fetch('/api/appointments/list');
+        const response = await fetch("/api/appointments/list");
         if (!response.ok) throw new Error("Failed to fetch appointments");
 
         const data = await response.json();
 
         // Hunt for an appointment that matches THIS provider AND is COMPLETED
         const completedAppt = data.appointments.find(
-          (appt) => appt.provider_id === providerID.id && appt.status === "COMPLETED"
+          (appt) =>
+            appt.provider_id === providerID.id && appt.status === "COMPLETED",
         );
 
         if (completedAppt) {

@@ -1,5 +1,8 @@
 import { Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.jsx";
+import { deleteUser } from "../../api/user.js";
 
 import FormLabel from "../../components/Form/FormLabel.jsx";
 import FormNav from "../../components/Form/FormNav.jsx";
@@ -11,6 +14,8 @@ import "./UserProfile.css";
 import "../../styles/common.css";
 
 export default function UserProfile() {
+  const { user, logout } = useContext(AuthContext);
+
   //ACTIVE TAB STATE
   const [activeTab, setActiveTab] = useState("details"); //details | password | account
 
@@ -22,8 +27,33 @@ export default function UserProfile() {
   // SHOW TOAST ON PASSWORD SAVE
   const [showToast, setShowToast] = useState(false);
 
+  // SHOW TOAST ON DELETE SUCCESS
+  const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
+
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
+
+  // Handle Delete User
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.log("No token found");
+      return;
+    }
+
+    try {
+      const result = await deleteUser(user, token);
+      console.log(result.message);
+      setShowModal(false);
+      setShowDeleteSuccess(true);
+      setTimeout(() => {
+        logout(); // log the usr out after account is deleted
+      }, 1500); // Delay logout for 1.5 seconds to show toast
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -72,6 +102,7 @@ export default function UserProfile() {
                       name="First Name"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user ? user.first_name : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -80,6 +111,7 @@ export default function UserProfile() {
                       name="Last Name"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user ? user.last_name : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -88,6 +120,7 @@ export default function UserProfile() {
                       name="Email"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user ? user.email : ""}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -96,14 +129,16 @@ export default function UserProfile() {
                       name="Mobile Number"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      value={user ? user.phone_number : ""}
                     />
                     <FormLabel
                       className="justify-left mb-3"
                       controlId="emergencyNumber"
-                      type="secondaryNumber"
-                      name="Secondary Phone Number"
+                      type="emergencyNumber"
+                      name="Emergency Phone Number"
                       disabled={!editMode}
                       readOnly={!editMode}
+                      // value={user.emergency_number}
                     />
                   </Form>
 
@@ -174,8 +209,10 @@ export default function UserProfile() {
                 </h6>
                 <div className="form-block mb-3">
                   <p>
-                    We're sorry to see you go! Note that this action cannot be
-                    undone and will result to a loss of all data.
+                    We're sorry to see you go 😢 <br />
+                    <br />
+                    Note that this action cannot be undone and will result in a
+                    loss of all data.
                   </p>
                   <button
                     type="button"
@@ -191,6 +228,12 @@ export default function UserProfile() {
             )}
 
             <SuccessToast
+              showToast={showDeleteSuccess}
+              onClose={() => setShowDeleteSuccess(false)}
+              message="Your account was deleted successfully!"
+            />
+
+            <SuccessToast
               showToast={showToast}
               onClose={() => setShowToast(false)}
               message="Your password was updated successfully!"
@@ -199,12 +242,12 @@ export default function UserProfile() {
             <ConfirmModal
               show={showModal}
               handleClose={() => setShowModal(false)}
+              handlePrimary={handleDelete}
               heading="Delete Account"
               body={
                 <>
                   Are you sure you want to permanently delete your account?{" "}
                   <br />
-                  All data will be erased after 30 days.
                 </>
               }
               secondaryButton="Close"
