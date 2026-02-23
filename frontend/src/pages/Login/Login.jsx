@@ -48,7 +48,7 @@ export default function Login() {
         // curretnly navigating to patientlist as provider dashboard not ready
         navigate("/PatientList")
       } else {
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (err) {
       setError(err.message || "Login failed");
