@@ -3,7 +3,7 @@ import PetCard from "../../../components/cards/PetCard";
 import { useEffect, useState } from "react";
 import { getMyPets } from "../../../api/pet";
 // import ProviderNav from "../../../components/Header/ProviderNav.jsx";
-import "../../../components/Header/providernavStyles.css";
+// import "../../../components/Header/providernavStyles.css";
 
 export default function PatientList() {
   const [pets, setPets] = useState([]);

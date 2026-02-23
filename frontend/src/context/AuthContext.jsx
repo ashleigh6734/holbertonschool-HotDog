@@ -22,6 +22,7 @@ export function AuthProvider({ children }) {
 
       const data = await response.json();
       setUser(data);
+      return data;
     } catch (err) {
       localStorage.removeItem("token");
       setUser(null);
@@ -42,7 +43,7 @@ export function AuthProvider({ children }) {
 
   const login = async (token) => {
     localStorage.setItem("token", token);
-    await fetchUser(token);
+    return await fetchUser(token);
   };
 
   const logout = () => {
