@@ -9,6 +9,7 @@ export default function EditPetDetails() {
   const [formData, setFormData] = useState({
     name: '',
     species: '',
+    breed: '',
     gender: '',
     desexed: false,
     date_of_birth: '',
@@ -19,21 +20,31 @@ export default function EditPetDetails() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Mock fetch for development - will replace with API call
-    const mockPet = {
-      id: petId || 1,
-      name: 'Miss Poodle',
-      species: 'cat',
-      gender: 'female',
-      desexed: true,
-      date_of_birth: '2025-06-28',
-      weight: 8,
-      notes: '',
+    const fetchPet = async () => {
+      try {
+        const res = await fetch(`/api/pets/${petId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+  
+        if (!res.ok) {
+          throw new Error("Failed to fetch pet");
+        }
+  
+        const data = await res.json();
+        setPet(data);
+        setFormData(data);
+      } catch (err) {
+        console.error(err);
+        setError("Could not load pet");
+      } finally {
+        setLoading(false);
+      }
     };
-    setPet(mockPet);
-    setFormData(mockPet);
-    setLoading(false);
-  }, [petId]);
+  
+    fetchPet();
+  }, [petId]);  
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
