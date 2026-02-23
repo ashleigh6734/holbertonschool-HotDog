@@ -47,7 +47,7 @@ export default function App() {
 
           {/* PROVIDER PAGES */}
           {/* <Route path="/ProviderDashboard" element={<Dashboard />} /> */}
-          {/* <Route path="/ProvideBookings" element={<Booking />} /> */}
+          {/* <Route path="/ProviderBookings" element={<Booking />} /> */}
           <Route path="/PatientList" element={<PatientList />} />
           <Route path="/ProviderEditPetDetails/:petId" element={<ProviderEditPetDetails />} />
           <Route path="/ProviderPetProfile/:petId" element={<ProviderPetProfile/>} />
