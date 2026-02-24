@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditPetDetails.css';
+import { getPetById } from '../../api/pet';
 
 export default function EditPetDetails() {
   const { petId } = useParams();
@@ -184,7 +185,7 @@ export default function EditPetDetails() {
               </div>
             )}
             <button className="delete-btn" onClick={handleDelete}>
-              Delete Pet Profile
+              Delete Pet
             </button>
           </div>
         </div>

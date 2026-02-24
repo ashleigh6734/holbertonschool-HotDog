@@ -110,14 +110,14 @@
   gap: 12px;
 }
 
-.service-card {
+.top-service-card {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #efefef;
 }
 
-.service-card img.service-img {
+.top-service-card img.service-img {
   width: 100%;
   aspect-ratio: 1 / 1; /* make image square */
   height: auto;
@@ -141,7 +141,7 @@
   overflow: hidden;
 }
 
-.service-card:hover .service-label {
+.top-service-card:hover .service-label {
   background: rgba(0, 0, 0, 0.6);
 }
 

@@ -5,6 +5,7 @@ import ConfirmModal from "../../components/modals/ConfirmModal";
 import BasicPopover from "../popovers/BasicPopover";
 
 export default function PetCard({ pet }) {
+  const navigate = useNavigate();
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
