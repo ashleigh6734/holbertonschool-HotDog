@@ -2,6 +2,9 @@ import "./AllPets.css";
 import PetCard from "../../components/cards/PetCard";
 import { useEffect, useState } from "react";
 import { getMyPets } from "../../api/pet";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
 
 export default function AllPets() {
   const [pets, setPets] = useState([]);
@@ -30,7 +33,21 @@ export default function AllPets() {
         </div>
         <div className="all-pets-actions">
           <div>All({pets.length})</div>
-          <button className="btn-yellow">+ Add Pet(s)</button>
+          <Popup
+            trigger={<button className="btn-yellow">+ Add Pet(s)</button>}
+            position="bottom center" 
+            closeOnDocumentClick
+            nested
+            arrow={false}  
+            overlayStyle={{ background: "none" }}
+            contentStyle={{ padding: 0, border: "none", background: "none" }}
+          >
+            {(close) => (
+              <div>
+                <FormAddPet closePopup={close} />
+              </div>
+            )}
+          </Popup>
         </div>
 
         <div className="pets-list">
