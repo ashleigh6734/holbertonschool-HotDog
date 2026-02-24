@@ -19,6 +19,12 @@ import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetPro
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
 
+
+
+// Need to delet after done
+import FormAddPet from "./components/AddPetsForm/FormAddPet.jsx";
+
+
 import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -52,6 +58,12 @@ export default function App() {
           <Route path="/ProviderEditPetDetails/:petId" element={<ProviderEditPetDetails />} />
           <Route path="/ProviderPetProfile/:petId" element={<ProviderPetProfile/>} />
           <Route path="/Account" element={<Account/>} />
+
+
+
+          {/* will need to delete */}
+          <Route path="/FormAddPet" element={<FormAddPet/>} />
+
 
 
           <Route path="/about" element={<About />} />

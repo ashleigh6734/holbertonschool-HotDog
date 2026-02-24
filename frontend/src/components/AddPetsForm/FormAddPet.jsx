@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./addpetform.css";
 
 function FormAddPet() {
 
-  const [values, setValues] = useState({
-    name: "",
-    species: "",
-    breed: "",
-    gender: "",
-    desexed: "",
-    date_of_birth: "",
-    weight: "",
-    notes: "",
-    age: "",
-  })
+  // const [value, setValue] = useState(0)
+
+  // useEffect(() => {
+  //   const fetchGet
+  // })
+  // const [values, setValues] = useState({
+  //   name: "",
+  //   species: "",
+  //   breed: "",
+  //   gender: "",
+  //   desexed: "",
+  //   date_of_birth: "",
+  //   weight: "",
+  //   notes: "",
+  //   age: "",
+  // })
 
   const handelChange = (e) => {
     setValues({...values, [e.target.name]:[e.taRget.value]})
@@ -23,28 +28,6 @@ function FormAddPet() {
     e.preventDefault()
     console.log(values)
   }
-
-  //CALLING API
-  try {
-    const token = localStorage.getItem("access_token");
-    const response = await fetch("/api/pets/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        console.error("Error creating pet:", data);
-      } else {
-        console.log("Pet profile successfullu created", data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="form-container">
