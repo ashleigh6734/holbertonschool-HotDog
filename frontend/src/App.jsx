@@ -35,12 +35,19 @@ import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetPro
 // import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext.jsx";
+import ProviderNav from "./components/Header/ProviderNav.jsx";
 
 
 export default function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
-      <Header />
+    {user?.role !== "provider" && <Header />}
+
+    {user?.role === "provider" && <ProviderNav />}
 
       <main className="main">
         <Routes>
@@ -89,7 +96,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <Footer />
+      {user?.role !== "provider" && <Footer />}
     </>
   );
 }

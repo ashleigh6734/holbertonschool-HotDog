@@ -9,22 +9,21 @@ function ProviderNav() {
   const { user, logout } = useContext(AuthContext);
 
   return (
-      <ul className="nav-links">
+      <ul className="provider-links">
+        <img src={yellowLogo} alt="HotDog Logo" className="bluehotdog-logo" />
         <li><Link to="/ProviderDashboard">Dashboard</Link></li>
         <li><Link to="/ProvideBookings">Booking</Link></li>
         <li><Link to="/PatientList">Patient List</Link></li>
         <li><Link to="/Reminders">Reminders</Link></li>
         <li><Link to="/Account">Account</Link></li>
-        <li>
           <button 
-            className="logout"
+            className="provider-logout"
             onClick={() => {
               logout(); // call context for logout function
               setOpen(false); // close menu after logout
             }}
             >
               Logout</button>
-        </li>
       </ul>
   );
 }
