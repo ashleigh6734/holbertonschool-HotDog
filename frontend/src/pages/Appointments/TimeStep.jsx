@@ -8,6 +8,7 @@ export default function TimeStep({ times, setSelectedTime, selectedTime }) {
   return times.map((time) => {
     return (
       <button
+        key={time}
         className={
           time === selectedTime ? "active-btn time-button" : "time-button"
         }
