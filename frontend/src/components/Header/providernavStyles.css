@@ -20,6 +20,9 @@ body {
   padding: 20px;
 }
 
+.with-sidebar {
+  margin-left: 260px;
+}
 
 /* DONE! */
 .bluehotdog-logo {
@@ -47,16 +50,18 @@ body {
   padding-top: 50px;
   overflow-y: auto;
   z-index: 1000;
+  list-style: none;
+  gap: 20px;
 }
 
-.provider-links ul {
+/* .provider-links {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
+} */
 
 
 .provider-links li a {
