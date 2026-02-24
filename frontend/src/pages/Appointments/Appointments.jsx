@@ -53,17 +53,18 @@ export default function Appointments() {
 
       try {
         // Hit the new dynamic backend endpoint
-        const response = await fetch(`/api/providers/${providerID.id}/slots?date=${formattedDate}`);
-        
+        const response = await fetch(
+          `/api/providers/${providerID.id}/slots?date=${formattedDate}`,
+        );
+
         if (!response.ok) {
           throw new Error(`Failed to fetch time slots: ${response.status}`);
         }
 
         const data = await response.json();
-        
+
         // Update the state with the live available slots from the database
         setAvailableTimes(data.available_slots || []);
-
       } catch (error) {
         console.error("Error fetching times from backend:", error);
         setAvailableTimes([]); // Fallback to empty array on error
@@ -209,7 +210,16 @@ export default function Appointments() {
           </div>
           <div className="bookings-container">
             <div className="date-container">
-              <DateStep value={selectedDate} onChange={setSelectedDate} />
+              <DateStep
+                value={selectedDate}
+                onChange={setSelectedDate}
+                sx={{
+                  margin: 0,
+                  padding: 0,
+                  transform: "scale(1.2)",
+                  alignSelf: "flex-start",
+                }}
+              />
             </div>
             <div className="time-container">
               <TimeStep
