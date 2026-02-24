@@ -1,15 +1,18 @@
 .all-pets-container {
   background-color: #e9ecf0;
   min-height: 100vh;
-  justify-items: center;
+
+  display: flex;
+  justify-content: center;
 }
 
 .all-pets-content {
   display: grid;
   grid-template-rows: 80px 50px 1fr;
   width: 100%;
-  max-width: 700px;
+  max-width: 800px;
   align-items: center;
+  padding-bottom: 40px;
 }
 
 .all-pets-header {
@@ -33,4 +36,10 @@
   font-size: 0.9rem;
   font-weight: bold;
   padding: 0.4rem;
+}
+
+.pets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
