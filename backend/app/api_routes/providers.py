@@ -125,3 +125,25 @@ def update_provider(provider_id):
         return jsonify({"message": "Provider updated successfully"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+    
+# =====================
+# GET AVAILABLE TIME SLOTS
+# =====================
+@providers_bp.route("/<string:provider_id>/slots", methods=["GET"])
+def get_provider_slots(provider_id):
+
+    date_str = request.args.get('date')
+    
+    if not date_str:
+        return jsonify({"error": "A date query parameter is required (e.g., ?date=2026-02-17)"}), 400
+
+    slots, error = ServiceProviderService.get_available_slots(provider_id, date_str)
+
+    if error:
+        return jsonify({"error": error}), 404 if "not found" in error else 400
+
+    return jsonify({
+        "provider_id": provider_id,
+        "date": date_str,
+        "available_slots": slots
+    }), 200

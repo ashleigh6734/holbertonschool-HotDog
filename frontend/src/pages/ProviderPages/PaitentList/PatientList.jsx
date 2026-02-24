@@ -17,11 +17,11 @@ export default function PatientList() {
     }
 
     getMyPets(token)
-      .then(data => {
+      .then((data) => {
         console.log("Fetched pets:", data);
         setPets(data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -35,10 +35,9 @@ export default function PatientList() {
           <button className="btn-yellow">+ Add Pet(s)</button>
         </div>
 
-        {pets.map(pet => (
+        {pets.map((pet) => (
           <PetCard key={pet.id} pet={pet} />
         ))}
-
       </div>
     </div>
   );
