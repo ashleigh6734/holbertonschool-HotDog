@@ -41,4 +41,18 @@ export const UPCOMING_APPOINTMENTS = [
     pet_name: "Crumpet",
     status: "Cancelled",
   },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Crumpet",
+    status: "Cancelled",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Crumpet",
+    status: "Cancelled",
+  },
 ];

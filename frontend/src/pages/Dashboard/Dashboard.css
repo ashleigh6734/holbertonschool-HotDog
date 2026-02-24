@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
 
 .dash {
   width: 100%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .dash h1,
 .dash .intro-title,
 .dash .banner-title,
 .dash .banner-text {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .dash-container {
@@ -165,7 +165,7 @@
 }
 
 .tab-active {
-  background: #ffd24d;
+  background: #ffc72c;
 }
 
 .events-list {
@@ -265,7 +265,7 @@
 /* Pet stylist title font and color */
 .stylists-title,
 .stylist-name {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #1f3a5f;
 }
 
