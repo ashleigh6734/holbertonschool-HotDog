@@ -19,6 +19,25 @@ export default function EditPetDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const breedMap = {
+    dog: [
+      { value: "labrador", label: "Labrador" },
+      { value: "golden_retriever", label: "Golden Retriever" },
+      { value: "german_shepherd", label: "German Shepherd" },
+      { value: "bulldog", label: "Bulldog" },
+      { value: "mixed", label: "Mixed" },
+    ],
+    cat: [
+      { value: "domestic_shorthair", label: "Domestic Shorthair" },
+      { value: "domestic_longhair", label: "Domestic Longhair" },
+      { value: "bengal", label: "Bengal" },
+      { value: "siamese", label: "Siamese" },
+      { value: "mixed", label: "Mixed" },
+    ],
+  };
+  
+  const breedOptions = breedMap[formData.species] || [];
+
   useEffect(() => {
     const fetchPet = async () => {
       try {
@@ -34,7 +53,12 @@ export default function EditPetDetails() {
   
         const data = await res.json();
         setPet(data);
-        setFormData(data);
+        setFormData({
+          ...data,
+          species: data.species?.toLowerCase() || "",
+          gender: data.gender?.toLowerCase() || "",
+          breed: data.breed?.toLowerCase() || "",
+        });
       } catch (err) {
         console.error(err);
         setError("Could not load pet");
@@ -48,23 +72,75 @@ export default function EditPetDetails() {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+  
+    setFormData((prev) => {
+      if (name === "species") {
+        return {
+          ...prev,
+          species: value,
+          breed: "", // reset breed when species changes
+        };
+      }
+  
+      return {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
   };
 
   const handleSave = async () => {
-    // TODO: wire up API save
-    console.log('Saving pet data:', formData);
-    navigate(-1);
+    try {
+      const res = await fetch(`/api/pets/${petId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          species: formData.species?.toLowerCase(),
+          gender: formData.gender?.toLowerCase(),
+          breed: formData.breed,
+        }),
+      });
+  
+      if (!res.ok) {
+        throw new Error("Failed to update pet");
+      }
+  
+      const updatedPet = await res.json();
+      console.log("Updated:", updatedPet);
+  
+      navigate(-1);
+    } catch (err) {
+      console.error(err);
+      setError("Could not save changes");
+    }
   };
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this pet?')) {
-      // TODO: wire up API delete
-      console.log('Deleting pet:', petId);
-      navigate(-1);
+    const confirmed = window.confirm("Are you sure you want to delete this pet?");
+    if (!confirmed) return;
+  
+    try {
+      const res = await fetch(`/api/pets/${petId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+  
+      if (!res.ok) {
+        throw new Error("Failed to delete pet");
+      }
+  
+      console.log("Pet deleted successfully");
+  
+      navigate("/pets");
+    } catch (err) {
+      console.error(err);
+      setError("Could not delete pet");
     }
   };
 
@@ -145,6 +221,27 @@ export default function EditPetDetails() {
               <option value="">Select species</option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="breed" className="form-label">
+              Breed
+            </label>
+            <select
+              id="breed"
+              name="breed"
+              value={formData.breed}
+              onChange={handleInputChange}
+              className="form-input"
+              disabled={!formData.species}
+            >
+              <option value="">Select breed</option>
+              {breedOptions.map((breed) => (
+                <option key={breed.value} value={breed.value}>
+                  {breed.label}
+                </option>
+              ))}
             </select>
           </div>
 
