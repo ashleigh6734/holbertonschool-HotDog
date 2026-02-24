@@ -43,40 +43,35 @@ export default function Appointments() {
     fetchProviderDetails();
   }, [providerID]);
 
-  // FETCH AVAILABLE TIME SLOTS
+  // FETCH AVAILABLE TIME SLOTS (CONNECTED TO BACKEND)
   useEffect(() => {
     const fetchAvailableTimes = async () => {
-      // DUMMY AVAILABLE TIME SLOTS
-      const dummyTimes = [
-        { date: "2026-02-26", slots: ["9:00AM", "10:30AM"] },
-        {
-          date: "2026-02-27",
-          slots: [
-            "9:00AM",
-            "9:30AM",
-            "10:00AM",
-            "1:00PM",
-            "2:30PM",
-            "4:00PM",
-            "4:30PM",
-            "5:00PM",
-          ],
-        },
-        { date: "2026-02-28", slots: ["9:30AM", "11:00AM", "3:30PM"] },
-      ];
-      // Fetch available time slots based on selectedDate
-      // if selectedDate is in the dummyTimes, return those slots, otherwise return an empty array
-      if (selectedDate === null) return null;
+      if (!selectedDate || !providerID?.id) return;
+
       const formattedDate = selectedDate.format("YYYY-MM-DD");
-      const dateSlot = dummyTimes.find((d) => d.date === formattedDate)
-        ? dummyTimes.find((d) => d.date === formattedDate)
-        : [];
-      const timeSlot = dateSlot.slots ? dateSlot.slots : [];
-      setAvailableTimes(timeSlot);
-      setSelectedTime(""); //set selectedTime back to nothing when user clicks on a new date
+      setSelectedTime(""); // Clear previously selected time when date changes
+
+      try {
+        // Hit the new dynamic backend endpoint
+        const response = await fetch(`/api/providers/${providerID.id}/slots?date=${formattedDate}`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch time slots: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // Update the state with the live available slots from the database
+        setAvailableTimes(data.available_slots || []);
+
+      } catch (error) {
+        console.error("Error fetching times from backend:", error);
+        setAvailableTimes([]); // Fallback to empty array on error
+      }
     };
+
     fetchAvailableTimes();
-  }, [selectedDate]);
+  }, [selectedDate, providerID]);
 
   // FETCH REAL REVIEWS FOR THIS PROVIDER (NEW!)
   useEffect(() => {
@@ -189,7 +184,7 @@ export default function Appointments() {
         <div className="provider-content">
           <h1>{provider.name}</h1>
           <div className="provider-img-container">
-            <img src={provider.img} alt="provider-image" />
+            <img src={provider.img_url} alt="provider-image" />
           </div>
 
           <div className="provider-info">

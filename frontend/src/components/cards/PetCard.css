@@ -2,7 +2,7 @@
 
 .pet-card {
   display: grid;
-  max-width: 45rem;
+  width: 100%;
   grid-template-columns: 13rem 1fr;
   gap: 1rem;
   background: white;

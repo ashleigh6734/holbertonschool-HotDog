@@ -150,3 +150,60 @@ class ServiceProviderService:
             top_rated.append(provider_data)
 
         return top_rated
+    
+    @staticmethod
+    def get_available_slots(provider_id, target_date_str):
+        from datetime import datetime, timedelta, timezone
+        from app.models.appointment import Appointment, AppointmentStatus
+        
+        # 1. Parse the requested date (e.g., '2026-02-17')
+        try:
+            target_date = datetime.strptime(target_date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return None, "Invalid date format. Use YYYY-MM-DD."
+
+        # 2. Get the provider
+        provider = ServiceProviderService.get_provider_by_id(provider_id)
+        if not provider:
+            return None, "Provider not found."
+
+        # 3. Create timezone-aware datetimes
+        start_of_day = datetime.combine(target_date, datetime.min.time()).replace(tzinfo=timezone.utc)
+        end_of_day = datetime.combine(target_date, datetime.max.time()).replace(tzinfo=timezone.utc)
+
+        # 4. Fetch all active appointments for this date
+        appointments = Appointment.query.filter(
+            Appointment.provider_id == provider_id,
+            Appointment.date_time >= start_of_day,
+            Appointment.date_time <= end_of_day,
+            Appointment.status != AppointmentStatus.CANCELLED
+        ).all()
+
+        # 5. Generate the daily schedule
+        available_slots = []
+        current_time = datetime.combine(target_date, provider.opening_time).replace(tzinfo=timezone.utc)
+        closing_time = datetime.combine(target_date, provider.closing_time).replace(tzinfo=timezone.utc)
+        slot_duration = timedelta(minutes=provider.slot_duration)
+
+        # 6. Loop through the day and check for overlaps
+        while current_time + slot_duration <= closing_time:
+            slot_end_time = current_time + slot_duration
+            is_booked = False
+
+            for appt in appointments:
+                appt_start = appt.date_time
+                appt_end = appt_start + slot_duration 
+
+                # If the times overlap, mark as booked
+                if current_time < appt_end and slot_end_time > appt_start:
+                    is_booked = True
+                    break
+
+            if not is_booked:
+                # Format to look exactly like UI
+                time_string = current_time.strftime("%I:%M%p").lstrip("0")
+                available_slots.append(time_string)
+
+            current_time += slot_duration
+
+        return available_slots, None
