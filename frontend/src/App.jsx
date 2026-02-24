@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext.jsx";
 
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import ProviderNav from "./components/Header/ProviderNav.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
 /* =======================
@@ -35,9 +38,6 @@ import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetPro
 // import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
-import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext.jsx";
-import ProviderNav from "./components/Header/ProviderNav.jsx";
 
 
 export default function App() {
@@ -45,11 +45,13 @@ export default function App() {
 
   return (
     <>
+    {/* Show TOP header if Guest + User */}
     {user?.role !== "provider" && <Header />}
 
+    {/* Show Side Provider NavBar if Provider */}
     {user?.role === "provider" && <ProviderNav />}
 
-      <main className="main">
+      <main className={user?.role === "provider" ? "main with-sidebar" : "main"}>
         <Routes>
           
           {/* =======================
