@@ -1,0 +1,32 @@
+.events-list {
+  padding: 0 12px 12px 12px;
+}
+
+.events-row {
+  display: grid;
+  grid-template-columns: 92px 92px 2fr 1fr 92px;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.upcoming-appointments-banner {
+  background-color: #ffc72c;
+  height: 44px;
+}
+
+.upcoming-appointments-banner p {
+  padding: 10px 12px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #1f3a5f;
+}
+
+.appt-date {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.appt-title {
+  font-size: 14px;
+}

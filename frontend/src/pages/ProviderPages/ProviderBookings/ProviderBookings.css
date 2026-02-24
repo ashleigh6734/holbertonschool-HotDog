@@ -1,0 +1,73 @@
+.wrapper-container {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  /* min-height: 100vh; */
+  max-width: 700px;
+  margin: 3rem auto;
+}
+
+.bookings-header-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookings-header-bar h1 {
+  font-weight: bold;
+  color: #1f3a5f;
+}
+
+.manage-bookings-btn {
+  border-radius: 10px;
+  border: none;
+  color: #1f3a5f;
+  font-weight: 600;
+  font-family:
+    Open Sans,
+    sans-serif;
+  font-size: 1rem;
+  padding: 0 16px;
+  text-decoration: underline;
+}
+
+.manage-bookings-btn:hover {
+  background-color: #dcdcdb;
+}
+
+.upcoming-appointments-container {
+  margin: 2.5rem 0;
+}
+
+.upcoming-appointments-table {
+  margin: 2rem 0;
+}
+
+.new-appointment-container {
+  margin-bottom: 2.5rem;
+  border: 1px solid #e0e0e0; /* ✅ light grey border */
+  border-radius: 12px; /* rounded corners */
+  background: white;
+  overflow: hidden;
+}
+
+.book-appointment-banner {
+  background-color: #ffc72c;
+  height: 44px;
+}
+
+.book-appointment-banner p {
+  padding: 10px 12px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #1f3a5f;
+}
+
+.provider-bookings-container {
+  /* display: flex;
+  flex-direction: column; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  height: auto;
+  padding: 0px 10px 20px 10px;
+}

@@ -1,0 +1,58 @@
+export const UPCOMING_APPOINTMENTS = [
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Miss Poodle",
+    status: "Confirmed",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Butters",
+    status: "Pending",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Snom",
+    status: "Confirmed",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Nugget",
+    status: "Confirmed",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Peanut",
+    status: "Confirmed",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Crumpet",
+    status: "Cancelled",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Crumpet",
+    status: "Cancelled",
+  },
+  {
+    date: "02/06/26",
+    time: "14:30:00",
+    service_type: "All pets health vaccination",
+    pet_name: "Crumpet",
+    status: "Cancelled",
+  },
+];

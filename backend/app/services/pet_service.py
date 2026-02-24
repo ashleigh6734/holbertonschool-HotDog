@@ -84,18 +84,31 @@ class PetService:
         """
         Update an existing pet
         """
-        if "species" in data:
-            new_species = SpeciesEnum(data["species"])
-            PetService.validate_breed_for_species(new_species, pet.breed)
-            pet.species = new_species
 
+        # Determine final species
+        if "species" in data:
+            final_species = SpeciesEnum(data["species"])
+        else:
+            final_species = pet.species
+
+        # Determine final breed
+        if "breed" in data:
+            final_breed = data["breed"]
+        else:
+            final_breed = pet.breed
+
+        # Validate breed against final species
+        PetService.validate_breed_for_species(final_species, final_breed)
+
+        # Assign species + breed
+        pet.species = final_species
+        pet.breed = final_breed
+
+        # Gender
         if "gender" in data:
             pet.gender = GenderEnum(data["gender"])
 
-        if "breed" in data:
-            PetService.validate_breed_for_species(pet.species, data["breed"])
-            pet.breed = data["breed"]
-        
+        # Date of birth
         if "date_of_birth" in data:
             dob_raw = data["date_of_birth"]
 
@@ -107,15 +120,15 @@ class PetService:
                 except ValueError:
                     raise ValueError("date_of_birth must be in YYYY-MM-DD format")
 
-        for field in [
-            "name",
-            "desexed",
-            "date_of_birth",
-            "weight",
-            "notes",
-        ]:
+        # Other simple fields
+        for field in ["name", "desexed", "weight", "notes"]:
             if field in data:
-                setattr(pet, field, data[field])
+                value = data[field]
+
+                if field == "weight" and value not in (None, "", "null"):
+                    value = float(value)
+
+                setattr(pet, field, value)
 
         db.session.commit()
         return pet

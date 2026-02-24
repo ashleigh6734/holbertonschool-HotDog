@@ -33,9 +33,11 @@ export default function AllPets() {
           <button className="btn-yellow">+ Add Pet(s)</button>
         </div>
 
-        {pets.map(pet => (
-          <PetCard key={pet.id} pet={pet} />
-        ))}
+        <div className="pets-list">
+          {pets.map(pet => (
+            <PetCard key={pet.id} pet={pet} />
+          ))}
+        </div>
 
       </div>
     </div>

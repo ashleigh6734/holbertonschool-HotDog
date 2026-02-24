@@ -4,6 +4,7 @@ import "../../pages/UserProfile/UserProfile.css";
 export default function ConfirmModal({
   show,
   handleClose,
+  handlePrimary,
   heading,
   body,
   secondaryButton,
@@ -27,7 +28,7 @@ export default function ConfirmModal({
             outline: "none",
             border: "none",
           }}
-          onClick={handleClose}
+          onClick={handlePrimary}
         >
           {primaryButton}
         </Button>
