@@ -31,7 +31,7 @@
 }
 
 .manage-bookings-btn:hover {
-  background-color: #ffc72c;
+  background-color: #dcdcdb;
 }
 
 .upcoming-appointments-container {
@@ -40,4 +40,11 @@
 
 .upcoming-appointments-table {
   margin: 2rem 0;
+}
+
+.provider-date-container {
+  display: flex;
+  max-width: 800px;
+  width: 100%;
+  height: auto;
 }
