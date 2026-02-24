@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditPetDetails.css';
 import { getPetById } from '../../api/pet';
+import catImage from "../../assets/images/cat.jpg";
+import dogImage from "../../assets/images/dog.jpg";
 
 export default function EditPetDetails() {
   const { petId } = useParams();
@@ -151,6 +153,15 @@ export default function EditPetDetails() {
 
   if (loading) return <div className="edit-pet-loading">Loading...</div>;
 
+  const getPetImage = () => {
+    const species = formData.species?.toLowerCase();
+  
+    if (species === "cat") return catImage;
+    if (species === "dog") return dogImage;
+  
+    return dogImage;
+  };
+
   return (
     <div className="edit-pet-container">
       <div className="edit-pet-header">
@@ -168,7 +179,7 @@ export default function EditPetDetails() {
           <div className="pet-card">
             <img
               className="pet-avatar"
-              src="/src/assets/images/cat.jpg"
+              src={getPetImage()}
               alt={`${pet?.name || 'Pet'} avatar`}
             />
             <h3 className="pet-card-name">{formData.name}</h3>
