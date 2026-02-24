@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext.jsx";
 
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import ProviderNav from "./components/Header/ProviderNav.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
 /* =======================
@@ -38,11 +41,17 @@ import Account from "./pages/ProviderPages/Account/Account.jsx";
 
 
 export default function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <>
-      <Header />
+    {/* Show TOP header if Guest + User */}
+    {user?.role !== "provider" && <Header />}
 
-      <main className="main">
+    {/* Show Side Provider NavBar if Provider */}
+    {user?.role === "provider" && <ProviderNav />}
+
+      <main className={user?.role === "provider" ? "main with-sidebar" : "main"}>
         <Routes>
           
           {/* =======================
@@ -89,7 +98,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <Footer />
+      {user?.role !== "provider" && <Footer />}
     </>
   );
 }
