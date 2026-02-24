@@ -6,7 +6,7 @@
 .review-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #003a70;
+  color: #1f3a5f;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -36,7 +36,7 @@
 }
 
 .add-review-btn {
-  background-color: #003a70;
+  background-color: #1f3a5f;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -49,7 +49,7 @@
 }
 
 .add-review-btn:hover {
-  background-color: #002a50;
+  background-color: #1f3a5f;
 }
 
 .add-review-btn:active {
@@ -80,7 +80,7 @@
 .reviewer-name {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #003a70;
+  color: #1f3a5f;
   margin: 0;
 }
 
