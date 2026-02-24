@@ -32,10 +32,9 @@ import ManageAppointments from "./pages/ManageAppointments/ManageAppointments.js
 import PatientList from "./pages/ProviderPages/PaitentList/PatientList.jsx";
 import ProviderEditPetDetails from "./pages/ProviderPages/PaitentList/ProviderEditPetDetails.jsx";
 import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetProfile.jsx";
-// import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
+import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
-
 
 export default function App() {
   return (
@@ -44,7 +43,6 @@ export default function App() {
 
       <main className="main">
         <Routes>
-          
           {/* =======================
               PUBLIC ROUTES
           ======================= */}
@@ -54,38 +52,42 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
 
-
           {/* =======================
               USER ROUTES (role: user)
           ======================= */}
           {/* PRIVATE routes - commented out for now to avoid redirects || DO NOT DELETE */}
           {/* <Route element={<ProtectedRoute allowedRole="user" />}> */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/booking" element={<Booking />} />
-            <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
-            <Route path="/pets" element={<AllPets />} />
-            <Route path="/user" element={<UserProfile />} />
-            <Route path="/appointments/:id" element={<Appointments />} />
-            <Route path="/manage-appointments" element={<ManageAppointments />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
+          <Route path="/pets" element={<AllPets />} />
+          <Route path="/user" element={<UserProfile />} />
+          <Route path="/appointments/:id" element={<Appointments />} />
+          <Route path="/manage-appointments" element={<ManageAppointments />} />
           {/* </Route> */}
 
           {/* =======================
               PROVIDER ROUTES (role: provider)
           ======================= */}
           {/* <Route element={<ProtectedRoute allowedRole="provider" />}>             */}
-            {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
-            {/* <Route path="/ProviderBookings" element={<ProviderBookings />} /> */}
-            <Route path="/PatientList" element={<PatientList />} />
-            <Route path="/ProviderEditPetDetails/:petId" element={<ProviderEditPetDetails />} />
-            <Route path="/ProviderPetProfile/:petId" element={<ProviderPetProfile/>} />
-            <Route path="/Account" element={<Account/>} />
+          {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
+          <Route path="/provider/appointments" element={<ProviderBookings />} />
+          <Route path="/PatientList" element={<PatientList />} />
+          <Route
+            path="/ProviderEditPetDetails/:petId"
+            element={<ProviderEditPetDetails />}
+          />
+          <Route
+            path="/ProviderPetProfile/:petId"
+            element={<ProviderPetProfile />}
+          />
+          <Route path="/Account" element={<Account />} />
           {/* </Route> */}
-          
+
           {/* =======================
               404 FALLBACK
           ======================= */}
           <Route path="*" element={<h1>404 — Route Not Found</h1>} />
-        
         </Routes>
       </main>
 
