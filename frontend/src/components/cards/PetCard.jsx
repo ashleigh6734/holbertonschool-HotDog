@@ -1,6 +1,6 @@
 import "./PetCard.css";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../components/modals/ConfirmModal";
 import BasicPopover from "../popovers/BasicPopover";
 
@@ -8,6 +8,38 @@ export default function PetCard({ pet }) {
   const navigate = useNavigate();
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/pets/${pet.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete pet");
+      }
+
+      setShowModal(false);
+
+      window.location.reload();
+
+    } catch (err) {
+      console.error("Delete failed:", err);
+    }
+  };
+
+  const formatEnum = (value) => {
+    if (!value) return "N/A";
+  
+    return value
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <div className="pet-card">
@@ -43,17 +75,17 @@ export default function PetCard({ pet }) {
 
           <div className="pet-info-group">
             <p className="pet-info-title">Species</p>
-            <p className="pet-info-input">{pet?.species || "N/A"}</p>
+            <p className="pet-info-input">{formatEnum(pet?.species)}</p>
           </div>
 
           <div className="pet-info-group">
             <p className="pet-info-title">Breed</p>
-            <p className="pet-info-input">{pet?.breed || "N/A"}</p>
+            <p className="pet-info-input">{formatEnum(pet?.breed)}</p>
           </div>
 
           <div className="pet-info-group">
             <p className="pet-info-title">Gender</p>
-            <p className="pet-info-input">{pet?.gender || "N/A"}</p>
+            <p className="pet-info-input">{formatEnum(pet?.gender)}</p>
           </div>
         </div>
 
@@ -71,7 +103,12 @@ export default function PetCard({ pet }) {
           </div>
 
           <div className="pet-card-actions">
-            <button className="btn-yellow" onClick={() => navigate(`/edit-pet/${pet.id}`)}>Edit</button>
+            <button
+              className="btn-yellow"
+              onClick={() => navigate(`/edit-pet/${pet.id}`)}
+            >
+              Edit
+            </button>
             <button
               className="btn-navy"
               onClick={() => {
@@ -87,6 +124,7 @@ export default function PetCard({ pet }) {
       <ConfirmModal
         show={showModal}
         handleClose={() => setShowModal(false)}
+        handlePrimary={handleDelete}
         heading="Delete Pet"
         body={
           <>
