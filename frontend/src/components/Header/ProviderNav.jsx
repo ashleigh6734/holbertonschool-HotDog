@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-// import Avatar from "../avatar/Avatar.jsx";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import "./providernavStyles.css";
@@ -20,7 +19,6 @@ function ProviderNav() {
             className="provider-logout"
             onClick={() => {
               logout(); // call context for logout function
-              setOpen(false); // close menu after logout
             }}
             >
               Logout</button>
