@@ -45,7 +45,7 @@
 .modal-header h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #003a70;
+  color: #1f3a5f;
 }
 
 .modal-close-btn {
@@ -79,7 +79,7 @@
   display: block;
   font-size: 1rem;
   font-weight: 600;
-  color: #003a70;
+  color: #1f3a5f;
   margin-bottom: 0.5rem;
 }
 
@@ -100,11 +100,11 @@
 }
 
 .star-btn.filled {
-  color: #ffc107;
+  color: #ffc72c;
 }
 
 .star-btn.empty {
-  color: #d3d3d3;
+  color: #e8eaee;
 }
 
 .star-btn:hover {
@@ -132,7 +132,7 @@
 
 .form-group textarea:focus {
   outline: none;
-  border-color: #003a70;
+  border-color: #1f3a5f;
   box-shadow: 0 0 0 3px rgba(0, 58, 112, 0.1);
 }
 
@@ -184,12 +184,12 @@
 }
 
 .btn-submit {
-  background-color: #003a70;
+  background-color: #1f3a5f;
   color: white;
 }
 
 .btn-submit:hover {
-  background-color: #002a50;
+  background-color: #1f3a5f;
 }
 
 .btn-submit:active {

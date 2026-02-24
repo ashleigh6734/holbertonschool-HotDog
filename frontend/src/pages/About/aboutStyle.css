@@ -175,6 +175,7 @@ body {
 
 .icon-whatwedo {
   width: 80px;
+  height: 80px;
   margin-bottom: 25px;
   padding: 15px;
   border-radius: 50%;
@@ -203,6 +204,7 @@ body {
 
 .icon-businesstesi {
   width: 40%;
+  height: 40%;
 }
 
 /* SPONDORED BY THE HOLBERTON SCHOOL*/
@@ -228,6 +230,7 @@ body {
 
 .icon-sponsor {
   width: 35%;
+  height: 100%;
 }
 
 .sponsor-description {

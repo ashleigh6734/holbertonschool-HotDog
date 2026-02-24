@@ -31,7 +31,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #1a3a52;
+  color: #1f3a5f;
   width: 30px;
   height: 30px;
   display: flex;
@@ -61,7 +61,7 @@
 
 .confirm-modal-confirm-btn {
   background-color: #ffc72c;
-  color: #1a3a52;
+  color: #1f3a5f;
   border: none;
   border-radius: 6px;
   padding: 12px 24px;

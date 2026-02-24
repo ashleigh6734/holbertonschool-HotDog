@@ -1,5 +1,5 @@
 .auth-toggle {
-  background: #e9ecef;
+  background: #e8eaee;
   padding: 4px;
   border-radius: 999px;
 }
@@ -10,12 +10,12 @@
   font-size: 0.85rem;
   font-weight: 600;
   background: transparent;
-  color: #1f3b64;
+  color: #1f3a5f;
   border: none;
 }
 
 .auth-btn.active {
-  background-color: #1f3b64;
+  background-color: #1f3a5f;
   color: #fff;
 }
 
