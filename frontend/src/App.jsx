@@ -79,20 +79,47 @@ export default function App() {
           {/* =======================
               PROVIDER ROUTES (role: provider)
           ======================= */}
-          {/* <Route element={<ProtectedRoute allowedRole="provider" />}>             */}
           {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
-          <Route path="/provider/appointments" element={<ProviderBookings />} />
-          <Route path="/PatientList" element={<PatientList />} />
+          <Route
+            path="/provider/appointments"
+            element={(
+              <ProtectedRoute allowedRole="provider">
+                <ProviderBookings />
+              </ProtectedRoute>
+            )}
+          />
+          <Route
+            path="/PatientList"
+            element={(
+              <ProtectedRoute allowedRole="provider">
+                <PatientList />
+              </ProtectedRoute>
+            )}
+          />
           <Route
             path="/ProviderEditPetDetails/:petId"
-            element={<ProviderEditPetDetails />}
+            element={(
+              <ProtectedRoute allowedRole="provider">
+                <ProviderEditPetDetails />
+              </ProtectedRoute>
+            )}
           />
           <Route
             path="/ProviderPetProfile/:petId"
-            element={<ProviderPetProfile />}
+            element={(
+              <ProtectedRoute allowedRole="provider">
+                <ProviderPetProfile />
+              </ProtectedRoute>
+            )}
           />
-          <Route path="/Account" element={<Account />} />
-          {/* </Route> */}
+          <Route
+            path="/Account"
+            element={(
+              <ProtectedRoute allowedRole="provider">
+                <Account />
+              </ProtectedRoute>
+            )}
+          />
 
           {/* =======================
               404 FALLBACK

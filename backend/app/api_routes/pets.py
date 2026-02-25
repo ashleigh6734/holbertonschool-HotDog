@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.pet_service import PetService
+from app.services.user_service import UserService
 
 pets_bp = Blueprint("pets", __name__, url_prefix="/api/pets")
 
@@ -129,3 +130,43 @@ def delete_pet(pet_id):
 
     PetService.delete_pet(pet)
     return jsonify({"message": "Pet successfully deleted"}), 200
+
+
+@pets_bp.route("/provider/search", methods=["GET"])
+@jwt_required()
+def provider_search_owner_pets():
+    user_id = get_jwt_identity()
+    user = UserService.get_user_by_id(user_id)
+
+    if not user or user.role != "provider":
+        return jsonify({"Provider role required"}), 403
+
+    email = request.args.get("email")
+    phone = request.args.get("phone")
+
+    try:
+        owner, pets = PetService.search_owner_and_pets(email=email, phone=phone)
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    if not owner:
+        return jsonify({"error": "Owner not found"}), 404
+
+    return jsonify({
+        "owner": {
+            "id": owner.id,
+            "first_name": owner.first_name,
+            "last_name": owner.last_name,
+            "email": owner.email,
+            "phone_number": owner.phone_number,
+        },
+        "pets": [
+            {
+                "id": pet.id,
+                "name": format_text(pet.name),
+                "species": format_text(pet.species.value),
+                "breed": format_text(pet.breed),
+            }
+            for pet in pets
+        ],
+    }), 200
