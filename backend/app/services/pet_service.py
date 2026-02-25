@@ -5,8 +5,10 @@ from app.models.pet import (
     CatBreedEnum,
     GenderEnum,
 )
+from app.models.user import User
 from app.extensions import db
 from datetime import date
+import re
 
 
 class PetService:
@@ -140,3 +142,24 @@ class PetService:
         """
         db.session.delete(pet)
         db.session.commit()
+
+    @staticmethod
+    def search_owner_and_pets(email=None, phone=None):
+        if not email and not phone:
+            raise ValueError("email or phone is required")
+
+        query = User.query
+
+        if email:
+            query = query.filter(User.email == email.strip().lower())
+
+        if phone:
+            stripped = re.sub(r"[^\d+]", "", phone.strip())
+            query = query.filter(User.phone_number == stripped)
+
+        owner = query.first()
+        if not owner:
+            return None, []
+
+        pets = Pet.query.filter_by(owner_id=owner.id).all()
+        return owner, pets

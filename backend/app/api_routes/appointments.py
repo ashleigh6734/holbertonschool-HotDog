@@ -5,7 +5,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.extensions import db
 from app.models.appointment import Appointment, AppointmentStatus
 from app.models.pet import Pet
+from app.models.service_provider import ServiceProvider
 from app.services.appointment_service import AppointmentService
+from app.services.user_service import UserService
 
 appointments_bp = Blueprint("appointments", __name__, url_prefix="/api/appointments")
 
@@ -37,6 +39,22 @@ def error_response(message: str, status_code: int = 400, extra=None):
     if extra:
         payload.update(extra)
     return jsonify(payload), status_code
+
+
+def _get_current_provider():
+    user_id = get_jwt_identity()
+    user = UserService.get_user_by_id(user_id)
+
+    if not user:
+        return None, error_response("User not found", 404)
+    if user.role != "provider":
+        return None, error_response("Forbidden: provider role required", 403)
+
+    provider = ServiceProvider.query.filter_by(user_id=user_id).first()
+    if not provider:
+        return None, error_response("Provider profile not found", 404)
+
+    return provider, None
 
 
 # -------------------------
@@ -211,5 +229,75 @@ def get_user_appointments():
         "count": len(appointments),
         "appointments": [appointment_to_dict(a) for a in appointments]
     }), 200
-    
 
+
+@appointments_bp.route("/provider/me", methods=["GET"])
+@jwt_required()
+def get_provider_appointments():
+    """Get all appointments for the logged-in provider"""
+    provider, err = _get_current_provider()
+    if err:
+        return err
+
+    q_date = request.args.get("date")
+    q_status = request.args.get("status")
+
+    query = Appointment.query.filter_by(provider_id=provider.id)
+
+    if q_date:
+        try:
+            day = datetime.strptime(q_date, "%Y-%m-%d").date()
+        except ValueError:
+            return error_response("Invalid date format. Use YYYY-MM-DD.", 400)
+
+        start = datetime(day.year, day.month, day.day, tzinfo=timezone.utc)
+        end = start + timedelta(days=1)
+        query = query.filter(Appointment.date_time >= start, Appointment.date_time < end)
+
+    if q_status:
+        try:
+            status_enum = AppointmentStatus[q_status.strip().upper()]
+            query = query.filter(Appointment.status == status_enum)
+        except KeyError:
+            return error_response("Invalid status", 400)
+
+    appointments = query.order_by(Appointment.date_time.asc()).all()
+
+    return jsonify({
+        "count": len(appointments),
+        "appointments": [appointment_to_dict(a) for a in appointments]
+    }), 200
+
+
+@appointments_bp.route("/provider/me", methods=["POST"])
+@jwt_required()
+def create_provider_appointment():
+    """Create an appointment scoped to the logged-in provider"""
+    provider, err = _get_current_provider()
+    if err:
+        return err
+
+    data = request.get_json(silent=True) or {}
+    required_fields = ["pet_id", "date_time", "service_type"]
+    missing = [f for f in required_fields if data.get(f) in (None, "")]
+    if missing:
+        return error_response("Missing required fields", 400, {"missing": missing})
+
+    payload = {
+        "pet_id": data["pet_id"],
+        "provider_id": provider.id,
+        "date_time": data["date_time"],
+        "service_type": data["service_type"],
+        "notes": data.get("notes"),
+    }
+
+    try:
+        appt = AppointmentService.create_appointment(payload)
+        return jsonify({
+            "message": "Appointment created",
+            "booking": appointment_to_dict(appt)
+        }), 201
+    except ValueError as exc:
+        return error_response(str(exc), 400)
+    except Exception:
+        return error_response("Internal server error", 500)

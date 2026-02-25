@@ -1,4 +1,5 @@
 import "./UpcomingEvents.css";
+import dayjs from "dayjs";
 
 export default function UpcomingEvents({ upcomingEvents = [] }) {
   return (
@@ -16,10 +17,14 @@ export default function UpcomingEvents({ upcomingEvents = [] }) {
         </div>
 
         <div className="events-list">
-          {upcomingEvents.map((e, idx) => (
-            <div key={idx} className="events-row">
-              <div className="appt-date">{e.date}</div>
-              <div className="appt-title">{e.time}</div>
+          {upcomingEvents.map((e) => (
+            <div key={e.id} className="events-row">
+              <div className="appt-date">
+                {e.date_time ? dayjs(e.date_time).format("DD/MM/YY") : "-"}
+              </div>
+              <div className="appt-title">
+                {e.date_time ? dayjs(e.date_time).format("HH:mm") : "-"}
+              </div>
               <div className="appt-title">{e.service_type}</div>
               <div className="appt-title">{e.pet_name}</div>
               <div className="appt-title">{e.status}</div>
