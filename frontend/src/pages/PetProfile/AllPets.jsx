@@ -2,14 +2,14 @@ import "./AllPets.css";
 import PetCard from "../../components/cards/PetCard";
 import { useEffect, useState } from "react";
 import { getMyPets } from "../../api/pet";
-// import Popup from "reactjs-popup";
-// import "reactjs-popup/dist/index.css";
-// import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
 
 export default function AllPets() {
   const [pets, setPets] = useState([]);
 
-  useEffect(() => {
+  const refreshPets = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -18,11 +18,16 @@ export default function AllPets() {
     }
 
     getMyPets(token)
-      .then((data) => {
+      .then(data => {
         console.log("Fetched pets:", data);
         setPets(data);
       })
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
+  };
+
+  // Load pets on page mount
+  useEffect(() => {
+    refreshPets();
   }, []);
 
   return (
@@ -33,7 +38,7 @@ export default function AllPets() {
         </div>
         <div className="all-pets-actions">
           <div>All({pets.length})</div>
-          {/* <Popup
+          <Popup
             trigger={<button className="btn-yellow">+ Add Pet(s)</button>}
             position="bottom center" 
             closeOnDocumentClick
@@ -44,19 +49,21 @@ export default function AllPets() {
           >
             {(close) => (
               <div>
-                <FormAddPet closePopup={close} />
+                <FormAddPet 
+                closePopup={close} 
+                onPetAdded={refreshPets}
+                />
               </div>
             )}
-          </Popup> */}
+          </Popup>
         </div>
 
-        <div className="pets-list-container">
-          <div className="pets-list">
-            {pets.map((pet) => (
-              <PetCard key={pet.id} pet={pet} />
-            ))}
-          </div>
+        <div className="pets-list">
+          {pets.map(pet => (
+            <PetCard key={pet.id} pet={pet} />
+          ))}
         </div>
+
       </div>
     </div>
   );

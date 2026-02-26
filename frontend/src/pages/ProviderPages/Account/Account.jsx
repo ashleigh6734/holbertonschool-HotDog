@@ -69,18 +69,18 @@ export default function Account() {
                       className="justify-left mb-1"
                       controlId="userFirstName"
                       type="firstname"
-                      name="First Name"
+                      name="Company Name"
                       disabled={!editMode}
                       readOnly={!editMode}
                     />
-                    <FormLabel
+                    {/* <FormLabel
                       className="justify-left mb-1"
                       controlId="userLastName"
                       type="lastname"
                       name="Last Name"
                       disabled={!editMode}
                       readOnly={!editMode}
-                    />
+                    /> */}
                     <FormLabel
                       className="justify-left mb-1"
                       controlId="userEmail"
@@ -93,7 +93,7 @@ export default function Account() {
                       className="justify-left mb-1"
                       controlId="userMobile"
                       type="mobile"
-                      name="Mobile Number"
+                      name="Address"
                       disabled={!editMode}
                       readOnly={!editMode}
                     />
@@ -101,10 +101,61 @@ export default function Account() {
                       className="justify-left mb-3"
                       controlId="emergencyNumber"
                       type="secondaryNumber"
-                      name="Secondary Phone Number"
+                      name="Other locations"
                       disabled={!editMode}
                       readOnly={!editMode}
                     />
+                    <FormLabel
+                      className="justify-left mb-3"
+                      controlId="emergencyNumber"
+                      type="secondaryNumber"
+                      name="Other locations"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+
+                    {/* Profile Info */}
+                    <FormLabel
+                      className="justify-left mb-1"
+                      controlId="userEmail"
+                      type="email"
+                      name="Services you provide"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+                    <FormLabel
+                      className="justify-left mb-1"
+                      controlId="userMobile"
+                      type="mobile"
+                      name="Phone"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+                    <FormLabel
+                      className="justify-left mb-3"
+                      controlId="emergencyNumber"
+                      type="secondaryNumber"
+                      name="Description"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+                    <FormLabel
+                      className="justify-left mb-3"
+                      controlId="emergencyNumber"
+                      type="secondaryNumber"
+                      name="Opening hours"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+                    <FormLabel
+                      className="justify-left mb-3"
+                      controlId="emergencyNumber"
+                      type="secondaryNumber"
+                      name="Closing hours"
+                      disabled={!editMode}
+                      readOnly={!editMode}
+                    />
+                    
                   </Form>
 
                   {editMode ? (

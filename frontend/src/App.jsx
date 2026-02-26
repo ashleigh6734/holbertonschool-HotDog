@@ -7,6 +7,11 @@ import Footer from "./components/Footer/Footer.jsx";
 import ProviderNav from "./components/Header/ProviderNav.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
+
+// MUST DELETE
+import BookingSteps from "./components/BookingSteps/BookingSteps.jsx";
+
+
 /* =======================
    PUBLIC PAGES
 ======================= */
@@ -75,6 +80,10 @@ export default function App() {
           <Route path="/user" element={<UserProfile />} />
           <Route path="/appointments/:id" element={<Appointments />} />
           <Route path="/manage-appointments" element={<ManageAppointments />} />
+
+          {/* MUST DELETE -- GRACE */}
+          <Route path="/BookingSteps" element={<BookingSteps />} />
+          BookingSteps
           {/* </Route> */}
 
           {/* =======================
