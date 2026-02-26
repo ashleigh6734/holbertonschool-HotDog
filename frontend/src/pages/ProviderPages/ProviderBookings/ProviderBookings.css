@@ -63,13 +63,28 @@
 }
 
 .provider-bookings-container {
-  /* display: flex;
-  flex-direction: column; */
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 2fr;
   gap: 0.5rem;
+  align-items: start;
   height: auto;
   padding: 0px 10px 20px 10px;
+}
+
+.provider-bookings-container .date-container {
+  margin-top: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.provider-bookings-container .date-container .MuiDateCalendar-root {
+  transform: scale(1.2);
+  transform-origin: top left;
+}
+
+.provider-bookings-container .time-container {
+  margin-top: 20;
+  align-self: start;
 }
 
 .create-booking-row {
@@ -99,7 +114,7 @@
   width: min(760px, 92vw);
   max-height: 90vh;
   overflow: auto;
-  background: #fff;
+  background: white;
   border-radius: 14px;
   padding: 18px;
   position: relative;
@@ -108,7 +123,8 @@
 .provider-modal-title {
   color: #1f3a5f;
   margin-bottom: 12px;
-  font-weight: 700;
+  font-weight: 900;
+
 }
 
 .provider-modal-close {
@@ -128,9 +144,21 @@
   background: #f2f4f7;
 }
 
+.provider-modal-block p {
+  font-weight: 700;
+  font-size: large;
+  color: #1f3a5f;
+}
+
 .provider-radio-row {
   display: flex;
   gap: 16px;
+}
+
+.provider-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
 .provider-input,
@@ -150,11 +178,18 @@
 .provider-secondary-btn {
   margin-top: 10px;
   border: none;
-  border-radius: 8px;
-  padding: 10px 12px;
+  border-radius: 10px;
+  padding: 8px 14px;
   background: #ffc72c;
   color: #1f3a5f;
   font-weight: 700;
+}
+
+.provider-checkbox-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .provider-error {

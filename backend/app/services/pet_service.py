@@ -33,6 +33,17 @@ class PetService:
         """
         Create new pet
         """
+        pet = PetService.build_pet_for_owner(owner_id, data)
+
+        db.session.add(pet)
+        db.session.commit()
+        return pet
+
+    @staticmethod
+    def build_pet_for_owner(owner_id, data):
+        """
+        Build a new pet instance without committing.
+        """
         species = SpeciesEnum(data["species"])
         gender = GenderEnum(data["gender"])
         breed = data["breed"]
@@ -51,7 +62,7 @@ class PetService:
             except ValueError:
                 raise ValueError("date_of_birth must be in YYYY-MM-DD format")
 
-        pet = Pet(
+        return Pet(
             owner_id=owner_id,
             name=data["name"],
             species=species,
@@ -62,10 +73,6 @@ class PetService:
             weight=data.get("weight"),
             notes=data.get("notes"),
         )
-
-        db.session.add(pet)
-        db.session.commit()
-        return pet
 
     @staticmethod
     def get_pets_for_user(owner_id):
