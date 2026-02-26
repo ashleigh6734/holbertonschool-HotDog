@@ -67,3 +67,15 @@ export async function createProviderBooking(token, payload) {
   }
   return data;
 }
+export async function cancelAppointment(token, appointmentId) {
+  const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/cancel`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || "Failed to cancel appointment");
+  }
+  return data;
+}

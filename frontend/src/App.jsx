@@ -38,6 +38,7 @@ import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetPro
 import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
+import ManageBooking from "./pages/ProviderPages/ManageBooking/ManageBooking.jsx";
 
 export default function App() {
   const { user } = useContext(AuthContext);
@@ -66,8 +67,6 @@ export default function App() {
           {/* =======================
               USER ROUTES (role: user)
           ======================= */}
-          {/* PRIVATE routes - commented out for now to avoid redirects || DO NOT DELETE */}
-          {/* <Route element={<ProtectedRoute allowedRole="user" />}> */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
@@ -75,12 +74,10 @@ export default function App() {
           <Route path="/user" element={<UserProfile />} />
           <Route path="/appointments/:id" element={<Appointments />} />
           <Route path="/manage-appointments" element={<ManageAppointments />} />
-          {/* </Route> */}
 
           {/* =======================
               PROVIDER ROUTES (role: provider)
           ======================= */}
-          {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
           <Route
             path="/provider/appointments"
             element={
@@ -118,6 +115,14 @@ export default function App() {
             element={
               <ProtectedRoute allowedRole="provider">
                 <Account />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/provider/manage-booking"
+            element={
+              <ProtectedRoute allowedRole="provider">
+                <ManageBooking />
               </ProtectedRoute>
             }
           />
