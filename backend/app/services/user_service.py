@@ -1,5 +1,6 @@
 from app.models.user import User
 from app import db
+import secrets
 
 class UserService():
 
@@ -94,3 +95,22 @@ class UserService():
     @staticmethod
     def get_all_users():
         return User.query.all()
+
+    @staticmethod
+    def build_customer_user_for_provider(data):
+        # Check if email already exists
+        existing_email = User.query.filter_by(email=data["email"]).first()
+        if existing_email:
+            raise ValueError("Email already registered")
+
+        user = User(
+            first_name=data["first_name"],
+            last_name=data["last_name"],
+            email=data["email"],
+            phone_number=data.get("phone_number"),
+            role="user",
+        )
+
+        # Generate a temporary password for provider-created customer accounts.
+        user.set_password(secrets.token_urlsafe(16))
+        return user
