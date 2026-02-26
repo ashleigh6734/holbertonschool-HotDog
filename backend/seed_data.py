@@ -6,6 +6,7 @@ from app.models.pet import Pet, SpeciesEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
 from app.models.appointment import Appointment, AppointmentStatus
 from datetime import date, time, datetime, timedelta, timezone
+from datetime import datetime
 
 app = create_app()
 
@@ -23,7 +24,9 @@ PROVIDERS_DATA = [
             "address": "123 High St, Melbourne VIC",
             "phone": "+61400111222",
             "email": "contact@pawsclaws.com",
-            "slot_duration": 30
+            "slot_duration": 30,
+            "opening_time": "08:00",
+            "closing_time": "17:00"
         }
     },
     {
@@ -36,7 +39,9 @@ PROVIDERS_DATA = [
             "address": "45 Dogwood Ln, Sydney NSW",
             "phone": "+61400333444",
             "email": "info@sparklepaws.com",
-            "slot_duration": 60
+            "slot_duration": 60,
+            "opening_time": "09:30",
+            "closing_time": "18:00"
         }
     },
     {
@@ -49,7 +54,9 @@ PROVIDERS_DATA = [
             "address": "78 Park Ave, Brisbane QLD",
             "phone": "+61400555666",
             "email": "walks@happytails.com",
-            "slot_duration": 45
+            "slot_duration": 45,
+            "opening_time": "7:00",
+            "closing_time": "15:00"
         }
     },
     {
@@ -62,7 +69,9 @@ PROVIDERS_DATA = [
             "address": "101 Training Crt, Perth WA",
             "phone": "+61400777888",
             "email": "train@goodboy.com",
-            "slot_duration": 60
+            "slot_duration": 60,
+            "opening_time": "8:00",
+            "closing_time": "15:00"
         }
     },
     {
@@ -75,7 +84,9 @@ PROVIDERS_DATA = [
             "address": "202 Safety Rd, Adelaide SA",
             "phone": "+61400999000",
             "email": "admin@safehands.com",
-            "slot_duration": 90
+            "slot_duration": 90,
+            "opening_time": "8:00",
+            "closing_time": "17:00"
         }
     },
     {
@@ -88,7 +99,9 @@ PROVIDERS_DATA = [
             "address": "303 Molar St, Hobart TAS",
             "phone": "+61400123123",
             "email": "smile@caninesmiles.com",
-            "slot_duration": 45
+            "slot_duration": 45,
+            "opening_time": "9:00",
+            "closing_time": "17:00"
         }
     }
 ]
@@ -168,6 +181,9 @@ with app.app_context():
         db.session.flush() # Flush to get the ID before creating the provider
 
         # B. Create the Service Provider linked to the Owner
+        opening_time_str = data["business"]["opening_time"]
+        closing_time_str = data["business"]["closing_time"]
+
         provider = ServiceProvider(
             user_id=owner.id,
             name=data["business"]["name"],
@@ -177,8 +193,8 @@ with app.app_context():
             phone=data["business"]["phone"],
             email=data["business"]["email"],
             slot_duration=data["business"]["slot_duration"],
-            opening_time=time(9, 0),
-            closing_time=time(17, 0)
+            opening_time=datetime.strptime(opening_time_str, "%H:%M").time(),
+            closing_time=datetime.strptime(closing_time_str, "%H:%M").time()
         )
         owner.service_provider = provider
         db.session.add(provider)
