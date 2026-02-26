@@ -26,7 +26,7 @@ body {
 header {
   position: fixed;
   background-color: #ffc72c;
-  margin: auto -16px;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
