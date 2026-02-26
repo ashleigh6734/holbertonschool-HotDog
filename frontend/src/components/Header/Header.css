@@ -65,6 +65,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 0;
+  align-items: center;
 }
 
 .nav-links li a {
