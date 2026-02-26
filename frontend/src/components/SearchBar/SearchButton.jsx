@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import providername_Data from "./providername_Data.js";
-import service_Lists from "./services_Lists.js";
+import service_Lists, { service_ListsWithAll } from "./services_Lists.js";
 import "./searchbar.css";
+import Fuse from "fuse.js";
 
 
 function SearchButton({ onServiceChange, onSearchChange, onSearch, service, searchValue }) {
@@ -16,24 +16,64 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
   const [showServices, setShowServices] = useState(false);
   const [showProviders, setShowProviders] = useState(false);
 
+  const [allProviders, setAllProviders] = useState([]);
+  const [fuse, setFuse] = useState(null);
+
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const fetchProviderNames = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/providers");
+        const data = await res.json();
+
+        const names = data.map((p) => p.name);
+        setAllProviders(names);
+
+        const fuseInstance = new Fuse(names, {
+          threshold: 0.35,      // stricter but still typo-tolerant
+          ignoreLocation: true,
+          minMatchCharLength: 2,
+        });
+
+        setFuse(fuseInstance);
+
+      } catch (err) {
+        console.error("Failed to fetch provider names:", err);
+      }
+    };
+
+    fetchProviderNames();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowServices(false);
+        setShowProviders(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   //select a service dropdown
   const handleServiceInput = (value) => {
     setServiceInput(value);
     onServiceChange?.(value);
 
-    if (value.trim()) {
-      setProviderInput("");
-      onSearchChange?.("");
-    }
-
     if (!value.trim()) {
-      setServiceResults([]);
-      setShowServices(false);
+      setServiceResults(service_ListsWithAll);
+      setShowServices(true);
       return;
     }
 
-    const filtered = service_Lists.filter((service) =>
-      service.toLowerCase().includes(value.toLowerCase())
+    const filtered = service_ListsWithAll.filter((s) =>
+      s.toLowerCase().includes(value.toLowerCase())
     );
 
     setServiceResults(filtered);
@@ -42,14 +82,17 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
 
   const selectService = (service) => {
     setServiceInput(service);
-    onServiceChange?.(service);
-
     setProviderInput("");
     onSearchChange?.("");
 
-    setTimeout(() => setShowServices(false), 0);
+    if (service === "All Services" || !service) {
+      onServiceChange?.("");
+    } else {
+      onServiceChange?.(service);
+    }
+
+    setShowServices(false);
   };
-  
 
   // Search by provider names 
   const handleProviderInput = (value) => {
@@ -67,11 +110,19 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
       return;
     }
 
-    const filtered = providername_Data.filter((provider) =>
-      provider.toLowerCase().includes(value.toLowerCase())
-    );
+    let results = [];
 
-    setProviderResults(filtered);
+    if (fuse) {
+      results = fuse.search(value).map(r => r.item);
+    }
+
+    if (results.length === 0) {
+      results = allProviders.filter(p =>
+        p.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+
+    setProviderResults(results);
     setShowProviders(true);
   };
 
@@ -90,18 +141,24 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     if (!serviceInput.trim() && !providerInput.trim()) return;
     if (onSearch) onSearch();
 
-    if (location.pathname === "/") {
-      const params = new URLSearchParams();
-      if (serviceInput) params.append("service", serviceInput);
-      if (providerInput) params.append("provider", providerInput);
+    const params = new URLSearchParams();
 
+    if (serviceInput && serviceInput !== "All Services") {
+      params.append("service", serviceInput);
+    }
+
+    if (providerInput) {
+      params.append("provider", providerInput);
+    }
+
+    if (location.pathname === "/") {
       navigate(`/services?${params.toString()}`);
     }
   };
 
 
   return (
-    <div className="search-bar-wrapper">
+    <div className="search-bar-wrapper" ref={wrapperRef}>
 
       {/* Search bar */}
       <div className="search-bar">
@@ -116,11 +173,11 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
           strokeWidth="2"
           className={`dropdown-icon ${showServices ? "open" : ""}`}
           onClick={() => {
-              if (showServices) setShowServices(false);
-              else {
-                setServiceResults(service_Lists);
-                setShowServices(true);
-              }
+              // if (showServices) setShowServices(false);
+              // else {
+                setServiceResults(service_ListsWithAll); 
+                setShowServices(!showServices);
+              // }
             }}
           >
             <polyline points="6 9 12 3 18 9"></polyline>
@@ -136,7 +193,7 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
           readOnly
           onChange={(e) => handleServiceInput(e.target.value)}
           onFocus={() => {
-            setServiceResults(service_Lists);
+            setServiceResults(service_ListsWithAll);
             setShowServices(true);
           }}
           className="provider-search-filter"

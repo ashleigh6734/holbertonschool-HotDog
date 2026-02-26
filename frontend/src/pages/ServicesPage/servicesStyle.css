@@ -53,6 +53,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 12px;
   /* overflow: hidden; */
 }
 
@@ -115,8 +116,15 @@ body {
 }
 
 /* opening hours */
-.opening-container {
+.opening-container.open {
   color: green;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.opening-container.closed {
+  color: rgb(209, 3, 3);
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 10px;
