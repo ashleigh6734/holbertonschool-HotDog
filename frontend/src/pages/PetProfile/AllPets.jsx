@@ -50,10 +50,12 @@ export default function AllPets() {
           </Popup> */}
         </div>
 
-        <div className="pets-list">
-          {pets.map((pet) => (
-            <PetCard key={pet.id} pet={pet} />
-          ))}
+        <div className="pets-list-container">
+          <div className="pets-list">
+            {pets.map((pet) => (
+              <PetCard key={pet.id} pet={pet} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
