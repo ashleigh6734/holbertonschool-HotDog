@@ -75,6 +75,30 @@ def get_top_rated():
         # In production, log this error
         return jsonify({"error": "Failed to fetch top rated providers"}), 500
 
+
+@providers_bp.route("/me", methods=["GET"])
+@jwt_required()
+def get_my_provider():
+    user_id = get_jwt_identity()
+    provider = ServiceProviderService.get_by_owner_id(user_id)
+
+    if not provider:
+        return jsonify({"error": "Provider profile not found"}), 404
+
+    return jsonify({
+        "id": provider.id,
+        "name": provider.name,
+        "services": [s.service_type.value for s in provider.services],
+        "description": provider.description,
+        "address": provider.address,
+        "phone": provider.phone,
+        "email": provider.email,
+        "img_url": provider.img_url,
+        "opening_time": provider.opening_time.strftime("%H:%M"),
+        "closing_time": provider.closing_time.strftime("%H:%M"),
+        "slot_duration": provider.slot_duration,
+    }), 200
+
 # =====================
 # GET SINGLE PROVIDER
 # =====================

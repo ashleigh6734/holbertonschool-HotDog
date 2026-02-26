@@ -99,6 +99,10 @@ class ServiceProviderService:
         return db.session.get(ServiceProvider, provider_id)
 
     @staticmethod
+    def get_by_owner_id(user_id):
+        return ServiceProvider.query.filter_by(user_id=user_id).first()
+
+    @staticmethod
     def update_provider(provider, data):
         # Update basic fields
         if "name" in data: provider.name = data["name"]
