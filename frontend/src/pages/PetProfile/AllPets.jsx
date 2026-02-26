@@ -2,9 +2,9 @@ import "./AllPets.css";
 import PetCard from "../../components/cards/PetCard";
 import { useEffect, useState } from "react";
 import { getMyPets } from "../../api/pet";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
-import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
+// import Popup from "reactjs-popup";
+// import "reactjs-popup/dist/index.css";
+// import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
 
 export default function AllPets() {
   const [pets, setPets] = useState([]);
@@ -18,11 +18,11 @@ export default function AllPets() {
     }
 
     getMyPets(token)
-      .then(data => {
+      .then((data) => {
         console.log("Fetched pets:", data);
         setPets(data);
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -33,7 +33,7 @@ export default function AllPets() {
         </div>
         <div className="all-pets-actions">
           <div>All({pets.length})</div>
-          <Popup
+          {/* <Popup
             trigger={<button className="btn-yellow">+ Add Pet(s)</button>}
             position="bottom center" 
             closeOnDocumentClick
@@ -47,15 +47,16 @@ export default function AllPets() {
                 <FormAddPet closePopup={close} />
               </div>
             )}
-          </Popup>
+          </Popup> */}
         </div>
 
-        <div className="pets-list">
-          {pets.map(pet => (
-            <PetCard key={pet.id} pet={pet} />
-          ))}
+        <div className="pets-list-container">
+          <div className="pets-list">
+            {pets.map((pet) => (
+              <PetCard key={pet.id} pet={pet} />
+            ))}
+          </div>
         </div>
-
       </div>
     </div>
   );

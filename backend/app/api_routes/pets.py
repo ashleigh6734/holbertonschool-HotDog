@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.pet_service import PetService
 from app.services.user_service import UserService
+from app.extensions import db
 
 pets_bp = Blueprint("pets", __name__, url_prefix="/api/pets")
 
@@ -170,3 +171,68 @@ def provider_search_owner_pets():
             for pet in pets
         ],
     }), 200
+
+
+@pets_bp.route("/provider/intake", methods=["POST"])
+@jwt_required()
+def provider_create_customer_and_pet():
+    """
+    Provider only route to create a new customer user and one pet in a single transaction (for phone and walk in bookings)
+    """
+    user_id = get_jwt_identity()
+    user = UserService.get_user_by_id(user_id)
+
+    if not user or user.role != "provider":
+        return jsonify({"Provider role is required"}), 403
+
+    data = request.get_json(silent=True) or {}
+    owner_data = data.get("owner") or {}
+    pet_data = data.get("pet") or {}
+
+    owner_required = ["first_name", "last_name", "email"]
+    pet_required = ["name", "species", "breed", "gender", "desexed"]
+
+    missing_owner = [f for f in owner_required if owner_data.get(f) in (None, "")]
+    missing_pet = [f for f in pet_required if pet_data.get(f) in (None, "")]
+    if missing_owner or missing_pet:
+        return jsonify({
+            "error": "Missing required fields",
+            "missing_owner": missing_owner,
+            "missing_pet": missing_pet,
+        }), 400
+
+    try:
+        customer = UserService.build_customer_user_for_provider(owner_data)
+        db.session.add(customer)
+        db.session.flush()
+
+        pet = PetService.build_pet_for_owner(customer.id, pet_data)
+        db.session.add(pet)
+        db.session.commit()
+    except ValueError as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 400
+    except Exception:
+        db.session.rollback()
+        return jsonify({"error": "Internal server error"}), 500
+
+    return jsonify({
+        "owner": {
+            "id": customer.id,
+            "first_name": customer.first_name,
+            "last_name": customer.last_name,
+            "email": customer.email,
+            "phone_number": customer.phone_number,
+        },
+        "pet": {
+            "id": pet.id,
+            "name": format_text(pet.name),
+            "species": format_text(pet.species.value),
+            "breed": format_text(pet.breed),
+            "gender": format_text(pet.gender.value),
+            "desexed": pet.desexed,
+            "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
+            "weight": pet.weight,
+            "notes": pet.notes,
+        },
+    }), 201

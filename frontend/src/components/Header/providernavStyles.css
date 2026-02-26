@@ -15,10 +15,10 @@ body {
   background-color: white;
 }
 
-.main {
+/* .main {
   margin-left: 25px;
   padding: 20px;
-}
+} */
 
 .with-sidebar {
   margin-left: 260px;
@@ -32,15 +32,14 @@ body {
 }
 /* DONE! */
 
-
 /* Navigation */
 .provider-links {
   position: fixed;
   top: 0;
   left: 0;
   width: 260px;
-  background-color:#1f3a5f;
-  height: 100vh; 
+  background-color: #1f3a5f;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -63,13 +62,12 @@ body {
   gap: 20px;
 } */
 
-
 .provider-links li a {
   text-decoration: none;
   font-family: "Open Sans";
   font-size: 20px !important;
   font-weight: 500 !important;
-  color:  white !important;
+  color: white !important;
   transition: color 0.2s ease;
 }
 
@@ -77,7 +75,6 @@ body {
   font-weight: 700;
   color: #ffc72c !important;
 }
-
 
 /* DONE! */
 .provider-logout {
