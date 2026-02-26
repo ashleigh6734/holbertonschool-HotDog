@@ -8,7 +8,6 @@ html {
   font-family: "nunito", "Open Sans";
 }
 
-
 body {
   min-height: 100vh;
   display: flex;
@@ -18,7 +17,7 @@ body {
 
 .main {
   flex: 1;
-  padding-top: 100px;
+  /* padding-top: 100px; */
 }
 
 /* Footer */
@@ -28,7 +27,7 @@ footer {
 
 .footer-container {
   background-color: #1f3a5f;
-  margin: auto -16px;
+  margin: auto;
   padding: 60px max(50px, calc((100vw - 1000px) / 2));
   display: flex;
   align-items: center;
@@ -53,7 +52,7 @@ footer {
 }
 
 .footer-title {
-  color: #ffc72c; 
+  color: #ffc72c;
   font-weight: 700;
   font-size: 15px;
   margin-bottom: 16px;
