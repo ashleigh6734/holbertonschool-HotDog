@@ -1,7 +1,11 @@
 import os
 from datetime import datetime, timezone
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, To, Email
+try:
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail, To, Email
+except ImportError:
+    SendGridAPIClient = None
+    Mail = To = Email = None
 
 def utccurrent():
     return datetime.now(timezone.utc)
@@ -9,6 +13,9 @@ def utccurrent():
 class EmailService:
     @staticmethod
     def send_booking_confirmation(*, to_email: str, subject: str, html_content: str) -> None:
+        if SendGridAPIClient is None:
+            raise RuntimeError("sendgrid package is required to send emails")
+
         api_key = os.getenv("SENDGRID_API_KEY")
         from_email = os.getenv("FROM_EMAIL")
         
@@ -33,4 +40,3 @@ class EmailService:
         print("SENDGRID HEADERS:", response.headers)
 
         return response.status_code
-
