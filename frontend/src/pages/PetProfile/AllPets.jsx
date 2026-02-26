@@ -9,7 +9,7 @@ import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
 export default function AllPets() {
   const [pets, setPets] = useState([]);
 
-  useEffect(() => {
+  const refreshPets = () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -23,6 +23,11 @@ export default function AllPets() {
         setPets(data);
       })
       .catch(err => console.error(err));
+  };
+
+  // Load pets on page mount
+  useEffect(() => {
+    refreshPets();
   }, []);
 
   return (
@@ -44,7 +49,10 @@ export default function AllPets() {
           >
             {(close) => (
               <div>
-                <FormAddPet closePopup={close} />
+                <FormAddPet 
+                closePopup={close} 
+                onPetAdded={refreshPets}
+                />
               </div>
             )}
           </Popup>
