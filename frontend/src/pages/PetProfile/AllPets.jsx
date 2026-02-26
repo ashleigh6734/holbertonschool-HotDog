@@ -2,7 +2,6 @@ import "./AllPets.css";
 import PetCard from "../../components/cards/PetCard";
 import { useEffect, useState } from "react";
 import { getMyPets } from "../../api/pet";
-import { createPet } from "../../api/pet";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
@@ -10,7 +9,7 @@ import FormAddPet from "../../components/AddPetsForm/FormAddPet.jsx";
 export default function AllPets() {
   const [pets, setPets] = useState([]);
 
-  const refreshPets = () => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -24,13 +23,7 @@ export default function AllPets() {
         setPets(data);
       })
       .catch(err => console.error(err));
-  };
-
-
-  useEffect(() => {
-    refreshPets();
   }, []);
-
 
   return (
     <div className="all-pets-container">
@@ -51,10 +44,7 @@ export default function AllPets() {
           >
             {(close) => (
               <div>
-                <FormAddPet 
-                closePopup={close} 
-                onPetAdded={refreshPets}
-                />
+                <FormAddPet closePopup={close} />
               </div>
             )}
           </Popup>
