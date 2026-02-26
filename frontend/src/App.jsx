@@ -16,7 +16,6 @@ import Services from "./pages/ServicesPage/Services.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 
-
 /* =======================
    USER PAGES
 ======================= */
@@ -44,14 +43,16 @@ export default function App() {
   const { user } = useContext(AuthContext);
 
   return (
-    <>
-    {/* Show TOP header if Guest + User */}
-    {user?.role !== "provider" && <Header />}
+    <div className="app">
+      {/* Show TOP header if Guest + User */}
+      {user?.role !== "provider" && <Header />}
 
-    {/* Show Side Provider NavBar if Provider */}
-    {user?.role === "provider" && <ProviderNav />}
+      {/* Show Side Provider NavBar if Provider */}
+      {user?.role === "provider" && <ProviderNav />}
 
-      <main className={user?.role === "provider" ? "main with-sidebar" : "main"}>
+      <main
+        className={user?.role === "provider" ? "main with-sidebar" : "main"}
+      >
         <Routes>
           {/* =======================
               PUBLIC ROUTES
@@ -82,43 +83,43 @@ export default function App() {
           {/* <Route path="/ProviderDashboard" element={<ProviderDashboard />} /> */}
           <Route
             path="/provider/appointments"
-            element={(
+            element={
               <ProtectedRoute allowedRole="provider">
                 <ProviderBookings />
               </ProtectedRoute>
-            )}
+            }
           />
           <Route
             path="/PatientList"
-            element={(
+            element={
               <ProtectedRoute allowedRole="provider">
                 <PatientList />
               </ProtectedRoute>
-            )}
+            }
           />
           <Route
             path="/ProviderEditPetDetails/:petId"
-            element={(
+            element={
               <ProtectedRoute allowedRole="provider">
                 <ProviderEditPetDetails />
               </ProtectedRoute>
-            )}
+            }
           />
           <Route
             path="/ProviderPetProfile/:petId"
-            element={(
+            element={
               <ProtectedRoute allowedRole="provider">
                 <ProviderPetProfile />
               </ProtectedRoute>
-            )}
+            }
           />
           <Route
             path="/Account"
-            element={(
+            element={
               <ProtectedRoute allowedRole="provider">
                 <Account />
               </ProtectedRoute>
-            )}
+            }
           />
 
           {/* =======================
@@ -129,6 +130,6 @@ export default function App() {
       </main>
 
       {user?.role !== "provider" && <Footer />}
-    </>
+    </div>
   );
 }
