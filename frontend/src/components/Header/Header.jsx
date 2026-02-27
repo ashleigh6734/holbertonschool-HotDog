@@ -3,6 +3,7 @@ import UserHeader from "./UserHeader";
 import ProviderNav from "./ProviderNav.jsx";
 import Avatar from "../avatar/Avatar.jsx";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 import blueLogo from "../../assets/logo/hotdog_logo_blue_background.svg";
 import { useContext } from "react";
@@ -15,9 +16,9 @@ function Header() {
 
   return (
     <header>
-      <a href={user?.role === "user" ? "/dashboard" : "/"}>
+      <Link to={user?.role === "user" ? "/dashboard" : "/"}>
         <img src={blueLogo} alt="HotDog Logo" className="hotdog-logo" />
-      </a>
+      </Link>
 
       <div className="header-content">
         {!user && <GuestHeader />}
