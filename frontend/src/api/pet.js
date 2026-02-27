@@ -29,3 +29,23 @@ export const getPetById = async (petId, token) => {
 
   return response.json();
 };
+
+// created api function for posting a pet
+export const createPet = async (petData, token) => {
+  const response = await fetch("/api/pets/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(petData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Failed to create pet");
+  }
+
+  return data;
+};

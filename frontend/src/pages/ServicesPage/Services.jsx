@@ -2,12 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SearchButton from "../../components/SearchBar/SearchButton.jsx";
 import ServicesFilters_Card from "./ServicesFilters_Card.jsx";
-import searchFilter_Data from "./searchFilter_Data.js";
+// import searchFilter_Data from "./searchFilter_Data.js";
 import "./servicesStyle.css";
 
-function createCard(props) {
-  return <ServicesFilters_Card key={props.id} {...props} />;
+function isProviderOpen(openingTimeStr, closingTimeStr) {
+  if (!openingTimeStr || !closingTimeStr) return false;
+
+  const now = new Date();
+
+  const [openHour, openMinute] = openingTimeStr.split(":").map(Number);
+  const [closeHour, closeMinute] = closingTimeStr.split(":").map(Number);
+
+  const openTime = new Date(now);
+  openTime.setHours(openHour, openMinute, 0, 0);
+
+  const closeTime = new Date(now);
+  closeTime.setHours(closeHour, closeMinute, 0, 0);
+
+  return now >= openTime && now <= closeTime;
 }
+
 
 function Services() {
   const location = useLocation();
@@ -23,21 +37,43 @@ function Services() {
   const [inputService, setInputService] = useState(initialService);
   const [inputQuery, setInputQuery] = useState(initialProvider);
 
-  const [filteredData, setFilteredData] = useState(searchFilter_Data);
+  const [providers, setProviders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
-    const keyword = query.toLowerCase();
-    const results = searchFilter_Data.filter((item) => {
-      const matchesQuery =
-        item.title.toLowerCase().includes(keyword) ||
-        item.address.toLowerCase().includes(keyword);
-      const matchesService = serviceType ? item.servicetype === serviceType : true;
-      return matchesQuery && matchesService;
-    });
+    const fetchProviders = async () => {
+      setLoading(true);
+      setError(null);
 
-    setFilteredData(results);
-  }, [query, serviceType]);
+      try {
+        const params = new URLSearchParams();
+
+        if (serviceType) params.append("service_type", serviceType);
+        if (query) params.append("name", query);
+
+        const response = await fetch(
+          `http://localhost:5000/api/providers?${params.toString()}`
+        );
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch providers");
+        }
+
+        const data = await response.json();
+        setProviders(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProviders();
+  }, [serviceType, query]);
+
+
 
   const handleServiceChange = (value) => setInputService(value);
   const handleSearchChange = (value) => setInputQuery(value);
@@ -47,8 +83,8 @@ function Services() {
     setQuery(inputQuery);
 
     const params = new URLSearchParams();
-    if (inputService) params.append("service", inputService);
-    if (inputQuery) params.append("provider", inputQuery);
+    if (serviceType) params.append("service_type", serviceType); 
+    if (query) params.append("name", query);
     navigate(`/services?${params.toString()}`);
   };
 
@@ -68,7 +104,29 @@ function Services() {
       </div>
 
       <div className="service-cards-container">
-        {filteredData.length > 0 ? filteredData.map(createCard) : <p>No results found</p>}
+        {loading && <p>loading...</p>}
+
+        {error && <p>{error}</p>}
+
+        {!loading && providers.length > 0 ? (
+          providers.map((p) => (
+            <ServicesFilters_Card
+              key={p.id}
+              title={p.name} 
+              address={p.address} 
+              img={p.img_url}  
+              avgrating="4.5"
+              days="Mon–Fri"
+              times={`${p.opening_time} - ${p.closing_time}`}
+              isOpen={isProviderOpen(p.opening_time, p.closing_time)}
+              availability="9:00 10:00 11:00"
+              booknowbtn={true}
+            />
+          ))
+        ) : ( 
+          !loading && <p>No results found</p>
+        )}
+
       </div>
     </div>
   );

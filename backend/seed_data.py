@@ -6,6 +6,7 @@ from app.models.pet import Pet, SpeciesEnum, GenderEnum
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService
 from app.models.appointment import Appointment, AppointmentStatus
 from datetime import date, time, datetime, timedelta, timezone
+from datetime import datetime
 
 app = create_app()
 
@@ -18,12 +19,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
             "address": "123 High St, Melbourne VIC",
             "phone": "+61400111222",
             "email": "contact@pawsclaws.com",
-            "slot_duration": 30
+            "slot_duration": 30,
+            "opening_time": "08:00",
+            "closing_time": "17:00"
         }
     },
     {
@@ -31,12 +35,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Sparkle Paws Grooming",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
-            "address": "45 Dogwood Ln, Sydney NSW",
+            "address": "45 Dogwood Ln, Melbourne VIC",
             "phone": "+61400333444",
             "email": "info@sparklepaws.com",
-            "slot_duration": 60
+            "slot_duration": 60,
+            "opening_time": "09:30",
+            "closing_time": "18:00"
         }
     },
     {
@@ -44,12 +51,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Happy Tails Dog Walking",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
-            "address": "78 Park Ave, Brisbane QLD",
+            "address": "78 Park Ave, Melbourne VIC",
             "phone": "+61400555666",
             "email": "walks@happytails.com",
-            "slot_duration": 45
+            "slot_duration": 45,
+            "opening_time": "7:00",
+            "closing_time": "15:00"
         }
     },
     {
@@ -57,12 +67,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Good Boy Puppy School",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
-            "address": "101 Training Crt, Perth WA",
+            "address": "101 Training Crt, Melbourne VIC",
             "phone": "+61400777888",
             "email": "train@goodboy.com",
-            "slot_duration": 60
+            "slot_duration": 60,
+            "opening_time": "8:00",
+            "closing_time": "15:00"
         }
     },
     {
@@ -70,12 +83,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Safe Hands Desexing Clinic",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
-            "address": "202 Safety Rd, Adelaide SA",
+            "address": "202 Safety Rd, Melbourne VIC",
             "phone": "+61400999000",
             "email": "admin@safehands.com",
-            "slot_duration": 90
+            "slot_duration": 90,
+            "opening_time": "8:00",
+            "closing_time": "17:00"
         }
     },
     {
@@ -83,12 +99,15 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Canine Smiles Dental",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
-            "address": "303 Molar St, Hobart TAS",
+            "address": "303 Molar St, Melbourne VIC",
             "phone": "+61400123123",
             "email": "smile@caninesmiles.com",
-            "slot_duration": 45
+            "slot_duration": 45,
+            "opening_time": "9:00",
+            "closing_time": "17:00"
         }
     }
 ]
@@ -168,17 +187,21 @@ with app.app_context():
         db.session.flush() # Flush to get the ID before creating the provider
 
         # B. Create the Service Provider linked to the Owner
+        opening_time_str = data["business"]["opening_time"]
+        closing_time_str = data["business"]["closing_time"]
+
         provider = ServiceProvider(
             user_id=owner.id,
             name=data["business"]["name"],
             img_url=data["business"].get("img_url"),
+            logo_url=data["business"].get("logo_url"),
             description=data["business"]["description"],
             address=data["business"]["address"],
             phone=data["business"]["phone"],
             email=data["business"]["email"],
             slot_duration=data["business"]["slot_duration"],
-            opening_time=time(9, 0),
-            closing_time=time(17, 0)
+            opening_time=datetime.strptime(opening_time_str, "%H:%M").time(),
+            closing_time=datetime.strptime(closing_time_str, "%H:%M").time()
         )
         owner.service_provider = provider
         db.session.add(provider)

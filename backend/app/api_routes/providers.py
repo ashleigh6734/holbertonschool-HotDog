@@ -41,19 +41,27 @@ def get_providers():
     
     providers = ServiceProviderService.get_all_providers(filters)
 
-    return jsonify([
-        {
+    provider_list = []
+    for p in providers:
+        reviews = p.reviews
+        
+        avg_rating = sum(r.rating for r in reviews) / len(reviews) if reviews else 0.0
+        
+        provider_list.append({
             "id": p.id,
             "name": p.name,
             "services": [s.service_type.value for s in p.services],
             "address": p.address,
             "img_url": p.img_url,
+            "logo_url": p.logo_url,
+            "rating": round(avg_rating, 1),       
+            "review_count": len(reviews),         
             "opening_time": p.opening_time.strftime("%H:%M"),
             "closing_time": p.closing_time.strftime("%H:%M"),
             "slot_duration": p.slot_duration
-        }
-        for p in providers
-    ]), 200
+        })
+
+    return jsonify(provider_list), 200
 
 # =====================
 # GET TOP RATED PROVIDERS (DASHBOARD)
@@ -94,6 +102,7 @@ def get_my_provider():
         "phone": provider.phone,
         "email": provider.email,
         "img_url": provider.img_url,
+        "logo_url": provider.logo_url,
         "opening_time": provider.opening_time.strftime("%H:%M"),
         "closing_time": provider.closing_time.strftime("%H:%M"),
         "slot_duration": provider.slot_duration,
@@ -110,6 +119,9 @@ def get_provider(provider_id):
     if not provider:
         return jsonify({"error": "Provider not found"}), 404
 
+    reviews = provider.reviews
+    avg_rating = sum(r.rating for r in reviews) / len(reviews) if reviews else 0
+    
     return jsonify({
         "id": provider.id,
         "name": provider.name,
@@ -119,6 +131,9 @@ def get_provider(provider_id):
         "phone": provider.phone,
         "email": provider.email,
         "img_url": provider.img_url,
+        "logo_url": provider.logo_url,
+        "rating": round(avg_rating, 1),
+        "review_count": len(reviews),
         "opening_time": provider.opening_time.strftime("%H:%M"),
         "closing_time": provider.closing_time.strftime("%H:%M"),
         "slot_duration": provider.slot_duration,

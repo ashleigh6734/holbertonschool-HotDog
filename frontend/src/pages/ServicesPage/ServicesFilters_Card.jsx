@@ -35,8 +35,8 @@ function ServicesFilters_Card(props) {
         </div>
           
         <div className="service-header-text"> 
-          <p className="opening-container">
-            ● Opening hours
+          <p className={`opening-container ${props.isOpen ? "open" : "closed"}`}>
+            ● {props.isOpen ? "Open" : "Closed"}
           </p>
           <div className="opening-hours">
             <div className="hours-items">

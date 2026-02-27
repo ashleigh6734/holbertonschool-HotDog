@@ -7,6 +7,11 @@ import Footer from "./components/Footer/Footer.jsx";
 import ProviderNav from "./components/Header/ProviderNav.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
+
+// MUST DELETE
+import BookingSteps from "./components/BookingSteps/BookingSteps.jsx";
+
+
 /* =======================
    PUBLIC PAGES
 ======================= */
@@ -19,7 +24,6 @@ import Register from "./pages/Register/Register.jsx";
 /* =======================
    USER PAGES
 ======================= */
-import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import EditPetDetails from "./pages/PetProfile/EditPetDetails.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
@@ -68,12 +72,16 @@ export default function App() {
               USER ROUTES (role: user)
           ======================= */}
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/booking" element={<Booking />} />
           <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
           <Route path="/pets" element={<AllPets />} />
           <Route path="/user" element={<UserProfile />} />
           <Route path="/appointments/:id" element={<Appointments />} />
           <Route path="/manage-appointments" element={<ManageAppointments />} />
+
+          {/* MUST DELETE -- GRACE */}
+          <Route path="/BookingSteps" element={<BookingSteps />} />
+          BookingSteps
+          {/* </Route> */}
 
           {/* =======================
               PROVIDER ROUTES (role: provider)

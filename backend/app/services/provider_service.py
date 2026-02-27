@@ -24,6 +24,7 @@ class ServiceProviderService:
             phone=data.get("phone"),
             email=data.get("email"),
             img_url=data.get("img_url", "https://via.placeholder.com/800x400?text=Clinic+Image"),
+            logo_url=data.get("logo_url", "https://via.placeholder.com/150?text=Logo"),
             opening_time=parse_time(opening),
             closing_time=parse_time(closing),
             slot_duration=int(data.get("slot_duration", 30))
@@ -111,16 +112,14 @@ class ServiceProviderService:
         if "phone" in data: provider.phone = data["phone"]
         if "slot_duration" in data: provider.slot_duration = int(data["slot_duration"])
         if "img_url" in data: provider.img_url = data["img_url"]
-    
+        if "logo_url" in data: provider.logo_url = data["logo_url"]
+        
         db.session.commit()
         return provider
     
     @staticmethod
     def get_top_rated_providers(limit=6):
-        """
-        Fetches providers sorted by average rating (highest first).
-        Only includes providers with at least one review.
-        """
+    
         # 1. Query the database for Provider, Avg Rating, and Count
         results = db.session.query(
             ServiceProvider,
@@ -149,6 +148,7 @@ class ServiceProviderService:
                 "rating": round(avg_rating, 1), 
                 "review_count": count,
                 "img_url": provider.img_url,
+                "logo_url": provider.logo_url,
                 "main_service": main_service
             }
             top_rated.append(provider_data)

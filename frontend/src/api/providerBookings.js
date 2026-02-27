@@ -67,15 +67,17 @@ export async function createProviderBooking(token, payload) {
   }
   return data;
 }
-export async function cancelAppointment(token, appointmentId) {
-  const response = await fetch(`${API_BASE}/api/appointments/${appointmentId}/cancel`, {
-    method: "DELETE",
+
+export async function createCustomerAndPetFromProvider(token, payload) {
+  const response = await fetch(`${API_BASE}/api/pets/provider/intake`, {
+    method: "POST",
     headers: authHeaders(token),
+    body: JSON.stringify(payload),
   });
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.error || "Failed to cancel appointment");
+    throw new Error(data.error || "Failed to create customer and pet");
   }
   return data;
 }
