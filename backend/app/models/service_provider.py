@@ -56,6 +56,7 @@ class ServiceProvider(db.Model):
     email = db.Column(db.String(120), nullable=True) # Public contact email
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     img_url = db.Column(db.String(500), nullable=True)
+    logo_url = db.Column(db.String(500), nullable=True)
 
     # =====================
     # RELATIONSHIPS
