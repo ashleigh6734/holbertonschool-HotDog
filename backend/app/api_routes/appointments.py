@@ -75,28 +75,27 @@ def create_appointment():
     if missing:
         return error_response("Missing required fields", 400, {"missing": missing})
 
+    payload = {
+        "pet_id": data["pet_id"],
+        "provider_id": data["provider_id"],
+        "date_time": data["date_time"],
+        "service_type": data["service_type"],
+        "notes": data.get("notes"),
+    }
+
     try:
-        # parse ISO str (note: frontend guarantee sending UTC times)
-        appointment_time = datetime.fromisoformat(data["date_time"])
-
-        appt = Appointment(
-            pet_id=data["pet_id"],
-            provider_id=data["provider_id"],
-            date_time=appointment_time,
-            service_type=data["service_type"],
-            notes=data.get("notes"),
-            # status defaults to PENDING in model and becomes CONFIRMED once confirmation email is sent
-        )
-
-        db.session.add(appt)
-        db.session.commit()
-
+        # Always auto-confirm on create and send confirmation email.
+        appt = AppointmentService.create_appointment(payload)
+        appt = AppointmentService.confirm_appointment(appt.id)
+        if appt is None:
+            db.session.rollback()
+            return error_response("Provider details incomplete for confirmation email", 400)
     except ValueError as exc:
         db.session.rollback()
         return error_response(str(exc), 400)
-    except Exception:
+    except Exception as exc:
         db.session.rollback()
-        return error_response("Internal server error", 500)
+        return error_response(f"Internal server error: {exc}", 500)
 
     return jsonify({
         "message": "Appointment confirmed",
@@ -152,25 +151,6 @@ def get_appointment(appointment_id: str):
         return error_response("Appointment not found", 404)
 
     return jsonify({"appointment": appointment_to_dict(appointment)}), 200
-
-@appointments_bp.route("/<string:appointment_id>/confirm", methods=["PATCH"])
-def confirm_booking(appointment_id: str):
-    """
-    Confirm appointment by ID and send confirmation email once
-    """
-    try:
-        appointment = AppointmentService.confirm_appointment(appointment_id)
-        if appointment is None:
-            return jsonify({"error": "Appointment not found"}), 404
-        return jsonify({
-            "message": "Appointment confirmed",
-            "appointment": appointment_to_dict(appointment)
-            }), 200
-        
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception as e:
-        return error_response(f"Internal server error: {e}", 500)
 
 @appointments_bp.route("/<string:appointment_id>/cancel", methods=["DELETE"])
 def cancel_appointment(appointment_id: str):
@@ -292,12 +272,20 @@ def create_provider_appointment():
     }
 
     try:
+        # Always auto-confirm on create and send confirmation email.
         appt = AppointmentService.create_appointment(payload)
+        appt = AppointmentService.confirm_appointment(appt.id)
+        if appt is None:
+            db.session.rollback()
+            return error_response("Provider details incomplete for confirmation email", 400)
+
         return jsonify({
-            "message": "Appointment created",
+            "message": "Appointment confirmed",
             "booking": appointment_to_dict(appt)
         }), 201
     except ValueError as exc:
+        db.session.rollback()
         return error_response(str(exc), 400)
-    except Exception:
-        return error_response("Internal server error", 500)
+    except Exception as exc:
+        db.session.rollback()
+        return error_response(f"Internal server error: {exc}", 500)
