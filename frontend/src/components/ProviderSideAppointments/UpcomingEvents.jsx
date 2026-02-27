@@ -1,5 +1,8 @@
 import "./UpcomingEvents.css";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 export default function UpcomingEvents({ upcomingEvents = [] }) {
   return (
@@ -20,10 +23,10 @@ export default function UpcomingEvents({ upcomingEvents = [] }) {
           {upcomingEvents.map((e) => (
             <div key={e.id} className="events-row">
               <div className="appt-date">
-                {e.date_time ? dayjs(e.date_time).format("DD/MM/YY") : "-"}
+                {e.date_time ? dayjs.utc(e.date_time).format("DD/MM/YY") : "-"}
               </div>
               <div className="appt-title">
-                {e.date_time ? dayjs(e.date_time).format("HH:mm") : "-"}
+                {e.date_time ? dayjs.utc(e.date_time).format("HH:mm") : "-"}
               </div>
               <div className="appt-title">{e.service_type}</div>
               <div className="appt-title">{e.pet_name}</div>
