@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import ConfirmModalCustom from '../../../components/modals/ConfirmModalCustom';
 import { getProviderAppointments, cancelAppointment } from '../../../api/providerBookings';
-import './ManageBooking.css';
+import './ManageAppointmentProvider.css';
 import LocationIcon from '../../../assets/icons/geo-alt.svg';
 
-export default function ManageBooking() {
+export default function ManageAppointmentProvider() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
@@ -100,12 +100,12 @@ export default function ManageBooking() {
   };
 
   return (
-    <div className="manage-booking">
-      <div className="manage-booking-header">
+    <div className="manage-appointment-provider">
+      <div className="manage-appointment-provider-header">
         <button className="back-btn" onClick={() => navigate(-1)}>
           &lt;
         </button>
-        <h1>Manage booking</h1>
+        <h1>Manage Appointments</h1>
       </div>
 
       {loading && <p className="loading">Loading bookings...</p>}

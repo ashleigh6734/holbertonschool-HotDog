@@ -38,7 +38,7 @@ import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetPro
 import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
-import ManageBooking from "./pages/ProviderPages/ManageBooking/ManageBooking.jsx";
+import ManageAppointmentProvider from "./pages/ProviderPages/ManageAppointmentsProvider/ManageAppointmentProvider.jsx";
 
 export default function App() {
   const { user } = useContext(AuthContext);
@@ -119,10 +119,10 @@ export default function App() {
             }
           />
           <Route
-            path="/provider/manage-booking"
+            path="/provider/manage-appointments"
             element={
               <ProtectedRoute allowedRole="provider">
-                <ManageBooking />
+                <ManageAppointmentProvider />
               </ProtectedRoute>
             }
           />
