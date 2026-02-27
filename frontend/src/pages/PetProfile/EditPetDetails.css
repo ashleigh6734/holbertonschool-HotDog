@@ -14,6 +14,8 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .edit-pet-title {
@@ -35,7 +37,7 @@
   font-weight: 700;
   font-family: "Open Sans", sans-serif;
   align-self: flex-start;
-  padding-left: 35px;
+  padding-left: 5px;
 }
 
 .back-btn:hover {
