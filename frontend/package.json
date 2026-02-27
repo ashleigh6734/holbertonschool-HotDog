@@ -17,6 +17,7 @@
     "@mui/x-date-pickers": "^8.27.0",
     "bootstrap": "^5.3.8",
     "dayjs": "^1.11.19",
+    "fuse.js": "^7.1.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
