@@ -8,6 +8,7 @@ import dogImage from "../../assets/images/dog.jpg";
 
 export default function PetCard({ pet }) {
   const navigate = useNavigate();
+  console.log(pet);
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
@@ -27,7 +28,6 @@ export default function PetCard({ pet }) {
       setShowModal(false);
 
       window.location.reload();
-
     } catch (err) {
       console.error("Delete failed:", err);
     }
@@ -35,19 +35,19 @@ export default function PetCard({ pet }) {
 
   const formatEnum = (value) => {
     if (!value) return "N/A";
-  
+
     return value
       .split("_")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
 
   const getPetImage = () => {
     const species = pet?.species?.toLowerCase();
-  
+
     if (species === "cat") return catImage;
     if (species === "dog") return dogImage;
-  
+
     return dogImage;
   };
 
@@ -104,7 +104,7 @@ export default function PetCard({ pet }) {
             <BasicPopover
               placement="right"
               heading="Notes"
-              body="See useful notes and reminders about your pet here!"
+              body={pet.notes}
               buttonText="See Notes"
               headerClassName="popover-header"
               buttonClassName="popover-button"
