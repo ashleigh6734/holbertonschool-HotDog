@@ -249,7 +249,7 @@ export default function ProviderBookings() {
   return (
     <div className="wrapper-container">
       <div className="bookings-header-bar">
-        <h1 className="my-auto">Bookings</h1>
+        <h1 className="my-auto">Appointments</h1>
       </div>
       <div className="upcoming-appointments-container">
         <p>View and manage all your upcoming appointments in one place:</p>
