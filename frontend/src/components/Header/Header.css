@@ -75,6 +75,7 @@ header {
   font-weight: 700;
   color: #1f3a5f;
   transition: color 0.2s ease;
+  text-align: left;
 }
 
 .nav-links li a:hover {

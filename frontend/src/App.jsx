@@ -24,7 +24,6 @@ import Register from "./pages/Register/Register.jsx";
 /* =======================
    USER PAGES
 ======================= */
-import Booking from "./pages/Booking.jsx";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import EditPetDetails from "./pages/PetProfile/EditPetDetails.jsx";
 import UserProfile from "./pages/UserProfile/UserProfile.jsx";
@@ -74,7 +73,6 @@ export default function App() {
           {/* PRIVATE routes - commented out for now to avoid redirects || DO NOT DELETE */}
           {/* <Route element={<ProtectedRoute allowedRole="user" />}> */}
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/booking" element={<Booking />} />
           <Route path="/edit-pet/:petId" element={<EditPetDetails />} />
           <Route path="/pets" element={<AllPets />} />
           <Route path="/user" element={<UserProfile />} />
