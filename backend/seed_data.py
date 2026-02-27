@@ -152,7 +152,7 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2024, 1, 17),
         weight=28.5,
-        notes="Up to date on vaccinations"
+        notes="No known health issues. Up to date on vaccinations - next vaccination date 27/02/2027"
     )
 
     pet2 = Pet(
@@ -164,7 +164,7 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
-        notes="Indoor cat"
+        notes="Indoor cat. Spayed/neutered and micrpchipped. "
     )
 
     db.session.add_all([pet1, pet2])
