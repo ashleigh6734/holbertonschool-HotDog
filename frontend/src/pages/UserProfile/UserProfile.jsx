@@ -15,6 +15,11 @@ import "../../styles/common.css";
 
 export default function UserProfile() {
   const { user, logout } = useContext(AuthContext);
+  const [firstName, setFirstName] = useState(user?.first_name || "");
+  const [lastName, setLastName] = useState(user?.last_name || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [mobileNumber, setMobileNumber] = useState(user?.phone_number || "");
+  const [emergencyNumber, setEmergencyNumber] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -27,7 +32,7 @@ export default function UserProfile() {
   const openEditMode = () => setEditMode(true);
 
   // SHOW TOAST ON PASSWORD SAVE
-  const [showToast, setShowToast] = useState(false);
+  const [showPasswordSuccess, setShowPasswordSuccess] = useState(false);
 
   // SHOW TOAST ON DELETE SUCCESS
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
@@ -35,28 +40,54 @@ export default function UserProfile() {
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
-  // HANDLE PASSWORD STATE
-  const handleUpdateUser = async (newPassword, confirmPassword) => {
+  // HANDLE UPDATE USER
+  const handleUpdateUser = async (
+    firstName,
+    lastName,
+    email,
+    mobileNumber,
+    // emergencyNumber,
+  ) => {
     const token = localStorage.getItem("token");
-    if (newPassword === confirmPassword) {
-      console.log("Passwords match");
-      try {
-        const body = {};
-        if (newPassword) {
-          body.password = newPassword;
-        }
-
-        // if (userName) {
-        //   body.username = userName;
-        // }
-
-        const result = await updateUser(token, user, body);
-        console.log(result.message);
-      } catch (error) {
-        console.error(error);
+    const body = {};
+    try {
+      if (firstName) {
+        body.first_name = firstName;
       }
-    } else {
+      if (lastName) {
+        body.last_name = lastName;
+      }
+      if (email) {
+        body.email = email;
+      }
+      if (mobileNumber) {
+        body.phone_number = mobileNumber;
+      }
+      console.log(body);
+      const result = await updateUser(token, user, body);
+      console.log(result.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // HANDLE PASSWORD STATE
+  const handleUpdatePassword = async () => {
+    const token = localStorage.getItem("token");
+    const body = {};
+    if (newPassword !== confirmPassword) {
       alert("Passwords do not match");
+      return;
+    }
+    try {
+      if (newPassword) {
+        body.password = newPassword;
+      }
+      const result = await updateUser(token, user, body);
+      console.log(result.message);
+      setShowPasswordSuccess(true);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -129,7 +160,10 @@ export default function UserProfile() {
                       name="First Name"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user ? user.first_name : ""}
+                      value={firstName}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -138,7 +172,10 @@ export default function UserProfile() {
                       name="Last Name"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user ? user.last_name : ""}
+                      value={lastName}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -147,7 +184,10 @@ export default function UserProfile() {
                       name="Email"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user ? user.email : ""}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                     <FormLabel
                       className="justify-left mb-1"
@@ -156,7 +196,10 @@ export default function UserProfile() {
                       name="Mobile Number"
                       disabled={!editMode}
                       readOnly={!editMode}
-                      value={user ? user.phone_number : ""}
+                      value={mobileNumber}
+                      onChange={(e) => {
+                        setMobileNumber(e.target.value);
+                      }}
                     />
                     <FormLabel
                       className="justify-left mb-3"
@@ -166,13 +209,24 @@ export default function UserProfile() {
                       disabled={!editMode}
                       readOnly={!editMode}
                       // value={user.emergency_number}
+                      onChange={(e) => {
+                        setEmergencyNumber(e.target.value);
+                      }}
                     />
                   </Form>
 
                   {editMode ? (
                     <div>
                       <button
-                        onClick={closeEditMode}
+                        onClick={() => {
+                          closeEditMode();
+                          handleUpdateUser(
+                            firstName,
+                            lastName,
+                            email,
+                            mobileNumber,
+                          );
+                        }}
                         className="btn-layout btn-yellow"
                       >
                         Save details
@@ -222,8 +276,7 @@ export default function UserProfile() {
                   <button
                     className="btn-layout btn-yellow"
                     onClick={() => {
-                      handleUpdateUser(newPassword, confirmPassword);
-                      // setShowToast(true);
+                      handleUpdatePassword(newPassword, confirmPassword);
                     }}
                   >
                     Change my password
@@ -268,8 +321,8 @@ export default function UserProfile() {
             />
 
             <SuccessToast
-              showToast={showToast}
-              onClose={() => setShowToast(false)}
+              showToast={showPasswordSuccess}
+              onClose={() => setShowPasswordSuccess(false)}
               message="Your password was updated successfully!"
             />
 

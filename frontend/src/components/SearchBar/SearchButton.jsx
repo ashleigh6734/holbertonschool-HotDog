@@ -4,8 +4,13 @@ import service_Lists, { service_ListsWithAll } from "./services_Lists.js";
 import "./searchbar.css";
 import Fuse from "fuse.js";
 
-
-function SearchButton({ onServiceChange, onSearchChange, onSearch, service, searchValue }) {
+function SearchButton({
+  onServiceChange,
+  onSearchChange,
+  onSearch,
+  service,
+  searchValue,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,13 +36,12 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
         setAllProviders(names);
 
         const fuseInstance = new Fuse(names, {
-          threshold: 0.35,      // stricter but still typo-tolerant
+          threshold: 0.35, // stricter but still typo-tolerant
           ignoreLocation: true,
           minMatchCharLength: 2,
         });
 
         setFuse(fuseInstance);
-
       } catch (err) {
         console.error("Failed to fetch provider names:", err);
       }
@@ -73,7 +77,7 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     }
 
     const filtered = service_ListsWithAll.filter((s) =>
-      s.toLowerCase().includes(value.toLowerCase())
+      s.toLowerCase().includes(value.toLowerCase()),
     );
 
     setServiceResults(filtered);
@@ -94,7 +98,7 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     setShowServices(false);
   };
 
-  // Search by provider names 
+  // Search by provider names
   const handleProviderInput = (value) => {
     setProviderInput(value);
     onSearchChange?.(value);
@@ -113,12 +117,12 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     let results = [];
 
     if (fuse) {
-      results = fuse.search(value).map(r => r.item);
+      results = fuse.search(value).map((r) => r.item);
     }
 
     if (results.length === 0) {
-      results = allProviders.filter(p =>
-        p.toLowerCase().includes(value.toLowerCase())
+      results = allProviders.filter((p) =>
+        p.toLowerCase().includes(value.toLowerCase()),
       );
     }
 
@@ -156,34 +160,30 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
     }
   };
 
-
   return (
     <div className="search-bar-wrapper" ref={wrapperRef}>
-
       {/* Search bar */}
       <div className="search-bar">
-
         <div>
           <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          className={`dropdown-icon ${showServices ? "open" : ""}`}
-          onClick={() => {
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className={`dropdown-icon ${showServices ? "open" : ""}`}
+            onClick={() => {
               // if (showServices) setShowServices(false);
               // else {
-                setServiceResults(service_ListsWithAll); 
-                setShowServices(!showServices);
+              setServiceResults(service_ListsWithAll);
+              setShowServices(!showServices);
               // }
             }}
           >
             <polyline points="6 9 12 3 18 9"></polyline>
           </svg>
         </div>
-        
 
         {/* Service selector */}
         <input
@@ -198,22 +198,21 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
           }}
           className="provider-search-filter"
         />
-        
+
         {showServices && (
           <ul className="service-results">
             {/* {serviceResults.length > 0 &&  */}
-              {serviceResults.map((service, idx) => (
-                <li
-                  key={idx}
-                  className="service-item"
-                  onClick={() => selectService(service)}
-                >
-                  {service}
-                </li>
-              ))}
+            {serviceResults.map((service, idx) => (
+              <li
+                key={idx}
+                className="service-item"
+                onClick={() => selectService(service)}
+              >
+                {service}
+              </li>
+            ))}
           </ul>
         )}
-
 
         {/* Search button */}
         <button className="search-btn" onClick={handleSearch}>
@@ -223,10 +222,9 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
             fill="currentColor"
             className="searchbar-icon"
           >
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
           </svg>
         </button>
-
 
         {/* Provider Search Input */}
         <input
@@ -253,7 +251,6 @@ function SearchButton({ onServiceChange, onSearchChange, onSearch, service, sear
             )}
           </ul>
         )}
-
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ def get_me():
         "last_name": user.last_name,
         "email": user.email,
         "image_url": user.image_url,
+        "phone_number": user.phone_number,
         "role": user.role
     }), 200
 
