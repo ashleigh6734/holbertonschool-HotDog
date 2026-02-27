@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import './EditPetDetails.css';
-import { getPetById } from '../../api/pet';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "./EditPetDetails.css";
+import { getPetById } from "../../api/pet";
 import catImage from "../../assets/images/cat.jpg";
 import dogImage from "../../assets/images/dog.jpg";
 
@@ -10,17 +10,17 @@ export default function EditPetDetails() {
   const navigate = useNavigate();
   const [pet, setPet] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    species: '',
-    breed: '',
-    gender: '',
+    name: "",
+    species: "",
+    breed: "",
+    gender: "",
     desexed: false,
-    date_of_birth: '',
-    weight: '',
-    notes: '',
+    date_of_birth: "",
+    weight: "",
+    notes: "",
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const breedMap = {
     dog: [
@@ -38,7 +38,7 @@ export default function EditPetDetails() {
       { value: "mixed", label: "Mixed" },
     ],
   };
-  
+
   const breedOptions = breedMap[formData.species] || [];
 
   useEffect(() => {
@@ -49,11 +49,11 @@ export default function EditPetDetails() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-  
+
         if (!res.ok) {
           throw new Error("Failed to fetch pet");
         }
-  
+
         const data = await res.json();
         setPet(data);
         setFormData({
@@ -69,13 +69,13 @@ export default function EditPetDetails() {
         setLoading(false);
       }
     };
-  
+
     fetchPet();
-  }, [petId]);  
+  }, [petId]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-  
+
     setFormData((prev) => {
       if (name === "species") {
         return {
@@ -84,7 +84,7 @@ export default function EditPetDetails() {
           breed: "", // reset breed when species changes
         };
       }
-  
+
       return {
         ...prev,
         [name]: type === "checkbox" ? checked : value,
@@ -107,14 +107,14 @@ export default function EditPetDetails() {
           breed: formData.breed,
         }),
       });
-  
+
       if (!res.ok) {
         throw new Error("Failed to update pet");
       }
-  
+
       const updatedPet = await res.json();
       console.log("Updated:", updatedPet);
-  
+
       navigate(-1);
     } catch (err) {
       console.error(err);
@@ -123,9 +123,11 @@ export default function EditPetDetails() {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm("Are you sure you want to delete this pet?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this pet?",
+    );
     if (!confirmed) return;
-  
+
     try {
       const res = await fetch(`/api/pets/${petId}`, {
         method: "DELETE",
@@ -133,13 +135,13 @@ export default function EditPetDetails() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-  
+
       if (!res.ok) {
         throw new Error("Failed to delete pet");
       }
-  
+
       console.log("Pet deleted successfully");
-  
+
       navigate("/pets");
     } catch (err) {
       console.error(err);
@@ -155,17 +157,17 @@ export default function EditPetDetails() {
 
   const getPetImage = () => {
     const species = formData.species?.toLowerCase();
-  
+
     if (species === "cat") return catImage;
     if (species === "dog") return dogImage;
-  
+
     return dogImage;
   };
 
   return (
     <div className="edit-pet-container">
       <div className="edit-pet-header">
-        <h1 className="edit-pet-title">Edit {pet?.name || 'Pet'} Details</h1>
+        <h1 className="edit-pet-title">Edit {pet?.name || "Pet"} Details</h1>
         <button className="back-btn" onClick={handleCancel}>
           &lt; Back
         </button>
@@ -176,11 +178,11 @@ export default function EditPetDetails() {
       <div className="edit-pet-content">
         {/* Pet Card Section */}
         <div className="pet-card-section">
-          <div className="pet-card">
+          <div className="pet-profile">
             <img
               className="pet-avatar"
               src={getPetImage()}
-              alt={`${pet?.name || 'Pet'} avatar`}
+              alt={`${pet?.name || "Pet"} avatar`}
             />
             <h3 className="pet-card-name">{formData.name}</h3>
             {pet?.date_of_birth && (

@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
 
 .edit-pet-container {
   min-height: 100vh;
   background: #f5f5f5;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #000;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .edit-pet-title {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 24px;
   font-weight: 700;
   color: #1f3a5f;
@@ -33,7 +33,7 @@
   cursor: pointer;
   color: #333;
   font-weight: 700;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   align-self: flex-start;
   padding-left: 20px;
 }
@@ -47,7 +47,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 18px;
 }
 
@@ -57,7 +57,7 @@
   padding: 12px 20px;
   margin: 16px;
   border-radius: 4px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 .edit-pet-content {
@@ -75,7 +75,7 @@
   justify-content: center;
 }
 
-.pet-card {
+.pet-profile {
   background: white;
   border-radius: 12px;
   padding: 20px;
@@ -98,7 +98,7 @@
 }
 
 .pet-card-name {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 18px;
   font-weight: 700;
   color: #1f3a5f;
@@ -122,7 +122,7 @@
 }
 
 .pet-info-label {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: #666;
@@ -131,7 +131,7 @@
 }
 
 .pet-info-value {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #000;
@@ -146,7 +146,7 @@
   padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 700;
   font-size: 14px;
 }
@@ -164,7 +164,7 @@
 }
 
 .form-title {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 18px;
   font-weight: 700;
   color: #1f3a5f;
@@ -178,7 +178,7 @@
 }
 
 .form-label {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #1f3a5f;
@@ -190,7 +190,7 @@
 
 .form-input,
 .form-textarea {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   border: 1px solid #d0d0d0;
   border-radius: 6px;
@@ -234,7 +234,7 @@
   color: #333;
   border-radius: 6px;
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 700;
   font-size: 14px;
 }
@@ -250,7 +250,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 700;
   font-size: 14px;
 }
