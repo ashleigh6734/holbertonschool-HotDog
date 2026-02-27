@@ -11,7 +11,7 @@ export default function Avatar() {
   return (
     <div className="avatar-container">
       <button className="avatar-btn" onClick={() => setOpen(!open)}>
-         <img
+        <img
           src={user?.avatarUrl || avatarIcon}
           alt="user avatar"
           className="avatar-img"
@@ -20,19 +20,26 @@ export default function Avatar() {
 
       {open && (
         <div className="avatar-menu">
-          <Link to="/booking" onClick={() => setOpen(false)}>Booking</Link>
-          <Link to="/manage-appointments" onClick={() => setOpen(false)}>Manage Appointments</Link>
-          <Link to="/pets" onClick={() => setOpen(false)}>Pet(s)</Link>
-          <Link to="/user" onClick={() => setOpen(false)}>Account</Link>
-          <button 
-          className="logout"
-          onClick={() => {
-            logout(); // call context for logout function
-            setOpen(false); // close menu after logout
-          }}
+          {/* <Link to="/booking" onClick={() => setOpen(false)}>Booking</Link> */}
+          <Link to="/manage-appointments" onClick={() => setOpen(false)}>
+            Manage Appointments
+          </Link>
+          <Link to="/pets" onClick={() => setOpen(false)}>
+            Pet(s)
+          </Link>
+          <Link to="/user" onClick={() => setOpen(false)}>
+            Account
+          </Link>
+          <button
+            className="logout"
+            onClick={() => {
+              logout(); // call context for logout function
+              setOpen(false); // close menu after logout
+            }}
           >
-            Logout</button>
-        </div> 
+            Logout
+          </button>
+        </div>
       )}
     </div>
   );
