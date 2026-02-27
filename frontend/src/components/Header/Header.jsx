@@ -15,7 +15,9 @@ function Header() {
 
   return (
     <header>
-      <img src={blueLogo} alt="HotDog Logo" className="hotdog-logo" />
+      <a href={user?.role === "user" ? "/dashboard" : "/"}>
+        <img src={blueLogo} alt="HotDog Logo" className="hotdog-logo" />
+      </a>
 
       <div className="header-content">
         {!user && <GuestHeader />}
