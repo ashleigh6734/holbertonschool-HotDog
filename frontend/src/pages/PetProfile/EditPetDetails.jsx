@@ -168,7 +168,7 @@ export default function EditPetDetails() {
     <div className="edit-pet-container">
       <div className="edit-pet-header">
         <h1 className="edit-pet-title">Edit {pet?.name || "Pet"} Details</h1>
-        <button className="back-btn" onClick={handleCancel}>
+        <button className="return-button" onClick={handleCancel}>
           &lt; Back
         </button>
       </div>

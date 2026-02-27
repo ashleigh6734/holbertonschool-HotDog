@@ -18,24 +18,24 @@
 
 .edit-pet-title {
   font-family: "Nunito", sans-serif;
-  font-size: 24px;
+  /* font-size: 24px; */
   font-weight: 700;
   color: #1f3a5f;
-  margin: 0;
+  margin-top: 3rem;
   text-align: center;
   width: 100%;
 }
 
-.back-btn {
+.return-button {
   background: none;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #333;
+  color: #1f3a5f;
   font-weight: 700;
   font-family: "Open Sans", sans-serif;
   align-self: flex-start;
-  padding-left: 20px;
+  padding-left: 35px;
 }
 
 .back-btn:hover {
@@ -76,6 +76,19 @@
 }
 
 .pet-profile {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 !important;
+}
+
+.pet-card {
   background: white;
   border-radius: 12px;
   padding: 20px;
