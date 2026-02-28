@@ -24,24 +24,36 @@ export default function Appointments() {
 
   // FETCH SERVICE PROVIDER DETAILS
   useEffect(() => {
+    // 1. Explicitly extract the ID string
+    const idString = providerID.id;
+    if (!idString) return;
+
     const fetchProviderDetails = async () => {
-      const API_URL = `/api/providers/${providerID.id}`;
+      const API_URL = `/api/providers/${idString}`;
       try {
         const response = await fetch(API_URL);
-
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Status: ${response.status}`);
 
         const result = await response.json();
         setProvider(result);
-        console.log(result, "result");
+
+        // 2. Map the reviews only if they exist in the backend response
+        if (result.reviews && result.reviews.length > 0) {
+          const formattedReviews = result.reviews.map((r) => ({
+            userName: r.user_name || "Anonymous", // Backend field
+            review: r.comment || "",     // Backend field
+            rating: r.rating || 0,
+          }));
+          
+          console.log("Successfully formatted reviews:", formattedReviews);
+          setReviews(formattedReviews);
+        }
       } catch (error) {
-        console.error(error.message, "error");
+        console.error("Fetch error:", error.message);
       }
     };
     fetchProviderDetails();
-  }, [providerID]);
+  }, [providerID.id]);
 
   // FETCH AVAILABLE TIME SLOTS (CONNECTED TO BACKEND)
   useEffect(() => {
@@ -73,36 +85,6 @@ export default function Appointments() {
 
     fetchAvailableTimes();
   }, [selectedDate, providerID]);
-
-  // FETCH REAL REVIEWS FOR THIS PROVIDER (NEW!)
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const API_URL = `/api/reviews/provider/${providerID.id}`;
-
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch reviews: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // The "Translator": Map the backend keys to the frontend keys
-        const formattedReviews = data.map((backendReview) => ({
-          userName: backendReview.author_name,
-          review: backendReview.comment,
-          rating: backendReview.rating,
-        }));
-
-        // Update the screen with the newly mapped data
-        setReviews(formattedReviews);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    };
-
-    fetchReviews();
-  }, [providerID]);
 
   // 4. SUBMIT A NEW REVIEW
   const handleAddReview = async (reviewData) => {
@@ -246,7 +228,6 @@ export default function Appointments() {
         {/* Reviews section - only show if user has completed appointment */}
         <ReviewList
           title={`${provider.name} Reviews`}
-          Reviews
           reviews={reviews}
           hasAppointment={hasAppointment}
           onAddReview={handleAddReview}
