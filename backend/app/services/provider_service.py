@@ -119,21 +119,15 @@ class ServiceProviderService:
     
     @staticmethod
     def get_top_rated_providers(limit=6):
-    
-        # 1. Query the database for Provider, Avg Rating, and Count
-        results = db.session.query(
-            ServiceProvider,
-            func.avg(Review.rating).label('avg_rating'),
-            func.count(Review.id).label('review_count')
-        ).join(Review, ServiceProvider.reviews) \
-         .group_by(ServiceProvider.id) \
-         .order_by(func.avg(Review.rating).desc()) \
-         .limit(limit) \
-         .all()
+        
+        # 1. Grab all providers from the database
+        providers = ServiceProvider.query.all()
 
-        # 2. Format the output cleanly
         top_rated = []
-        for provider, avg_rating, count in results:
+        for provider in providers:
+            # 2. Calculate the math dynamically
+            reviews = provider.reviews
+            avg_rating = sum(r.rating for r in reviews) / len(reviews) if reviews else 0.0
             
             # Get the main service to show on the dashboard card
             main_service = "General"
@@ -144,16 +138,18 @@ class ServiceProviderService:
                 "id": provider.id,
                 "name": provider.name,
                 "address": provider.address,
-                # Round to 1 decimal place (e.g., 4.7)
                 "rating": round(avg_rating, 1), 
-                "review_count": count,
+                "review_count": len(reviews),
                 "img_url": provider.img_url,
-                "logo_url": provider.logo_url,
+                "logo_url": provider.logo_url, 
                 "main_service": main_service
             }
             top_rated.append(provider_data)
 
-        return top_rated
+        # 3. Sort the list by rating (highest first) and limit it
+        top_rated.sort(key=lambda x: x["rating"], reverse=True)
+        
+        return top_rated[:limit]
     
     @staticmethod
     def get_available_slots(provider_id, target_date_str):

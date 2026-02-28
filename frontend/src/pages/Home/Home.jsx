@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../../components/SearchBar/SearchButton.jsx";
 import Card from "./Card.jsx";
 import card_Data from "./card_Data.js";
@@ -51,6 +51,24 @@ function advertBanner(props) {
 
 
 function Home() {
+  // 1. Add state for the live providers
+  const [topProviders, setTopProviders] = useState([]);
+
+  // 2. Fetch the same public endpoint
+  useEffect(() => {
+    const fetchTopProviders = async () => {
+      try {
+        const response = await fetch("/api/providers/top-rated");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
+        setTopProviders(data.providers);
+      } catch (error) {
+        console.error("Error fetching providers:", error);
+      }
+    };
+    fetchTopProviders();
+  }, []);
+
   return (
     <div className="home-container">
       {/* Main Heading */}
@@ -65,13 +83,23 @@ function Home() {
 
       <SearchBar />
 
-      {/* Top Searches Card Section */}
-      <div className="topsearchs-title-card-container">
-        <p className="topsearchs-card-title">Top Searches</p>
+      {/* DYNAMIC BACKEND SECTION: Top Rated Providers */}
+      <div className="topsearchs-title-card-container" style={{ marginTop: '40px' }}>
+        <p className="topsearchs-card-title">Top Rated Providers</p>
       </div>
-
+      
       <div className="topsearchs-cards-container">
-        {card_Data.map(createCard)}
+        {topProviders.length > 0 ? (
+          topProviders.map((provider) => (
+            <Card
+              key={provider.id}
+              img={provider.img_url}
+              title={`${provider.name} (⭐${provider.rating})`}
+            />
+          ))
+        ) : (
+          <p>Loading top rated clinics...</p>
+        )}
       </div>
 
       {/* Faster Booking Banner Section */}

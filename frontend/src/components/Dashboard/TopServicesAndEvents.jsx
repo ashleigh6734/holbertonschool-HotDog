@@ -1,46 +1,42 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import desexingImg from '../../assets/images/desexing.jpg';
-import dentalImg from '../../assets/images/dental-care.jpg';
-import specialistImg from '../../assets/images/specialist-services.jpg';
-import nailsImg from '../../assets/images/nail-trimming.jpg';
-import hairImg from '../../assets/images/haircuts.jpg';
-import trainingImg from '../../assets/images/puppy-training.jpg';
-
-const SERVICE_IMAGES = {
-  surgery: desexingImg,
-  dental: dentalImg,
-  specialist: specialistImg,
-  nails: nailsImg,
-  hair: hairImg,
-  training: trainingImg,
-};
 
 export default function TopServicesAndEvents({
-  topServices = [],
+  topProviders = [], // Accepting live backend data
   upcomingEvents = [],
 }) {
-  const [activeTab, setActiveTab] = useState('upcoming'); // upcoming
+  const [activeTab, setActiveTab] = useState('upcoming');
   const navigate = useNavigate();
+  console.log("3. Data received by Grid Component:", topProviders);
 
   return (
     <section className="grid-2col">
       <div className="panel">
-        <h2 className="panel-title">Top Search Services </h2>
+        {/* Updated Title */}
+        <h2 className="panel-title">Top Rated Providers</h2>
 
         <div className="service-grid">
-          {topServices.map((service) => (
-            <div key={service.id} className="top-service-card">
-              <img
-                className="service-img"
-                src={SERVICE_IMAGES[service.id]}
-                alt={service.title}
-                loading="lazy"
-              />
-              <div className="service-label">{service.title}</div>
-            </div>
-          ))}
+          {/* SAFETY CHECK: If we have data, map it. If not, show the text */}
+          {topProviders && topProviders.length > 0 ? (
+            topProviders.map((provider) => (
+              <div key={provider.id} className="top-service-card">
+                <img
+                  className="service-img"
+                  src={provider.img_url}
+                  alt={provider.name}
+                  loading="lazy"
+                  style={{ objectFit: 'cover' }}
+                />
+                <div className="service-label" style={{ lineHeight: '1.2' }}>
+                  {provider.name} <br/>
+                  <span style={{ fontSize: '0.85em', color: '#ffce31' }}>⭐ {provider.rating}</span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p style={{ padding: '20px', color: '#666', fontStyle: 'italic' }}>Loading clinics or no data found...</p>
+          )}
         </div>
       </div>
 
