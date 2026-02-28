@@ -18,8 +18,8 @@ PROVIDERS_DATA = [
         "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "img_url": "https://i.postimg.cc/0y52d7QR/paws-and-claws.jpg",
+            "logo_url": "https://i.postimg.cc/2y76xGNF/Logo-Paws-Claws-Veterinary-Clinic.png",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
             "address": "123 High St, Melbourne VIC",
@@ -35,7 +35,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Sparkle Paws Grooming",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "logo_url": "https://i.postimg.cc/FRgNtKC5/Logo-Sparkle-Paws-Grooming.png",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
             "address": "45 Dogwood Ln, Melbourne VIC",
@@ -51,7 +51,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Happy Tails Dog Walking",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "logo_url": "https://i.postimg.cc/P5gjPDBp/Logo-Happy-Tails-Dog-Walking.png",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
             "address": "78 Park Ave, Melbourne VIC",
@@ -67,7 +67,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Good Boy Puppy School",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "logo_url": "https://i.postimg.cc/wM4KHRX6/Logo-Good-Boy-Puppy-School.png",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
             "address": "101 Training Crt, Melbourne VIC",
@@ -83,7 +83,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Safe Hands Desexing Clinic",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "logo_url": "https://i.postimg.cc/zGgmZBV8/Logo-Safe-Hands-Desexing-Clinic.png",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
             "address": "202 Safety Rd, Melbourne VIC",
@@ -99,7 +99,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Canine Smiles Dental",
             "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
-            "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
+            "logo_url": "https://i.postimg.cc/90MSxXvn/Logo-Canine-Smiles-Dental.png",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
             "address": "303 Molar St, Melbourne VIC",

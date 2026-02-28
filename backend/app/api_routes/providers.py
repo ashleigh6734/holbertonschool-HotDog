@@ -52,6 +52,7 @@ def get_providers():
             "name": p.name,
             "services": [s.service_type.value for s in p.services],
             "address": p.address,
+            "phone": p.phone,
             "img_url": p.img_url,
             "logo_url": p.logo_url,
             "rating": round(avg_rating, 1),       
