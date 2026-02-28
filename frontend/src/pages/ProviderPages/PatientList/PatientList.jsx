@@ -1,5 +1,5 @@
 import "../../PetProfile/AllPets.css";
-import PetCard from "../../../components/cards/PetCard";
+import PatientCard from "../../../components/cards/PatientCard";
 import { useEffect, useState } from "react";
 import { getPetById } from "../../../api/pet";
 import { getProviderAppointments } from "../../../api/providerBookings";
@@ -56,7 +56,7 @@ export default function PatientList() {
 
         <div className="pets-list">
           {patients.map((patient) => (
-            <PetCard key={patient.id} pet={patient} />
+            <PatientCard key={patient.id} pet={patient} />
           ))}
         </div>
       </div>
