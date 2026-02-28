@@ -8,7 +8,7 @@ import dogImage from "../../assets/images/dog.jpg";
 
 export default function PetCard({ pet }) {
   const navigate = useNavigate();
-  console.log(pet);
+  console.log(pet, "petcard");
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
