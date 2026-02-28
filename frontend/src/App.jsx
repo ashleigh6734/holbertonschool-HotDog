@@ -7,10 +7,8 @@ import Footer from "./components/Footer/Footer.jsx";
 import ProviderNav from "./components/Header/ProviderNav.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 
-
 // MUST DELETE
 import BookingSteps from "./components/BookingSteps/BookingSteps.jsx";
-
 
 /* =======================
    PUBLIC PAGES
@@ -36,9 +34,9 @@ import ManageAppointments from "./pages/ManageAppointments/ManageAppointments.js
 ======================= */
 // import ProviderNav from "./components/Header/ProviderNav.jsx";
 // import ProviderDashboard from "./pages/ProviderPages/ProviderDashboard/ProviderDashboard.jsx";
-import PatientList from "./pages/ProviderPages/PaitentList/PatientList.jsx";
-import ProviderEditPetDetails from "./pages/ProviderPages/PaitentList/ProviderEditPetDetails.jsx";
-import ProviderPetProfile from "./pages/ProviderPages/PaitentList/ProviderPetProfile.jsx";
+import PatientList from "./pages/ProviderPages/PatientList/PatientList.jsx";
+import ProviderEditPetDetails from "./pages/ProviderPages/PatientList/ProviderEditPetDetails.jsx";
+import ProviderPetProfile from "./pages/ProviderPages/PatientList/ProviderPetProfile.jsx";
 import ProviderBookings from "./pages/ProviderPages/ProviderBookings/ProviderBookings.jsx";
 // import Reminders from "./pages/ProviderPages/ProviderDashboard/Reminders.jsx";
 import Account from "./pages/ProviderPages/Account/Account.jsx";
@@ -67,7 +65,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
-
           {/* =======================
               USER ROUTES (role: user)
           ======================= */}
@@ -77,12 +74,10 @@ export default function App() {
           <Route path="/user" element={<UserProfile />} />
           <Route path="/appointments/:id" element={<Appointments />} />
           <Route path="/manage-appointments" element={<ManageAppointments />} />
-
           {/* MUST DELETE -- GRACE */}
           <Route path="/BookingSteps" element={<BookingSteps />} />
           BookingSteps
           {/* </Route> */}
-
           {/* =======================
               PROVIDER ROUTES (role: provider)
           ======================= */}
@@ -134,7 +129,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
           {/* =======================
               404 FALLBACK
           ======================= */}

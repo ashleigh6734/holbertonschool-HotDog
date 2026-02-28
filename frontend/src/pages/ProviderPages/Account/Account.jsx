@@ -7,7 +7,7 @@ import SuccessToast from "../../../components/toasts/SuccessToast.jsx";
 import ConfirmModal from "../../../components/modals/ConfirmModal.jsx";
 // import Header from "../../components/Header/Header.jsx";
 // import "../../components/Header/Header.css";
-import "../PaitentList/ProviderPetProfile.jsx";
+// import "../PaitentList/ProviderPetProfile.jsx";
 import "../../../styles/common.css";
 
 export default function Account() {
@@ -155,7 +155,6 @@ export default function Account() {
                       disabled={!editMode}
                       readOnly={!editMode}
                     />
-                    
                   </Form>
 
                   {editMode ? (

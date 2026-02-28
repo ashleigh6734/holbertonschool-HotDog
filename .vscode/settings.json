@@ -1,8 +1,6 @@
 {
   // Let Pylance/VS Code know the backend folder is the import root so `app.*` resolves.
-  "python.analysis.extraPaths": [
-    "backend"
-  ],
+  "python.analysis.extraPaths": ["backend"],
   // Ensure the interpreter runs with the same import path in terminals/debugging.
   "python.envFile": "${workspaceFolder}/.vscode/.env"
 }

@@ -168,7 +168,19 @@ with app.app_context():
         notes="Indoor cat. Spayed/neutered and micrpchipped. "
     )
 
-    db.session.add_all([pet1, pet2])
+    pet3 = Pet(
+        owner_id=user2.id,
+        name="Nugget",
+        species=SpeciesEnum.dog,
+        breed="mixed",
+        gender=GenderEnum.male,
+        desexed=False,
+        date_of_birth=date(2017, 1, 11),
+        weight=8.5,
+        notes="Friendly dog but hates walks. Food motivated. "
+    )
+
+    db.session.add_all([pet1, pet2, pet3])
     db.session.commit()
     # =====================
     # 3. Seed 6 Service Providers
@@ -228,7 +240,7 @@ with app.app_context():
     # Query all providers from database
     providers = ServiceProvider.query.all()
     
-    if providers and pet1 and pet2:
+    if providers and pet1 and pet2 and pet3:
         # Create appointments for user1's pets
         # Note: Appointment times are set to on the hour or half past
         appointments = [
@@ -263,6 +275,14 @@ with app.app_context():
                 service_type=ServiceType.DOG_WALKING,
                 status=AppointmentStatus.CONFIRMED,
                 notes="30-minute walk"
+            ),
+            Appointment(
+                pet_id=pet3.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.DESEXING,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Not yet desexed"
             ),
         ]
         

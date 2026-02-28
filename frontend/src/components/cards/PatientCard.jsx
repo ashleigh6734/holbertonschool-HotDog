@@ -1,4 +1,4 @@
-import "./PetCard.css";
+import "./PatientCard.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../components/modals/ConfirmModal";
@@ -22,7 +22,7 @@ export default function PetCard({ pet }) {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to delete pet");
+        throw new Error("Failed to delete patient");
       }
 
       setShowModal(false);
@@ -115,7 +115,7 @@ export default function PetCard({ pet }) {
           <div className="pet-card-actions">
             <button
               className="btn-yellow"
-              onClick={() => navigate(`/edit-pet/${pet.id}`)}
+              onClick={() => navigate(`/edit-pet/${pet.id}`)} //@ SYLVIA LINK TO BE UPDATED TO PROVIDER EDIT PET FORM
             >
               Edit
             </button>
@@ -135,14 +135,14 @@ export default function PetCard({ pet }) {
         show={showModal}
         handleClose={() => setShowModal(false)}
         handlePrimary={handleDelete}
-        heading="Delete Pet"
+        heading="Delete Patient"
         body={
           <>
-            Are you sure you want to permanently remove this pet? <br />
+            Are you sure you want to permanently remove this patient? <br />
           </>
         }
         secondaryButton="Close"
-        primaryButton="Delete Pet"
+        primaryButton="Delete Patient"
       />
     </div>
   );
