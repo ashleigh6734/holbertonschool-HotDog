@@ -9,6 +9,9 @@ import LocationIcon from "../../assets/icons/geo-alt.svg";
 import EmailIcon from "../../assets/icons/email.svg";
 import PhoneIcon from "../../assets/icons/phone.svg";
 
+
+
+
 export default function Appointments() {
   const providerID = useParams();
   const today = dayjs();

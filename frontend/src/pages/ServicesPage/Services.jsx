@@ -50,8 +50,10 @@ function Services() {
       try {
         const params = new URLSearchParams();
 
-        if (serviceType) params.append("service_type", serviceType);
-        if (query) params.append("name", query);
+        // if (serviceType) params.append("service_type", serviceType);
+        // if (query) params.append("name", query);
+        if (inputService) params.append("service_type", inputService);
+        if (inputQuery) params.append("name", inputQuery);
 
         const response = await fetch(
           `http://localhost:5000/api/providers?${params.toString()}`
@@ -100,7 +102,7 @@ function Services() {
       />
 
       <div className="service-title-card-container">
-        <p className="service-card-title">Practices</p>
+        <p className="service-card-title">Providers</p>
       </div>
 
       <div className="service-cards-container">
@@ -113,14 +115,16 @@ function Services() {
             <ServicesFilters_Card
               key={p.id}
               title={p.name} 
-              address={p.address} 
-              img={p.img_url}  
-              avgrating="4.5"
+              address={p.address}
+              phone={p.phone} 
+              logo_url={p.logo_url}  
+              avgrating={p.rating}
               days="Mon–Fri"
               times={`${p.opening_time} - ${p.closing_time}`}
               isOpen={isProviderOpen(p.opening_time, p.closing_time)}
               availability="9:00 10:00 11:00"
               booknowbtn={true}
+              bookNow={() => navigate(`/appointments/${p.id}`)}
             />
           ))
         ) : ( 

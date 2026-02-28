@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Days from "../../assets/icons/calendar-icon.png";
 import Time from "../../assets/icons/clockicon.png";
 import Locationicon from "../../assets/icons/location.png";
+import Mobile from "../../assets/icons/mobile.png";
 
 function ServicesFilters_Card(props) {
   return (
@@ -9,9 +10,9 @@ function ServicesFilters_Card(props) {
 
       {/* Top section */}
       <div className="service-info-row">
-        {props.img && (
-          <img src={props.img} className="company-logos" />
-        )} 
+        {props.logo_url && (
+          <img src={props.logo_url} className="company-logos" alt="Company logo" />
+        )}
 
         <div className="service-header-text">
           <p className="service-name">{props.title}</p>
@@ -24,8 +25,17 @@ function ServicesFilters_Card(props) {
               <p className="service-address">{props.address}</p>
             </div>
           </div>
+          <div className="location-container">
+            <div className="address-and-icon">
+                <img src={Mobile} width="20" />
+            </div>
+            <div className="address-and-icon">
+              <p className="service-address">{props.phone}</p>
+            </div>
+          </div>
         </div>
       </div>
+      
 
       {/* Opening hours*/}
       <div className="service-info-row middle-row">
@@ -62,7 +72,9 @@ function ServicesFilters_Card(props) {
         </div>
 
         {props.booknowbtn && (
-          <button className="book-now-btn">Book Now</button>
+          <button className="book-now-btn" onClick={props.bookNow}>
+            Book Now
+          </button>
         )}
       </div>
 

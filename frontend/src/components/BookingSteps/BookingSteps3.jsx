@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./bookingsteps.css";
 import { createPet } from "../../api/pet";
 
-function BookingSteps2({ closePopup, onPetAdded }) { // fixed prop name
+function BookingSteps3({ closePopup, onPetAdded }) { // fixed prop name
   const [values, setValues] = useState({
     name: "",
     species: "",
@@ -60,28 +60,27 @@ function BookingSteps2({ closePopup, onPetAdded }) { // fixed prop name
 
   return (
     <div className="add-pet-form-container">
-        <h4>Please note that this appointment type is not suitable for any
-        procedures.
-        </h4>
-        <p>If you require a procedure we ask that you please call our reception instead to ensure that the appropriate resources, time and facilities are allocated to you. Thank you</p>
+      <form onSubmit={handleSubmit}>
 
-        <hr />
-        
-        <p>PLEASE READ BELOW BEFORE ANSWERING YES OR NO</p>
-        <p>We take pet insurance</p>
-        
-        <p> All other patients will be privately billed at all times. A detailed fee schedule is available at medicfirst.com.au/fees/ Do you understand and agree to the fee schedule? 24 hourse cancellatiion
-        </p>
-        
+        <h2>Appointment Confirmed!</h2>
+
+        <p>Name</p>
+        <p>Company Name</p>
+        <p>Date</p>
+        <p>Location</p>
+
+        {/* BOOKING TYPES */}
+        <p>Thank you for making your appointment online</p>
+        <p>Should you wish to manage your appointments you can do so online, or on your mobile by downloading the mobile app, AMS Connect, from your app store and following the prompts.</p>
+        <p>We look forward to taking care of your health needs</p>
+    
+
         <button type="button" onClick={closePopup} className="cancelbutton">
-          Yes
+          Cancel
         </button>
-        <button type="submit" className="submitbutton">
-          No
-        </button>
-
+      </form>
     </div>
   );
 }
 
-export default BookingSteps2;
+export default BookingSteps3;
