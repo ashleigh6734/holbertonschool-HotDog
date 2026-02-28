@@ -118,7 +118,17 @@ def get_provider(provider_id):
 
     if not provider:
         return jsonify({"error": "Provider not found"}), 404
-
+    
+    reviews_list = []
+    for r in provider.reviews:
+        reviews_list.append({
+            "id": r.id,
+            "rating": r.rating,
+            "comment": r.comment,
+            "user_name": f"{r.user.first_name} {r.user.last_name}",
+            "date": r.created_at.strftime("%d %b %Y") 
+        })
+        
     reviews = provider.reviews
     avg_rating = sum(r.rating for r in reviews) / len(reviews) if reviews else 0
     
@@ -134,6 +144,7 @@ def get_provider(provider_id):
         "logo_url": provider.logo_url,
         "rating": round(avg_rating, 1),
         "review_count": len(reviews),
+        "reviews": reviews_list,
         "opening_time": provider.opening_time.strftime("%H:%M"),
         "closing_time": provider.closing_time.strftime("%H:%M"),
         "slot_duration": provider.slot_duration,
