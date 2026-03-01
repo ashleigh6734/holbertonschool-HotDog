@@ -111,9 +111,14 @@ export default function ManageAppointmentProvider() {
             <button
               className="cancel-btn"
               onClick={() => handleCancelClick(selectedAppt.id)}
-              disabled={cancellingId === selectedAppt.id}
+              disabled={cancellingId === selectedAppt.id || selectedAppt.status === 'CANCELLED'}
             >
-              {cancellingId === selectedAppt.id ? 'Cancelling...' : 'Cancel'}
+              {cancellingId === selectedAppt.id 
+                ? 'Cancelling...' 
+                : selectedAppt.status === 'CANCELLED'
+                ? 'Cancelled'
+                : 'Cancel'
+              }
             </button>
           </div>
         )}
