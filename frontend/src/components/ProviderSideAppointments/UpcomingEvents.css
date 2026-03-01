@@ -30,3 +30,14 @@
 .appt-title {
   font-size: 14px;
 }
+
+.edit-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.edit-icon svg {
+  color: #1f3a5f;
+}
