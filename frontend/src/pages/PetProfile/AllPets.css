@@ -18,8 +18,8 @@
   justify-self: center;
 }
 
-.all-pets-header h2 {
-  font-weight: bolder;
+.all-pets-header h1 {
+  font-weight: 700;
   color: #1f3a5f;
 }
 

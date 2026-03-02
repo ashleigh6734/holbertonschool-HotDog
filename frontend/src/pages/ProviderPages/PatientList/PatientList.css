@@ -2,3 +2,22 @@
   display: flex;
   justify-content: center;
 }
+
+.all-patients-content {
+  display: grid;
+  grid-template-rows: 80px 50px 1fr;
+  width: 100%;
+  max-width: 800px;
+  align-items: flex-start;
+  padding-bottom: 40px;
+  margin: 48px 154.5px;
+}
+
+.all-patients-header {
+  justify-self: flex-start;
+}
+
+.all-patients-header h1 {
+  font-weight: 700;
+  color: #1f3a5f;
+}

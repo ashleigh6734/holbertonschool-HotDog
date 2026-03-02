@@ -45,9 +45,9 @@ export default function PatientList() {
 
   return (
     <div className="all-patients-container">
-      <div className="all-pets-content">
-        <div className="all-pets-header">
-          <h2>Patients</h2>
+      <div className="all-patients-content">
+        <div className="all-patients-header">
+          <h1>Patients</h1>
         </div>
         <div className="all-pets-actions">
           <div>All({patients.length})</div>
