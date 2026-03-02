@@ -7,6 +7,7 @@ from app.models.service_provider import ServiceProvider, ServiceType, ProviderSe
 from app.models.appointment import Appointment, AppointmentStatus
 from datetime import date, time, datetime, timedelta, timezone
 from datetime import datetime
+from app.models.review import Review
 
 app = create_app()
 
@@ -18,7 +19,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/paws-and-claws.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
@@ -34,7 +35,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Bob", "last": "Groomer", "email": "bob@grooming.com"},
         "business": {
             "name": "Sparkle Paws Grooming",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/sparkle-paws-grooming.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
@@ -50,7 +51,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Charlie", "last": "Walker", "email": "charlie@walks.com"},
         "business": {
             "name": "Happy Tails Dog Walking",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/dog-walking.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
@@ -66,7 +67,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Diana", "last": "Trainer", "email": "diana@train.com"},
         "business": {
             "name": "Good Boy Puppy School",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/puppy-school.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
@@ -82,7 +83,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Evan", "last": "Surgeon", "email": "evan@desex.com"},
         "business": {
             "name": "Safe Hands Desexing Clinic",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/desexing.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
@@ -98,7 +99,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Fiona", "last": "Dentist", "email": "fiona@teeth.com"},
         "business": {
             "name": "Canine Smiles Dental",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/dental-smiles.jpg",
             "logo_url": "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=150&q=80",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",
@@ -288,3 +289,51 @@ with app.app_context():
         db.session.add_all(appointments)
         db.session.commit()
         print("✅ Appointments seeded successfully!")
+        
+    # =====================
+    # 5. Seed Reviews 
+    # =====================
+
+    if appointments and len(appointments) >= 2:
+        test_reviews = [
+            # Link this review to John's first appointment (Paws & Claws)
+            Review(
+                provider_id=appointments[0].provider_id,
+                user_id=appointments[0].pet.owner_id,
+                appointment_id=appointments[0].id,
+                rating=5,
+                comment="Absolutely the best care for my dog! The staff at Paws & Claws are so gentle and knowledgeable.",
+                created_at=datetime.now() - timedelta(days=2)
+            ),
+            # Link this to the second appointment (Sparkle Paws)
+            Review(
+                provider_id=appointments[1].provider_id,
+                user_id=appointments[1].pet.owner_id,
+                appointment_id=appointments[1].id,
+                rating=4,
+                comment="Great grooming session, Butters looks like a new dog!",
+                created_at=datetime.now() - timedelta(days=5)
+            ),
+            # Link this to the third appointment (Paws & Claws)
+            Review(
+                provider_id=appointments[2].provider_id,
+                user_id=appointments[2].pet.owner_id,
+                appointment_id=appointments[2].id,
+                rating=4,
+                comment="Snom had a wonderful time at the vet!",
+                created_at=datetime.now() - timedelta(days=1)
+            ),
+            # Link this to the fourth appointment (Happy Tails)
+            Review(
+                provider_id=appointments[3].provider_id,
+                user_id=appointments[3].pet.owner_id,
+                appointment_id=appointments[3].id,
+                rating=3,
+                comment="Happy Tails is reliable, but the 30-minute walk ended up being closer to 20 minutes today.",
+                created_at=datetime.now() - timedelta(days=1)
+            ),
+        ]
+        
+        db.session.add_all(test_reviews)
+        db.session.commit()
+        print("✅ Reviews hardcoded successfully with Appointment IDs!")

@@ -115,7 +115,7 @@ export default function PetCard({ pet }) {
           <div className="pet-card-actions">
             <button
               className="btn-yellow"
-              onClick={() => navigate(`/edit-pet/${pet.id}`)} //@ SYLVIA LINK TO BE UPDATED TO PROVIDER EDIT PET FORM
+              onClick={() => navigate(`/ProviderEditPetDetails/${pet.id}`)}
             >
               Edit
             </button>
