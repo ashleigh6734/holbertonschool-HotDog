@@ -20,9 +20,6 @@ function ProviderNav() {
         <Link to="/patients">Patient List</Link>
       </li>
       <li>
-        <Link to="/Reminders">Reminders</Link>
-      </li>
-      <li>
         <Link to="/Account">Account</Link>
       </li>
       <button
