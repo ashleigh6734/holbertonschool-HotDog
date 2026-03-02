@@ -17,7 +17,7 @@ function ProviderNav() {
         <Link to="/provider/appointments">Appointments</Link>
       </li>
       <li>
-        <Link to="/patients">Patient List</Link>
+        <Link to="/patients">Patients</Link>
       </li>
       <li>
         <Link to="/Account">Account</Link>
