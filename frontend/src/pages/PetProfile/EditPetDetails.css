@@ -28,7 +28,8 @@
   width: 100%;
 }
 
-.return-button {
+.return-button,
+.back-btn {
   background: none;
   border: none;
   font-size: 18px;
@@ -40,6 +41,7 @@
   padding-left: 5px;
 }
 
+.return-button:hover,
 .back-btn:hover {
   opacity: 0.8;
 }
