@@ -30,13 +30,15 @@ export default function UpcomingEvents({ upcomingEvents = [] }) {
               <div className="appt-title">
                 {e.date_time ? dayjs.utc(e.date_time).format('HH:mm') : '-'}
               </div>
-              <div className="appt-title">{e.service_type} </div>
-
               <div className="appt-title">
-                {e.pet_name}
-                <span 
+                {e.service_type}
+                <span
                   className="edit-icon"
-                  onClick={() => navigate('/provider/manage-appointments', { state: { appointment: e } })}
+                  onClick={() =>
+                    navigate('/provider/manage-appointments', {
+                      state: { appointment: e },
+                    })
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -57,6 +59,8 @@ export default function UpcomingEvents({ upcomingEvents = [] }) {
                   </svg>
                 </span>
               </div>
+
+              <div className="appt-title">{e.pet_name}</div>
               <div className="appt-title">{e.status}</div>
             </div>
           ))}
