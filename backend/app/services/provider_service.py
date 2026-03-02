@@ -192,6 +192,8 @@ class ServiceProviderService:
 
             for appt in appointments:
                 appt_start = appt.date_time
+                if appt_start.tzinfo is None or appt_start.tzinfo.utcoffset(appt_start) is None:
+                    appt_start = appt_start.replace(tzinfo=timezone.utc)
                 appt_end = appt_start + slot_duration 
 
                 # If the times overlap, mark as booked

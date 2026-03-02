@@ -114,12 +114,65 @@ export default function ProviderBookings() {
     resetForm();
   };
 
+  const closeModalAfterBooking = () => {
+    setShowModal(false);
+    setExistingOwner("yes");
+    setEmail("");
+    setPhone("");
+    setOwnerResult(null);
+    setLookupError("");
+    setSelectedPetId("");
+    setServiceType("");
+    setSelectedTime("");
+    setNotes("");
+    setSubmitError("");
+    setIntakeData({
+      owner: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone_number: "",
+      },
+      pet: {
+        name: "",
+        species: "",
+        breed: "",
+        gender: "",
+        desexed: false,
+        date_of_birth: "",
+        weight: "",
+        notes: "",
+      },
+    });
+  };
+
   const loadAppointments = async () => {
     if (!token) {
       return;
     }
     const response = await getProviderAppointments(token);
     setAppointments(response.appointments || []);
+  };
+
+  const loadAvailableTimes = async (date = selectedDate) => {
+    if (!provider?.id || !date) {
+      return;
+    }
+
+    try {
+      const formattedDate = date.format("YYYY-MM-DD");
+      const response = await fetch(
+        `/api/providers/${provider.id}/slots?date=${formattedDate}`,
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch slots");
+      }
+      setAvailableTimes(data.available_slots || []);
+    } catch (error) {
+      console.error(error);
+      setAvailableTimes([]);
+    }
   };
 
   useEffect(() => {
@@ -141,27 +194,7 @@ export default function ProviderBookings() {
   }, [token]);
 
   useEffect(() => {
-    const fetchSlots = async () => {
-      if (!provider?.id || !selectedDate) {
-        return;
-      }
-
-      try {
-        const formattedDate = selectedDate.format("YYYY-MM-DD");
-        const response = await fetch(
-          `/api/providers/${provider.id}/slots?date=${formattedDate}`,
-        );
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || "Failed to fetch slots");
-        }
-        setAvailableTimes(data.available_slots || []);
-      } catch (_error) {
-        setAvailableTimes([]);
-      }
-    };
-
-    fetchSlots();
+    loadAvailableTimes(selectedDate);
   }, [provider, selectedDate]);
 
   const buildDateTimeFromSlot = () => {
@@ -240,7 +273,8 @@ export default function ProviderBookings() {
       });
 
       await loadAppointments();
-      closeModal();
+      await loadAvailableTimes(selectedDate);
+      closeModalAfterBooking();
     } catch (error) {
       setSubmitError(error.message);
     }
