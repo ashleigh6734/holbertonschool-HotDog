@@ -41,10 +41,10 @@ export default function Appointments() {
         if (result.reviews && result.reviews.length > 0) {
           const formattedReviews = result.reviews.map((r) => ({
             userName: r.user_name || "Anonymous", // Backend field
-            review: r.comment || "",     // Backend field
+            review: r.comment || "", // Backend field
             rating: r.rating || 0,
           }));
-          
+
           console.log("Successfully formatted reviews:", formattedReviews);
           setReviews(formattedReviews);
         }
@@ -54,6 +54,8 @@ export default function Appointments() {
     };
     fetchProviderDetails();
   }, [providerID.id]);
+
+  console.log(provider.img_url, "provider");
 
   // FETCH AVAILABLE TIME SLOTS (CONNECTED TO BACKEND)
   useEffect(() => {
