@@ -170,6 +170,10 @@
   border-radius: 12px 0 0 0;
 }
 
+.tab:hover {
+  background: #ffc72c;
+}
+
 .tab-active {
   background: #ffc72c;
   text-align: left;
@@ -202,7 +206,7 @@
 }
 
 .event-service {
-  font-size: 12px;
+  font-size: 15px;
   color: #666;
 }
 
