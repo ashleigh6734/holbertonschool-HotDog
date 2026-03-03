@@ -1,10 +1,37 @@
-export default function DashboardHero({ name = "there" }) {
+export default function DashboardHero({
+  name = "there",
+  displayGreeting = true,
+  title,
+}) {
+
+  //Greeting message
+  const hour = new Date().getHours();
+
+  let greeting = "Hello";
+  if (hour < 12) {
+    greeting = "Good morning";
+  }
+  else if (hour < 17) {
+    greeting = "Good afternoon";
+  }
+  else {
+    greeting = "Good evening";
+  }
+
   return (
-    <section className="intro">
-      <p className="intro-hi">Hi {name}</p>
-      <h1 className="intro-title">
-        Welcome to HotDog, where quality care and everything your pet needs come together.
-      </h1>
-    </section>
+    <>
+    
+      {displayGreeting && name && (
+        <p className="intro-hi">
+          {greeting} {name}
+        </p>
+      )}
+
+      <section className="intro">
+        <h1 className="intro-title">
+          {title}
+        </h1>
+      </section>
+    </>
   );
 }
