@@ -89,7 +89,7 @@
   gap: 0.5rem;
 }
 
-.date-container {
+.appointment-page .date-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -99,7 +99,7 @@
   margin-top: 2rem;
 }
 
-.time-container {
+.appointment-page .time-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 40px);
@@ -151,7 +151,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-.provider-modal {
+.appointment-page .provider-modal {
   background: transparent !important;
   border-radius: 10px;
   overflow: hidden;

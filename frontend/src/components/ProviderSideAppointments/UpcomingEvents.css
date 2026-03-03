@@ -1,43 +1,252 @@
+.events {
+  border: none;
+  border-radius: 18px;
+  overflow: visible;
+  background: #ffffff;
+}
+
+.events-header-row {
+  display: grid;
+  grid-template-columns: 92px 86px 1.5fr 1fr 1fr 160px;
+  gap: 10px;
+  padding: 16px 12px 12px 12px;
+  align-items: center;
+  border-left: 1px solid #e6e2dc;
+  border-right: 1px solid #e6e2dc;
+  border-bottom: 1px solid #e6e2dc;
+  position: relative;
+  background: #faf9f8;
+}
+
+.events-header-cell {
+  position: relative;
+}
+
+.filter-trigger {
+  border: none;
+  background: transparent;
+  color: #677084;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  gap: 6px;
+  padding: 0;
+}
+
+.filter-trigger-active {
+  color: #1f3a5f;
+}
+
+.filter-trigger-filtered {
+  color: #1f3a5f;
+}
+
+.filter-active-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #f59e0b;
+  display: inline-flex;
+  flex: 0 0 7px;
+}
+
+.filter-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+}
+
+.filter-chevron svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 220px;
+  background: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.filter-dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #ececec;
+  color: #5f6673;
+  font-size: 0.95rem;
+}
+
+.filter-icon-btn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.filter-dropdown-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ececec;
+}
+
+.filter-action-link {
+  border: none;
+  background: transparent;
+  color: #f59e0b;
+  font-size: 0.9rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.filter-action-sep {
+  color: #9ca3af;
+}
+
+.filter-options {
+  max-height: 190px;
+  overflow-y: auto;
+}
+
+.filter-option-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f2f2f2;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.filter-option-row input {
+  accent-color: #fbbf24;
+}
+
+.filter-dropdown-footer {
+  padding: 10px 14px;
+  color: #667085;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: #fafafa;
+}
+
 .events-list {
-  padding: 0 12px 12px 12px;
+  padding: 0 0 12px 0;
+  border-left: 1px solid #d9d9d9;
+  border-right: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 0 0 18px 18px;
 }
 
 .events-row {
   display: grid;
-  grid-template-columns: 92px 92px 2fr 1fr 92px;
+  grid-template-columns: 92px 86px 1.5fr 1fr 1fr 160px;
   gap: 10px;
-  padding: 10px 0;
-  border-top: 1px solid #f0f0f0;
+  padding: 14px 12px;
+  border-top: 1px solid #d8d2c8;
+  align-items: center;
+  background: #ffffff;
 }
 
 .upcoming-appointments-banner {
   background-color: #ffc72c;
-  height: 44px;
+  height: 56px;
+  border-radius: 18px 18px 0 0;
 }
 
 .upcoming-appointments-banner p {
-  padding: 10px 12px;
+  padding: 14px 24px;
   font-family: "Open Sans", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1rem;
   color: #1f3a5f;
 }
 
 .appt-date {
   font-weight: 700;
-  font-size: 14px;
+  font-size: 0.95rem;
+  color: #1f2937;
 }
 
 .appt-title {
-  font-size: 14px;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.appt-service-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.events-empty {
+  padding: 20px 12px;
+  color: #667085;
+  font-weight: 600;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.status-confirmed {
+  color: #16a34a;
+  background: #e7f6ec;
+}
+
+.status-pending {
+  color: #d97706;
+  background: #fff1df;
+}
+
+.status-cancelled {
+  color: #8b8b8b;
+  background: #ececec;
 }
 
 .edit-icon {
   display: inline-flex;
   align-items: center;
-  margin-left: 6px;
   cursor: pointer;
 }
 
 .edit-icon svg {
-  color: #1f3a5f;
+  color: #667085;
+}
+
+@media (max-width: 900px) {
+  .events-header-row,
+  .events-row {
+    grid-template-columns: 92px 80px 1.3fr 1fr 1fr 130px;
+  }
+
+  .filter-dropdown {
+    width: 200px;
+  }
 }

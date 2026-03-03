@@ -294,7 +294,7 @@ export default function ProviderBookings() {
 
       <div className="create-booking-row">
         <button className="create-booking-btn" onClick={() => setShowModal(true)}>
-          Create a booking
+          Create an appointment
         </button>
       </div>
 

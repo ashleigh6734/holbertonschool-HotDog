@@ -29,6 +29,10 @@ def appointment_to_dict(appt: Appointment) -> dict:
         "reminder_24h_sent_at": appt.reminder_24h_sent_at.isoformat() if appt.reminder_24h_sent_at else None,
         # Add fields needed for front-end ManageAppointments page
         "pet_name": appt.pet.name if appt.pet else None,
+        "pet_owner_name": (
+            f"{appt.pet.owner.first_name} {appt.pet.owner.last_name}"
+            if appt.pet and appt.pet.owner else None
+        ),
         "provider_name": appt.service_provider.name if appt.service_provider else None,
         "provider_address": appt.service_provider.address if appt.service_provider else None,
     }
