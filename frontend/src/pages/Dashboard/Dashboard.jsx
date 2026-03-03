@@ -1,10 +1,13 @@
 import './Dashboard.css';
 
 import DashboardHero from '../../components/Dashboard/DashboardHero.jsx';
-import DashboardSearch from '../../components/Dashboard/DashboardSearch.jsx';
+// import DashboardSearch from '../../components/Dashboard/DashboardSearch.jsx';
+import SearchBar from '../../components/SearchBar/SearchButton.jsx';
 import TopServicesAndEvents from '../../components/Dashboard/TopServicesAndEvents.jsx';
 import DashboardBanner from '../../components/Dashboard/DashboardBanner.jsx';
 import PetStylistReviews from '../../components/Dashboard/PetStylistReviews.jsx';
+import Advert from '../../pages/Home/Advert.jsx';
+import advert_Data from '../../pages/Home/advert_Data.js';
 
 import { TOP_SERVICES, UPCOMING_EVENTS, STYLISTS } from './dashboardData.js';
 import { useContext, useState, useEffect } from 'react';
@@ -38,11 +41,12 @@ export default function Dashboard() {
       <div className="dash-container">
         <DashboardHero name={user?.first_name || "User"} />
 
-        <DashboardSearch
+        {/* <DashboardSearch
           onSearch={(query) => {
             console.log('search:', query);
           }}
-        />
+        /> */}
+        <SearchBar />
 
         <TopServicesAndEvents
           topProviders={topProviders}
@@ -51,15 +55,29 @@ export default function Dashboard() {
 
         <DashboardBanner
           title="Tick season!"
-          text="Get your furry friend the care they need with All Pets Health"
-          ctaText="Book appointment"
+          text="Get your furry friend the care they need!"
+          ctaText="Find a Provider"
         />
       </div>
 
-      <PetStylistReviews
+      {/* <PetStylistReviews
         stylists={STYLISTS}
         onBookClick={() => console.log('Book appointment')}
-      />
+      /> */}
+      <div className="banner-advert-container">
+        {advert_Data
+        .filter(ad => ad.id === 1 || ad.id === 2 || ad.dashboardSubtitle)
+        .map(advert =>(
+          <Advert
+            key={advert.id}
+            img={advert.img}
+            name={advert.name}
+            description={advert.description}
+            dashboardSubtitle={advert.dashboardSubtitle}
+          />
+        ))}
+      </div>
+
     </div>
   );
 }

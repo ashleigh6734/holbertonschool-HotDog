@@ -51,14 +51,18 @@ export default function Appointments() {
 
   // Move popup steps
   const handleNext = async (dataFromStep) => {
-    const updatedBookingData = { ...bookingData, ...dataFromStep };
+    const updatedBookingData = {
+      ...bookingData,
+      ...dataFromStep
+    };
+
     setBookingData(updatedBookingData);
 
     if (step === 2) {
       await submitAppointment(updatedBookingData);
     }
 
-    setStep((prev) => prev + 1);
+    setStep(prev => prev + 1);
   };
 
   // Submit appointment to backend

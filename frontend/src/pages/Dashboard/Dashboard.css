@@ -2,7 +2,7 @@
 
 .dash {
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  
 }
 
 .dash h1,
@@ -13,9 +13,9 @@
 }
 
 .dash-container {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 32px 20px;
+  max-width: 1000px;
+  margin: 50px auto;
+  min-height: 100vh;
 }
 
 /* Intro */
@@ -41,6 +41,7 @@
   justify-self: center;
   text-align: center;
   color: #1f3a5f;
+  margin-bottom: 40px;
 }
 
 /* Search */
@@ -85,22 +86,27 @@
 /* Grid section */
 .grid-2col {
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 18px;
-  margin: 10px 0 28px;
+  grid-template-columns: 1.35fr 1.35fr;
+  gap: 30px;
+  margin: 10px 0 50px;
 }
 
 .panel {
-  border: 1px solid #e8e8e8;
+  /* border: 1px solid #e8e8e8; */
+  width: 100%;
   border-radius: 14px;
   background: #fff;
-  padding: 16px;
+  /* padding: 16px; */
 }
 
 .panel-title {
   margin: 0 0 12px;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 700;
+  text-align: left;
+  color: #1f3a5f;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 /* services */
@@ -133,19 +139,23 @@
   bottom: 0;
   padding: 8px 10px;
   font-size: 12px;
-  font-weight: 700;
+  /* font-weight: 700; */
   color: #ffffff;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(31, 58, 95, 0.9);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .top-service-card:hover .service-label {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(31, 58, 95, 2);
 }
 
 /* events */
+.panel-events {
+  margin-top: 75px;
+}
+
 .events {
   padding: 0;
   overflow: hidden;
@@ -160,12 +170,16 @@
   border: 0;
   padding: 10px 12px;
   cursor: pointer;
-  background: #f5f5f5;
+  background: #e8eaee;
   font-weight: 700;
+  text-align: left;
+  border-radius: 12px 0 0 0;
 }
 
 .tab-active {
   background: #ffc72c;
+  text-align: left;
+  border-radius: 0 12px 0 0;
 }
 
 .events-list {
@@ -177,7 +191,7 @@
   grid-template-columns: 92px 1fr;
   gap: 10px;
   padding: 10px 0;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid #e8eaee;
 }
 
 .event-row:first-child {
@@ -186,43 +200,66 @@
 
 .event-date {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .event-title {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 /* banner */
 .banner {
-  border-radius: 16px;
-  padding: 22px;
   background: #173a66;
   color: #fff;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 14px;
-  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.banner-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
 }
 
 .banner-title {
-  font-size: 40px;
-  font-weight: 600;
+  font-size: 35px;
+  font-weight: 900;
+  margin-left: 50px;
+  text-align: left;
 }
 
 .banner-text {
-  font-size: 40px;
-  font-weight: 600;
-  max-width: 360px;
+  font-family: "nunito";
+    font-weight: 900;
+    text-align: left;
+    font-size: 35px;
+    margin-left: 50px;
+    margin-bottom: 40px;
+    line-height: 1.2;
 }
 
 .banner-btn {
-  border: 0;
-  padding: 10px 14px;
-  border-radius: 12px;
+  border-radius: 20px;
+  border-radius: 12px !important;
+  border: none;
   cursor: pointer;
-  background: #ffd24d;
-  font-weight: 800;
+  background-color: #ffc72c;
+  font-weight: 600 !important;
+  color: #1f3a5f !important;
+  margin-left: 50px;
+  width: 200px;
+  height: 40px;
+}
+
+.banner-btn:hover {
+  color: white;
 }
 
 .banner-title {
@@ -243,14 +280,15 @@
 }
 
 .banner-image {
-  width: 220px;
-  height: 300px;
+  width: 80%;
+  height: auto;
   object-fit: cover;
-  border-radius: 12px;
   display: block;
 }
 
-/* stylists section */
+/* This code has replace the stylist section */
+
+/* stylists section
 .stylists {
   background: #f2f5f7;
   padding: 34px 0 46px;
@@ -260,10 +298,10 @@
   text-align: center;
   margin: 0 0 20px;
   font-size: 22px;
-}
+} */
 
 /* Pet stylist title font and color */
-.stylists-title,
+/* .stylists-title,
 .stylist-name {
   font-family: "Nunito", sans-serif;
   color: #1f3a5f;
@@ -303,7 +341,7 @@
 
 .stars {
   font-size: 14px;
-}
+} */
 
 /* pager + CTA */
 .pager {

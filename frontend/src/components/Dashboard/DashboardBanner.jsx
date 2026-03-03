@@ -22,9 +22,12 @@ export default function DashboardBanner({ title, text, ctaText, onCtaClick }) {
         </button>
       </div>
 
-      <div className="banner-visual" aria-hidden="true">
-        <img className="banner-image" src={tickImg} alt="Tick season" />
+      <div className="banner-content-image">
+        <div className="banner-visual" aria-hidden="true">
+          <img className="banner-image" src={tickImg} alt="Tick season" />
+        </div>
       </div>
+      
     </section>
   );
 }

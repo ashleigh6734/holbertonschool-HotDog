@@ -8,10 +8,12 @@
   display: grid;
   grid-template-rows: 80px 50px 1fr;
   width: 100%;
-  max-width: 800px;
   align-items: flex-start;
   padding-bottom: 40px;
-  margin: 5rem 0 7rem 0;
+  max-width: 1000px;
+  margin: 50px auto;
+  max-width: 1000px;
+  min-height: 100vh;
 }
 
 .all-pets-header {
@@ -46,5 +48,5 @@
 .pets-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
+
