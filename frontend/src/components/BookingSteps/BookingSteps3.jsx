@@ -19,7 +19,7 @@ function BookingSteps3({ closePopup, bookingData, selectedDate, selectedTime, ad
         </div>
         
         <div className="apptdetail-container">
-          <p>{bookingData.pet_name}</p>
+          <p>{bookingData.name}</p>
           <p>{bookingData.booking_type}</p>
           <p>{selectedDate.format("DD/MM/YYYY")}</p>
           <p>{selectedTime}</p>
@@ -30,7 +30,7 @@ function BookingSteps3({ closePopup, bookingData, selectedDate, selectedTime, ad
       <hr />
 
       <p className="bold-word-accent">Thank you for making your appointment online.</p>
-      <p>Should you wish to manage your appointments, you can do so online. Please cancel your appointments 24 hours prior to your appointment.</p>
+      <p>Appointments can be managed online. We kindly ask that cancellations be made at least 24 hours prior to the scheduled appointment.</p>
       <p className="bold-word-accent">We look forward to taking care of your health needs.</p>
 
       <button type="button" className="bookingsequence-closebutton" onClick={closePopup}>Close</button>

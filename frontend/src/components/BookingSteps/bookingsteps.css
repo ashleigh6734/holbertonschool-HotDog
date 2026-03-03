@@ -146,12 +146,14 @@ body {
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 100px;
+  gap: 25px;
+  line-height: 1;
 }
 
 .apptdetail-titles-container {
   color: #1f3a5f;
   font-weight: bold;
+  width: 40%;
 } 
 
 .bold-word-accent {
