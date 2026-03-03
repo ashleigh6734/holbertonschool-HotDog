@@ -8,7 +8,12 @@ function CardBanner(props) {
         <>
           <h1 className="home-banner-h1">{props.bannerTitle}</h1>
           {props.showButton && (
-          <button className="home-banner-btn">Find a Practice Now!</button>
+          <button 
+            className="home-banner-btn"
+            onClick={props.onButtonClick}
+          >
+            Find a Practice Now!
+          </button>
           )}
         </>
       )}
@@ -26,3 +31,5 @@ function CardBanner(props) {
 }
 
 export default CardBanner;
+
+

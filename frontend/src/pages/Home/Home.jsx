@@ -24,19 +24,20 @@ function createCard(props) {
 }
 
 // Function for main banner
-function bannerCard(props) {
+function bannerCard(props, navigate) {
   return (
     <CardBanner
     key={props.id}
     bannerTitle={props.bannerTitle}
     img={props.img}
     showButton={props.showButton}
+    onButtonClick={() => navigate("/services")}
     />
   );
 }
 
 // Function slide show banners
-function advertBanner(props) {
+function advertBanner(props, navigate) {
   return (
     <Advert
     key={props.id}
@@ -46,6 +47,7 @@ function advertBanner(props) {
     title={props.title}
     subtitle={props.subtitle}
     showButton={props.showButton}
+    registerNowBtnClick={() => navigate("/about")}
     />
   );
 }
@@ -101,7 +103,7 @@ function Home() {
               key={provider.id}
               img={provider.img_url}
               title={`${provider.name} (⭐${provider.rating})`}
-              linktoservices={() => navigate(`/services/${p.id}`)}
+              linktoApptPage={() => navigate(`/appointments/${provider.id}`)}
             />
           ))
         ) : (
@@ -111,12 +113,12 @@ function Home() {
 
       {/* Faster Booking Banner Section */}
       <div className="home-banner-container">
-        {banner_Data.map(bannerCard)}
+        {banner_Data.map((banner) => bannerCard(banner, navigate))}
       </div>
 
       {/* Advert card */}
       <div className="banner-advert-container">
-        {advert_Data.map(advertBanner)}
+        {advert_Data.map((advert) => advertBanner(advert, navigate))}
       </div>
 
 

@@ -5,7 +5,7 @@ const advert_Data = [
   {
     id: 1,
     img: WomanWithDog,
-    name: "Anastasie Stevens",
+    name: "Jamie Jason",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
     showButton: false,  
@@ -13,15 +13,20 @@ const advert_Data = [
   {
     id: 2,
     img: ManWithCat,
-    name: "Monique Tims",
+    name: "Tony Samuels",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
     showButton: false,
   },
   {
     id: 3,
-    title: "Not sure about All Things Pets?",
-    subtitle: "Here is what our patients have to say!",
+    title: "A centralized platform for pet care services.",
+    subtitle: "Are you a provider looking to join our network?",
+    showButton: true,
+  },
+  {
+    id: 4,
+    dashboardSubtitle: "Here’s what HotDog users are saying!",
     showButton: true,
   },
 ];

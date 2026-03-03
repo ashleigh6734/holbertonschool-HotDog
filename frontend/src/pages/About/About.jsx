@@ -106,7 +106,7 @@ function Home() {
       
       {/* Banner choose us */}
       <div className="using-hotDog-container">
-        <h1 className="adout-heading">Are you a practice interested <br /> in our platform!</h1>
+        <h1 className="adout-heading">Are you a provider interested <br /> in our platform?</h1>
         <div className="adout-body-text">
           {chooseUs_Card_Data.map(chooseUsCard)}
         </div>
