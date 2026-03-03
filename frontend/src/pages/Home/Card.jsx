@@ -1,15 +1,14 @@
 import React from "react";
 
-function Card({ img, title, linktoApptPage }) {
+function Card({ img, title, onClick }) {
   return (
     <div
       className="topsearchs-card"
-      onClick={props.onClick}
+      onClick={onClick}
       style={{
         backgroundImage: `url(${img})`,
-        cursor: "pointer"
+        cursor: "pointer",
       }}
-      onClick={linktoApptPage}
     >
       <div className="topsearchs-overlay">
         <p className="topsearchs-servicestitle">{title}</p>
@@ -19,4 +18,3 @@ function Card({ img, title, linktoApptPage }) {
 }
 
 export default Card;
-

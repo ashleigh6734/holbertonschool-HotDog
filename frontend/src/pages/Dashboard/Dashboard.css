@@ -87,15 +87,9 @@
 /* Grid section */
 .grid-2col {
   display: grid;
-<<<<<<< HEAD
   grid-template-columns: 1.35fr 1.35fr;
   gap: 30px;
   margin: 10px 0 50px;
-=======
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 18px;
-  margin: 30px 0 28px;
->>>>>>> d2ba4548a21f4d648414b5a269bbe245c3682f30
 }
 
 .panel {

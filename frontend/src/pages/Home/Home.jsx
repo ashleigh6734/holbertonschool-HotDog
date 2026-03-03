@@ -11,7 +11,6 @@ import AvatarImages from "../../components/AvatarImages/AvatarImages.jsx";
 import "./homeStyle.css";
 import "../../components/SearchBar/searchbar.css";
 import "../../components/AvatarImages/avatarStyle.css";
-import { useNavigate } from "react-router-dom";
 
 // Function service cards
 function createCard(props) {
@@ -102,11 +101,9 @@ function Home() {
           topProviders.map((provider) => (
             <Card
               key={provider.id}
-              onClick={() => navigate(`/appointments/${provider.id}`)}
-              style={{ cursor: 'pointer' }}
               img={provider.img_url}
               title={`${provider.name} (⭐${provider.rating})`}
-              linktoApptPage={() => navigate(`/appointments/${provider.id}`)}
+              onClick={() => navigate(`/appointments/${provider.id}`)}
             />
           ))
         ) : (
