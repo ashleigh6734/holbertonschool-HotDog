@@ -13,7 +13,7 @@ function UserHeader() {
       <ul className="nav-links">
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/services">Services</Link></li>
-        <li><Link to="/appointments">Appointments</Link></li>
+        <li><Link to="/appointments/:id">Appointments</Link></li>
       </ul>
       
       {/* User Area */}
