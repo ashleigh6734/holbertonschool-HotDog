@@ -75,6 +75,7 @@
   margin-top: 0;
   justify-content: flex-start;
   align-items: flex-start;
+  min-height: 360px;
 }
 
 .provider-bookings-container .date-container .MuiDateCalendar-root {
@@ -83,7 +84,7 @@
 }
 
 .provider-bookings-container .time-container {
-  margin-top: 20;
+  margin-top: 20px;
   align-self: start;
 }
 

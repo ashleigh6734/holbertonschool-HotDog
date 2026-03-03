@@ -7,6 +7,7 @@ from app.models.service_provider import ServiceProvider, ServiceType, ProviderSe
 from app.models.appointment import Appointment, AppointmentStatus
 from datetime import date, time, datetime, timedelta, timezone
 from datetime import datetime
+from app.models.review import Review
 
 app = create_app()
 
@@ -167,7 +168,19 @@ with app.app_context():
         notes="Indoor cat. Spayed/neutered and micrpchipped. "
     )
 
-    db.session.add_all([pet1, pet2])
+    pet3 = Pet(
+        owner_id=user2.id,
+        name="Nugget",
+        species=SpeciesEnum.dog,
+        breed="mixed",
+        gender=GenderEnum.male,
+        desexed=False,
+        date_of_birth=date(2017, 1, 11),
+        weight=8.5,
+        notes="Friendly dog but hates walks. Food motivated. "
+    )
+
+    db.session.add_all([pet1, pet2, pet3])
     db.session.commit()
     # =====================
     # 3. Seed 6 Service Providers
@@ -227,7 +240,7 @@ with app.app_context():
     # Query all providers from database
     providers = ServiceProvider.query.all()
     
-    if providers and pet1 and pet2:
+    if providers and pet1 and pet2 and pet3:
         # Create appointments for user1's pets
         # Note: Appointment times are set to on the hour or half past
         appointments = [
@@ -263,8 +276,64 @@ with app.app_context():
                 status=AppointmentStatus.CONFIRMED,
                 notes="30-minute walk"
             ),
+            Appointment(
+                pet_id=pet3.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.DESEXING,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Not yet desexed"
+            ),
         ]
         
         db.session.add_all(appointments)
         db.session.commit()
         print("✅ Appointments seeded successfully!")
+        
+    # =====================
+    # 5. Seed Reviews 
+    # =====================
+
+    if appointments and len(appointments) >= 2:
+        test_reviews = [
+            # Link this review to John's first appointment (Paws & Claws)
+            Review(
+                provider_id=appointments[0].provider_id,
+                user_id=appointments[0].pet.owner_id,
+                appointment_id=appointments[0].id,
+                rating=5,
+                comment="Absolutely the best care for my dog! The staff at Paws & Claws are so gentle and knowledgeable.",
+                created_at=datetime.now() - timedelta(days=2)
+            ),
+            # Link this to the second appointment (Sparkle Paws)
+            Review(
+                provider_id=appointments[1].provider_id,
+                user_id=appointments[1].pet.owner_id,
+                appointment_id=appointments[1].id,
+                rating=4,
+                comment="Great grooming session, Butters looks like a new dog!",
+                created_at=datetime.now() - timedelta(days=5)
+            ),
+            # Link this to the third appointment (Paws & Claws)
+            Review(
+                provider_id=appointments[2].provider_id,
+                user_id=appointments[2].pet.owner_id,
+                appointment_id=appointments[2].id,
+                rating=4,
+                comment="Snom had a wonderful time at the vet!",
+                created_at=datetime.now() - timedelta(days=1)
+            ),
+            # Link this to the fourth appointment (Happy Tails)
+            Review(
+                provider_id=appointments[3].provider_id,
+                user_id=appointments[3].pet.owner_id,
+                appointment_id=appointments[3].id,
+                rating=3,
+                comment="Happy Tails is reliable, but the 30-minute walk ended up being closer to 20 minutes today.",
+                created_at=datetime.now() - timedelta(days=1)
+            ),
+        ]
+        
+        db.session.add_all(test_reviews)
+        db.session.commit()
+        print("✅ Reviews hardcoded successfully with Appointment IDs!")

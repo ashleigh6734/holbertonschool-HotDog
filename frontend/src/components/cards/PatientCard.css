@@ -1,0 +1,139 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&display=swap");
+
+.pet-card {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 13rem 1fr;
+  gap: 1rem;
+  background: white;
+  margin: 1.5rem 0rem;
+  align-items: stretch;
+}
+
+/*LEFT OF CARD*/
+.pet-card-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pet-img {
+  max-width: 170px;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* make image square */
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pet-name {
+  color: #1f3a5f;
+  font-weight: bold;
+  font-family:
+    Open Sans,
+    sans-serif;
+}
+
+/*RIGHT OF CARD*/
+.pet-card-right {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.pet-card-right h6 {
+  justify-self: start;
+  text-align: left;
+  font-family:
+    Open Sans,
+    sans-serif;
+  color: #1f3a5f;
+  font-weight: bold;
+}
+
+.pet-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 55px);
+  gap: 1rem 2rem;
+  outline: black;
+  justify-items: left;
+  align-self: center;
+}
+
+.pet-info-group {
+  text-align: left;
+}
+
+.pet-info-title {
+  font-size: 0.9rem;
+  font-family:
+    Open Sans,
+    sans-serif;
+  color: #1f3a5f;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0.3rem 0rem;
+}
+
+.pet-info-input {
+  font-size: 0.9rem;
+  font-family:
+    Open Sans,
+    sans-serif;
+  color: #1f3a5f;
+  margin: 0;
+}
+
+/*PET CARD FOOTER*/
+.pet-card-footer {
+  display: flex;
+  flex-direction: row;
+}
+
+.notes-label {
+  font-family:
+    Open Sans,
+    sans-serif;
+}
+
+.pet-card-actions {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.pet-card-footer button {
+  border-radius: 10px;
+  border: none;
+  font-size: 0.8rem;
+  width: 5rem;
+  font-weight: bold;
+  padding: 0.3rem;
+}
+
+/*'SEE NOTES' POPOVER*/
+
+.popover-header.popover-header {
+  background-color: #757677;
+  color: white;
+  font-weight: bold;
+}
+
+.btn.btn-primary.popover-button {
+  background-color: #757677;
+  color: white;
+  font-weight: bold;
+}
+
+.btn.btn-primary.popover-button:hover {
+  background-color: #999b9d;
+}
+
+.popover-body.popover-body {
+  font-family:
+    Open Sans,
+    sans-serif;
+}

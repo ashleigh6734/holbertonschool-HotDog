@@ -23,6 +23,7 @@
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .intro-hi {
@@ -87,7 +88,7 @@
   display: grid;
   grid-template-columns: 1.35fr 0.65fr;
   gap: 18px;
-  margin: 10px 0 28px;
+  margin: 30px 0 28px;
 }
 
 .panel {
@@ -174,7 +175,7 @@
 
 .event-row {
   display: grid;
-  grid-template-columns: 92px 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
   padding: 10px 0;
   border-top: 1px solid #f0f0f0;
@@ -191,6 +192,11 @@
 
 .event-title {
   font-size: 12px;
+}
+
+.event-service {
+  font-size: 12px;
+  color: #666;
 }
 
 /* banner */
@@ -273,6 +279,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
+  margin-bottom: 20px;
 }
 
 .stylist-card {

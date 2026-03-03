@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from app.services.pet_service import PetService
 from app.services.user_service import UserService
 from app.extensions import db
@@ -77,9 +77,12 @@ def get_my_pets():
 @jwt_required()
 def get_pet(pet_id):
     owner_id = get_jwt_identity()
+    claims = get_jwt()
+    role = claims.get("role")
     pet = PetService.get_pet_by_id(pet_id)
-
-    if pet.owner_id != owner_id:
+    
+    # allow: pet owner & providers to access pets
+    if pet.owner_id != owner_id and role != "provider":
         return jsonify({"error": "Unauthorized"}), 403
 
     return jsonify({
@@ -103,9 +106,12 @@ def get_pet(pet_id):
 @jwt_required()
 def update_pet(pet_id):
     owner_id = get_jwt_identity()
+    claims = get_jwt()
+    role = claims.get("role")
     pet = PetService.get_pet_by_id(pet_id)
 
-    if pet.owner_id != owner_id:
+    # Allow: pet owner & providers to edit pets
+    if pet.owner_id != owner_id and role != "provider":
         return jsonify({"error": "Unauthorized"}), 403
 
     data = request.get_json()
@@ -124,9 +130,12 @@ def update_pet(pet_id):
 @jwt_required()
 def delete_pet(pet_id):
     owner_id = get_jwt_identity()
+    claims = get_jwt()
+    role = claims.get("role")
     pet = PetService.get_pet_by_id(pet_id)
 
-    if pet.owner_id != owner_id:
+    # Allow: pet owner & providers to delete pets
+    if pet.owner_id != owner_id and role != "provider":
         return jsonify({"error": "Unauthorized"}), 403
 
     PetService.delete_pet(pet)

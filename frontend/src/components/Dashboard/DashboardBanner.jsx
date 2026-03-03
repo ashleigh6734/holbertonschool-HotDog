@@ -8,7 +8,7 @@ export default function DashboardBanner({ title, text, ctaText, onCtaClick }) {
     if (onCtaClick) {
       onCtaClick();
     } else {
-      navigate("/appointments/:id");
+      navigate("/services");
     }
   }
 

@@ -31,7 +31,9 @@ def create_app():
         os.environ["SSL_CERT_FILE"] = certifi.where()
 
     # initialise flask app
-    app = Flask(__name__)
+    app = Flask(__name__,
+        static_folder="../static",
+        static_url_path="/static")
 
     # load configurations
     app.config.from_object(Config)
