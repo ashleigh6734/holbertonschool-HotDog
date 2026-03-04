@@ -153,7 +153,8 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2024, 1, 17),
         weight=28.5,
-        notes="No known health issues. Up to date on vaccinations - next vaccination date 27/02/2027"
+        notes="No known health issues. Up to date on vaccinations - next vaccination date 27/02/2027",
+        img_url="http://localhost:5000/static/images/petImages/butters.jpg"
     )
 
     pet2 = Pet(
@@ -165,7 +166,8 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
-        notes="Indoor cat. Spayed/neutered and microchipped. "
+        notes="Indoor cat. Spayed/neutered and microchipped. ",
+        img_url="http://localhost:5000/static/images/petImages/snom.jpg"
     )
 
     pet3 = Pet(
@@ -177,7 +179,8 @@ with app.app_context():
         desexed=False,
         date_of_birth=date(2017, 1, 11),
         weight=8.5,
-        notes="Friendly dog but hates walks. Food motivated. "
+        notes="Friendly dog but hates walks. Food motivated. ",
+        img_url="http://localhost:5000/static/images/petImages/nugget.jpeg"
     )
 
     db.session.add_all([pet1, pet2, pet3])

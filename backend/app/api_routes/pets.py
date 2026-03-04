@@ -64,7 +64,8 @@ def get_my_pets():
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
             "notes": pet.notes,
-            "age": pet.age_display
+            "age": pet.age_display,
+            "img_url": pet.img_url
         }
         for pet in pets
     ]), 200
@@ -95,7 +96,8 @@ def get_pet(pet_id):
         "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
         "weight": pet.weight,
         "notes": pet.notes,
-        "age": pet.age_display
+        "age": pet.age_display,
+        "img_url": pet.img_url
     }), 200
 
 

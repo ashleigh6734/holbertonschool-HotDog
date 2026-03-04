@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../components/modals/ConfirmModal";
 import BasicPopover from "../popovers/BasicPopover";
-import catImage from "../../assets/images/cat.jpg";
-import dogImage from "../../assets/images/dog.jpg";
+import catImage from "../../assets/images/cat_default.png";
+import dogImage from "../../assets/images/dog_default.png";
 
 export default function PetCard({ pet }) {
   const navigate = useNavigate();
@@ -53,7 +53,11 @@ export default function PetCard({ pet }) {
   return (
     <div className="pet-card">
       <div className="pet-card-left">
-        <img className="pet-img" src={getPetImage()} alt={pet?.name} />
+        <img
+          className="pet-img"
+          src={pet.img_url ? pet.img_url : getPetImage()}
+          alt={pet?.name}
+        />
         <h6 className="pet-name mb-0">{pet?.name}</h6>
       </div>
 

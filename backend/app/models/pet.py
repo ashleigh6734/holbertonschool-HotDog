@@ -51,6 +51,7 @@ class Pet(db.Model):
     weight = db.Column(db.Float, nullable=True)
     notes = db.Column(db.String(500), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    img_url = db.Column(db.String(500), nullable=True)
 
 
     # =====================
