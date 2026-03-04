@@ -16,7 +16,11 @@ export default function PatientList() {
         return;
       }
       const providerAppointments = await getProviderAppointments(token);
-      setAppointments(providerAppointments.appointments || []);
+      // only set appointments where status is CONFIRMED
+      const confirmedAppointments = providerAppointments.appointments.filter(
+        (appointment) => appointment.status === "CONFIRMED",
+      );
+      setAppointments(confirmedAppointments || []);
     }
     getAppointments();
   }, []);
@@ -34,12 +38,15 @@ export default function PatientList() {
           getPetById(appointment.pet_id, token),
         );
         const patientDataArray = await Promise.all(promises);
-        setPatients(patientDataArray);
+        // return an array with UNIQUE patients
+        let sanitisedDataArray = [
+          ...new Set(patientDataArray.map((item) => JSON.stringify(item))),
+        ].map((item) => JSON.parse(item));
+        setPatients(sanitisedDataArray);
       } catch (error) {
         console.error(error);
       }
     }
-
     getPatients();
   }, [appointments]);
 

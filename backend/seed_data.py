@@ -165,7 +165,7 @@ with app.app_context():
         desexed=True,
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
-        notes="Indoor cat. Spayed/neutered and micrpchipped. "
+        notes="Indoor cat. Spayed/neutered and microchipped. "
     )
 
     pet3 = Pet(
@@ -279,10 +279,18 @@ with app.app_context():
             Appointment(
                 pet_id=pet3.id,
                 provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
-                service_type=ServiceType.DESEXING,
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=14, minutes=30),
+                service_type=ServiceType.VET_CONSULTATIONS,
                 status=AppointmentStatus.CONFIRMED,
                 notes="Not yet desexed"
+            ),
+            Appointment(
+                pet_id=pet3.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.VACCINATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Annual vaccination"
             ),
         ]
         
