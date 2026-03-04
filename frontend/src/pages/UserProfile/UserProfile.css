@@ -31,7 +31,7 @@
   height: 45rem;
   top: 24px;
   width: 200px;
-  box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.239);
+  box-shadow: 0 2px 8px rgba(31, 58, 95, 0.1);
 }
 
 .form-panel {
@@ -40,7 +40,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.239);
+  box-shadow: 0 2px 8px rgba(31, 58, 95, 0.1);
 }
 
 .form-panel h6 {
