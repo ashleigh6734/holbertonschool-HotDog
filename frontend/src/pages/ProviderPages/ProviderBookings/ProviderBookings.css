@@ -3,8 +3,8 @@
   flex-direction: column;
   background: white;
   /* min-height: 100vh; */
-  max-width: 700px;
-  margin: 3rem auto;
+  max-width: 800px;
+  margin: 2.5rem auto;
 }
 
 .bookings-header-bar {
@@ -132,7 +132,6 @@
   color: #1f3a5f;
   margin: 0 0 12px;
   font-weight: 900;
-
 }
 
 .provider-modal-close {
