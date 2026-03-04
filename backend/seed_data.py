@@ -19,7 +19,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
-            "img_url": "https://i.postimg.cc/0y52d7QR/paws-and-claws.jpg",
+            "img_url": "http://localhost:5000/static/images/bookingImages/paws-and-claws.jpg",
             "logo_url": "https://i.postimg.cc/2y76xGNF/Logo-Paws-Claws-Veterinary-Clinic.png",
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "Comprehensive veterinary care for your furry friends.",
@@ -35,7 +35,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Bob", "last": "Groomer", "email": "bob@grooming.com"},
         "business": {
             "name": "Sparkle Paws Grooming",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/sparkle-paws-grooming.jpg",
             "logo_url": "https://i.postimg.cc/FRgNtKC5/Logo-Sparkle-Paws-Grooming.png",
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional grooming services including wash, cut, and style.",
@@ -51,7 +51,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Charlie", "last": "Walker", "email": "charlie@walks.com"},
         "business": {
             "name": "Happy Tails Dog Walking",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/dog-walking.jpg",
             "logo_url": "https://i.postimg.cc/P5gjPDBp/Logo-Happy-Tails-Dog-Walking.png",
             "services": [ServiceType.DOG_WALKING],
             "description": "Group and solo walks to keep your dog active.",
@@ -67,7 +67,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Diana", "last": "Trainer", "email": "diana@train.com"},
         "business": {
             "name": "Good Boy Puppy School",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/puppy-school.jpg",
             "logo_url": "https://i.postimg.cc/wM4KHRX6/Logo-Good-Boy-Puppy-School.png",
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Obedience training and socialization classes.",
@@ -83,7 +83,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Evan", "last": "Surgeon", "email": "evan@desex.com"},
         "business": {
             "name": "Safe Hands Desexing Clinic",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/desexing.jpg",
             "logo_url": "https://i.postimg.cc/zGgmZBV8/Logo-Safe-Hands-Desexing-Clinic.png",
             "services": [ServiceType.DESEXING],
             "description": "Specialized clinic focusing on safe desexing procedures.",
@@ -99,7 +99,7 @@ PROVIDERS_DATA = [
         "owner": {"first": "Fiona", "last": "Dentist", "email": "fiona@teeth.com"},
         "business": {
             "name": "Canine Smiles Dental",
-            "img_url": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&q=80",
+            "img_url": "http://localhost:5000/static/images/bookingImages/dental-smiles.jpg",
             "logo_url": "https://i.postimg.cc/90MSxXvn/Logo-Canine-Smiles-Dental.png",
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dentistry including cleaning and scaling.",

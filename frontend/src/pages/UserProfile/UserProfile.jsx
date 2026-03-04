@@ -142,7 +142,7 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="profile-page">
+    <div className="profile-background">
       <div className="profile-container">
         <h1 className="mb-5" style={{ fontWeight: "800", color: "#1f3a5f" }}>
           My Profile
@@ -273,10 +273,7 @@ export default function UserProfile() {
             )}
             {activeTab === "password" && (
               <>
-                <h6
-                  id="mngpwd"
-                  style={{ margin: "0px", fontWeight: 700, color: "#1f3a5f" }}
-                >
+                <h6 id="mngpwd" style={{ fontWeight: 700, color: "#1f3a5f" }}>
                   Manage Password
                 </h6>
 
@@ -318,7 +315,7 @@ export default function UserProfile() {
               <Form>
                 <h6
                   id="mngacc"
-                  style={{ margin: "0px", fontWeight: 700, color: "#1f3a5f" }}
+                  style={{ fontWeight: 700, color: "#1f3a5f" }}
                   className="mb-3"
                 >
                   Manage Account

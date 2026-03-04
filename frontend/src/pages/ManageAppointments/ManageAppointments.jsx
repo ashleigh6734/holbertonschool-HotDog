@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import ConfirmModalCustom from '../../components/modals/ConfirmModalCustom';
-import './ManageAppointments.css';
-import LocationIcon from '../../assets/icons/geo-alt.svg';
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import ConfirmModalCustom from "../../components/modals/ConfirmModalCustom";
+import "./ManageAppointments.css";
+import LocationIcon from "../../assets/icons/geo-alt.svg";
 
 export default function ManageAppointments() {
   const { user } = useContext(AuthContext);
@@ -23,9 +23,9 @@ export default function ManageAppointments() {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/appointments/user/me', {
+        const response = await fetch("/api/appointments/user/me", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
@@ -37,7 +37,7 @@ export default function ManageAppointments() {
         setAppointments(data.appointments || []);
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching appointments:', err);
+        console.error("Error fetching appointments:", err);
       } finally {
         setLoading(false);
       }
@@ -63,11 +63,11 @@ export default function ManageAppointments() {
       const response = await fetch(
         `/api/appointments/${selectedAppointmentId}/cancel`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -76,7 +76,7 @@ export default function ManageAppointments() {
 
       // Remove cancelled appointment from list
       setAppointments((prev) =>
-        prev.filter((apt) => apt.id !== selectedAppointmentId)
+        prev.filter((apt) => apt.id !== selectedAppointmentId),
       );
 
       setShowCancelConfirm(false);
@@ -88,7 +88,7 @@ export default function ManageAppointments() {
       }, 2000);
     } catch (err) {
       setError(err.message);
-      console.error('Error cancelling appointment:', err);
+      console.error("Error cancelling appointment:", err);
       setShowCancelConfirm(false);
     } finally {
       setCancellingId(null);
@@ -99,18 +99,18 @@ export default function ManageAppointments() {
   // Format date and time
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
   const formatTime = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -166,7 +166,7 @@ export default function ManageAppointments() {
                   <span>Time:</span>
                 </div>
                 <span className="detail-value">
-                  {formatDate(appointment.date_time)}{' '}
+                  {formatDate(appointment.date_time)}{" "}
                   {formatTime(appointment.date_time)}
                 </span>
               </div>
@@ -191,7 +191,7 @@ export default function ManageAppointments() {
               onClick={() => handleCancelClick(appointment.id)}
               disabled={cancellingId === appointment.id}
             >
-              {cancellingId === appointment.id ? 'Cancelling...' : 'Cancel'}
+              {cancellingId === appointment.id ? "Cancelling..." : "Cancel"}
             </button>
           </div>
         ))}
@@ -199,9 +199,9 @@ export default function ManageAppointments() {
 
       {/* Make Another Appointment Button */}
       <div className="make-another-appointment-section">
-        <button 
+        <button
           className="make-appointment-btn"
-          onClick={() => navigate('/services')}
+          onClick={() => navigate("/services")}
         >
           Make Another Appointment
         </button>
