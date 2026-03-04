@@ -27,6 +27,8 @@ export async function deleteUser(user, token) {
 export async function updateUser(token, user, body) {
   const API_UPDATE_USER_URL = `http://localhost:5000/api/users/${user.id}`;
 
+  console.log("Calling PATCH:", API_UPDATE_USER_URL, body); // ✅ log request
+
   const response = await fetch(`${API_UPDATE_USER_URL}`, {
     method: "PATCH",
     headers: {
@@ -37,8 +39,10 @@ export async function updateUser(token, user, body) {
   });
   const data = await response.json();
 
+  console.log("Response status:", response.status, "Data:", data); // ✅ log response
+
   if (!response.ok) {
-    throw new Error(data.error || "Failed to update password");
+    throw new Error(data.error || "Failed to update user");
   }
   return data;
 }

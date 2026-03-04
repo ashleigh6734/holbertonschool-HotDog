@@ -59,16 +59,26 @@ def update_user(user_id):
     if current_user != user_id:
         return jsonify({"error": "Unauthorized"}), 403
 
-    data = request.get_json()
+    
     if not request.is_json:
         return jsonify({"error": "Invalid JSON"}), 400
 
-    user = UserService.update_user(user_id, data)
+    data = request.get_json()
+
+    try:
+        user = UserService.update_user(user_id, data)
+        return jsonify({"message": "User successfully updated"}), 200
+    
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    except Exception:
+        return jsonify({"error": "Server error"}), 500
     
     if not user:
         return jsonify({"error": "User not found"}), 404
     
-    return jsonify({"message": "User successfully updated"}), 200
+    
 
 @users_bp.route('/<string:user_id>', methods=['DELETE'])
 @jwt_required()

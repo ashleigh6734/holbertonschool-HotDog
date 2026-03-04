@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import { deleteUser } from "../../api/user.js";
@@ -14,6 +14,7 @@ import "./UserProfile.css";
 import "../../styles/common.css";
 
 export default function UserProfile() {
+  const [error, setError] = useState(null);
   const { user, logout } = useContext(AuthContext);
   const [firstName, setFirstName] = useState(user?.first_name || "");
   const [lastName, setLastName] = useState(user?.last_name || "");
@@ -25,6 +26,13 @@ export default function UserProfile() {
 
   //ACTIVE TAB STATE
   const [activeTab, setActiveTab] = useState("details"); //details | password | account
+
+  // ================================
+  // RESET ERROR ON TAB CHANGE
+  // ================================
+  useEffect(() => {
+    setError(null);
+  }, [activeTab]);
 
   // EDIT/SAVE STATE
   const [editMode, setEditMode] = useState(false);
@@ -40,7 +48,9 @@ export default function UserProfile() {
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
 
-  // HANDLE UPDATE USER
+  // ================================
+  // UPDATE USER DETAILS
+  // ================================
   const handleUpdateUser = async (
     firstName,
     lastName,
@@ -48,47 +58,65 @@ export default function UserProfile() {
     mobileNumber,
     // emergencyNumber,
   ) => {
-    const token = localStorage.getItem("token");
-    const body = {};
+    console.log("handleUpdateUser triggered with:", {
+      firstName,
+      lastName,
+      email,
+      mobileNumber,
+    });
+    setError("");
+
+    // ---------- Set Body ----------
+    const body = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone_number: mobileNumber || null,
+    };
+
+    // ---------- Submit ----------
+
     try {
-      if (firstName) {
-        body.first_name = firstName;
-      }
-      if (lastName) {
-        body.last_name = lastName;
-      }
-      if (email) {
-        body.email = email;
-      }
-      if (mobileNumber) {
-        body.phone_number = mobileNumber;
-      }
-      console.log(body);
-      const result = await updateUser(token, user, body);
+      const result = await submitUpdate(body);
       console.log(result.message);
+      closeEditMode();
     } catch (error) {
+      console.log(error.message, "error-message");
+      setError(error.message || "Failed to update user");
+    }
+  };
+
+  // ================================
+  // UPDATE PASSWORD
+  // ================================
+  const handleUpdatePassword = async () => {
+    setError("");
+    if (!newPassword) {
+      return setError("Password cannot be empty");
+    }
+
+    if (newPassword !== confirmPassword) {
+      return setError("Passwords do not match");
+    }
+
+    const body = { password: "newPassword" };
+
+    try {
+      const result = await submitUpdate(body);
+      console.log(result.message);
+      setShowPasswordSuccess(true);
+    } catch (error) {
+      setError(error.message);
       console.error(error);
     }
   };
 
-  // HANDLE PASSWORD STATE
-  const handleUpdatePassword = async () => {
+  // ================================
+  // SUBMIT UPDATE
+  // ================================
+  const submitUpdate = async (body) => {
     const token = localStorage.getItem("token");
-    const body = {};
-    if (newPassword !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-    try {
-      if (newPassword) {
-        body.password = newPassword;
-      }
-      const result = await updateUser(token, user, body);
-      console.log(result.message);
-      setShowPasswordSuccess(true);
-    } catch (error) {
-      console.error(error);
-    }
+    return await updateUser(token, user, body);
   };
 
   // HANDLE DELETE USER
@@ -215,11 +243,11 @@ export default function UserProfile() {
                     />
                   </Form>
 
+                  {error && <p style={{ color: "red" }}>{error}</p>}
                   {editMode ? (
                     <div>
                       <button
                         onClick={() => {
-                          closeEditMode();
                           handleUpdateUser(
                             firstName,
                             lastName,
@@ -273,6 +301,7 @@ export default function UserProfile() {
                       }}
                     />
                   </Form>
+                  {error && <p style={{ color: "red" }}>{error}</p>}
                   <button
                     className="btn-layout btn-yellow"
                     onClick={() => {

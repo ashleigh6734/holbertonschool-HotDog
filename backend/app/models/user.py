@@ -49,7 +49,7 @@ class User(db.Model):
         value = value.strip().lower()
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         if not re.match(email_regex, value):
-            raise ValueError("Invalid email address format")
+            raise ValueError("Invalid email address format. Use following format: e.g. example@test.com")
         return value
     
     @validates('role')
@@ -74,7 +74,7 @@ class User(db.Model):
 
         if not re.match(phone_regex, stripped):
             raise ValueError(
-                "Invalid phone number. Use following format, e.g. +61412345678"
+                "Invalid phone number. Use following format: e.g. +61412345678"
             )
         return stripped
 

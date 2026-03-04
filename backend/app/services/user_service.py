@@ -43,44 +43,50 @@ class UserService():
         # Get user
         user = User.query.get(user_id)
         if not user:
-            return None
+            raise ValueError("User not found")
         
-        # Email update with uniqueness checking
-        if "email" in data and data["email"]:
-            new_email = data["email"].strip().lower()
+        try:
+            # Email update with uniqueness checking
+            if "email" in data and data["email"]:
+                new_email = data["email"].strip().lower()
 
-            if new_email == user.email:
-                raise ValueError("New email must be different from current email")
+                # if new_email == user.email:
+                #     raise ValueError("New email must be different from current email")
+                    
+                existing = User.query.filter_by(email=new_email).first()
+                if existing and existing.id != user.id:
+                    raise ValueError("Email already in use")
                 
-            existing = User.query.filter_by(email=new_email).first()
-            if existing and existing.id != user.id:
-                raise ValueError("Email already in use")
+                user.email = new_email
+
+            # Password change
+            if "password" in data and data["password"]:
+                user.set_password(data["password"])
+
+            # Other updatable fields
+            if "first_name" in data:
+                user.first_name = data["first_name"]
+
+            if "last_name" in data:
+                user.last_name = data["last_name"]
+
+            if "image_url" in data:
+                user.image_url = data["image_url"]
             
-            user.email = new_email
+            if "phone_number" in data:
+                user.phone_number = data["phone_number"]
+            
+            # Role CANNOT be updated
+            if "role" in data:
+                raise ValueError("Role cannot be updated")
 
-        # Password change
-        if "password" in data and data["password"]:
-            user.set_password(data["password"])
-
-        # Other updatable fields
-        if "first_name" in data:
-            user.first_name = data["first_name"]
-
-        if "last_name" in data:
-            user.last_name = data["last_name"]
-
-        if "image_url" in data:
-            user.image_url = data["image_url"]
+            db.session.commit()
+            return user
         
-        if "phone_number" in data:
-            user.phone_number = data["phone_number"]
-        
-        # Role CANNOT be updated
-        if "role" in data:
-            raise ValueError("Role cannot be updated")
+        except Exception:
+            db.session.rollback()
+            raise
 
-        db.session.commit()
-        return user
     
     @staticmethod
     def delete_user(user_id):
