@@ -1,41 +1,41 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import '../../PetProfile/EditPetDetails.css';
-import catImage from '../../../assets/images/cat.jpg';
-import dogImage from '../../../assets/images/dog.jpg';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "../../PetProfile/EditPetDetails.css";
+import catImage from "../../../assets/images/cat.jpg";
+import dogImage from "../../../assets/images/dog.jpg";
 
 export default function ProviderEditPetDetails() {
   const { petId } = useParams();
   const navigate = useNavigate();
   const [pet, setPet] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    species: '',
-    breed: '',
-    gender: '',
+    name: "",
+    species: "",
+    breed: "",
+    gender: "",
     desexed: false,
-    date_of_birth: '',
-    weight: '',
-    notes: '',
-    medical_notes: '', //need to add medical notes to pet model
+    date_of_birth: "",
+    weight: "",
+    notes: "",
+    medical_notes: "", //need to add medical notes to pet model
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const breedMap = {
     dog: [
-      { value: 'labrador', label: 'Labrador' },
-      { value: 'golden_retriever', label: 'Golden Retriever' },
-      { value: 'german_shepherd', label: 'German Shepherd' },
-      { value: 'bulldog', label: 'Bulldog' },
-      { value: 'mixed', label: 'Mixed' },
+      { value: "labrador", label: "Labrador" },
+      { value: "golden_retriever", label: "Golden Retriever" },
+      { value: "german_shepherd", label: "German Shepherd" },
+      { value: "bulldog", label: "Bulldog" },
+      { value: "mixed", label: "Mixed" },
     ],
     cat: [
-      { value: 'domestic_shorthair', label: 'Domestic Shorthair' },
-      { value: 'domestic_longhair', label: 'Domestic Longhair' },
-      { value: 'bengal', label: 'Bengal' },
-      { value: 'siamese', label: 'Siamese' },
-      { value: 'mixed', label: 'Mixed' },
+      { value: "domestic_shorthair", label: "Domestic Shorthair" },
+      { value: "domestic_longhair", label: "Domestic Longhair" },
+      { value: "bengal", label: "Bengal" },
+      { value: "siamese", label: "Siamese" },
+      { value: "mixed", label: "Mixed" },
     ],
   };
 
@@ -46,26 +46,26 @@ export default function ProviderEditPetDetails() {
       try {
         const res = await fetch(`/api/pets/${petId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 
         if (!res.ok) {
-          throw new Error('Failed to fetch pet');
+          throw new Error("Failed to fetch pet");
         }
 
         const data = await res.json();
         setPet(data);
         setFormData({
           ...data,
-          species: data.species?.toLowerCase() || '',
-          gender: data.gender?.toLowerCase() || '',
-          breed: data.breed?.toLowerCase() || '',
-          medical_notes: data.medical_notes || '',
+          species: data.species?.toLowerCase() || "",
+          gender: data.gender?.toLowerCase() || "",
+          breed: data.breed?.toLowerCase() || "",
+          medical_notes: data.medical_notes || "",
         });
       } catch (err) {
         console.error(err);
-        setError('Could not load patient');
+        setError("Could not load patient");
       } finally {
         setLoading(false);
       }
@@ -78,17 +78,17 @@ export default function ProviderEditPetDetails() {
     const { name, value, type, checked } = e.target;
 
     setFormData((prev) => {
-      if (name === 'species') {
+      if (name === "species") {
         return {
           ...prev,
           species: value,
-          breed: '', // reset breed when species changes
+          breed: "", // reset breed when species changes
         };
       }
 
       return {
         ...prev,
-        [name]: type === 'checkbox' ? checked : value,
+        [name]: type === "checkbox" ? checked : value,
       };
     });
   };
@@ -96,10 +96,10 @@ export default function ProviderEditPetDetails() {
   const handleSave = async () => {
     try {
       const res = await fetch(`/api/pets/${petId}`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           ...formData,
@@ -111,43 +111,43 @@ export default function ProviderEditPetDetails() {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to update pet');
+        throw new Error("Failed to update pet");
       }
 
       const updatedPet = await res.json();
-      console.log('Updated:', updatedPet);
+      console.log("Updated:", updatedPet);
 
       navigate(-1);
     } catch (err) {
       console.error(err);
-      setError('Could not save changes');
+      setError("Could not save changes");
     }
   };
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
-      'Are you sure you want to delete this patient?',
+      "Are you sure you want to delete this patient?",
     );
     if (!confirmed) return;
 
     try {
       const res = await fetch(`/api/pets/${petId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
       if (!res.ok) {
-        throw new Error('Failed to delete pet');
+        throw new Error("Failed to delete pet");
       }
 
-      console.log('Pet deleted successfully');
+      console.log("Pet deleted successfully");
 
       navigate(-1);
     } catch (err) {
       console.error(err);
-      setError('Could not delete patient');
+      setError("Could not delete patient");
     }
   };
 
@@ -160,8 +160,8 @@ export default function ProviderEditPetDetails() {
   const getPetImage = () => {
     const species = formData.species?.toLowerCase();
 
-    if (species === 'cat') return catImage;
-    if (species === 'dog') return dogImage;
+    if (species === "cat") return catImage;
+    if (species === "dog") return dogImage;
 
     return dogImage;
   };
@@ -169,7 +169,7 @@ export default function ProviderEditPetDetails() {
   return (
     <div className="edit-pet-container">
       <div className="edit-pet-header">
-        <h1 className="edit-pet-title">Edit {pet?.name || 'Pet'} Details</h1>
+        <h1 className="edit-pet-title">Edit {pet?.name || "Pet"} Details</h1>
         <button className="back-btn" onClick={handleCancel}>
           &lt; Back
         </button>
@@ -184,7 +184,7 @@ export default function ProviderEditPetDetails() {
             <img
               className="pet-avatar"
               src={getPetImage()}
-              alt={`${pet?.name || 'Pet'} avatar`}
+              alt={`${pet?.name || "Pet"} avatar`}
             />
             <h3 className="pet-card-name">{formData.name}</h3>
             {pet?.date_of_birth && (
@@ -329,6 +329,7 @@ export default function ProviderEditPetDetails() {
               id="notes"
               name="notes"
               value={formData.notes}
+              readOnly="true"
               onChange={handleInputChange}
               className="form-textarea"
               rows="4"
