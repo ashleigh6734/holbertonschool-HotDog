@@ -168,7 +168,13 @@ export default function ProviderBookings() {
       if (!response.ok) {
         throw new Error(data.error || "Failed to fetch slots");
       }
-      setAvailableTimes(data.available_slots || []);
+      const slots = Array.isArray(data.slots)
+        ? data.slots
+        : (data.available_slots || []).map((time) => ({
+            time,
+            is_booked: false,
+          }));
+      setAvailableTimes(slots);
     } catch (error) {
       console.error(error);
       setAvailableTimes([]);

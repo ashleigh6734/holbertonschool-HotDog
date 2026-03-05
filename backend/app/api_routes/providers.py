@@ -188,7 +188,7 @@ def get_provider_slots(provider_id):
     if not date_str:
         return jsonify({"error": "A date query parameter is required (e.g., ?date=2026-02-17)"}), 400
 
-    slots, error = ServiceProviderService.get_available_slots(provider_id, date_str)
+    slots_data, error = ServiceProviderService.get_slots_with_status(provider_id, date_str)
 
     if error:
         return jsonify({"error": error}), 404 if "not found" in error else 400
@@ -196,5 +196,6 @@ def get_provider_slots(provider_id):
     return jsonify({
         "provider_id": provider_id,
         "date": date_str,
-        "available_slots": slots
+        "available_slots": slots_data["available_slots"],
+        "slots": slots_data["slots"]
     }), 200

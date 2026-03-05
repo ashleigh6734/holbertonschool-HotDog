@@ -165,8 +165,14 @@ export default function Appointments() {
 
         const data = await response.json();
 
-        // Update the state with the live available slots from the database
-        setAvailableTimes(data.available_slots || []);
+        // Keep all slots so booked ones remain visible but disabled in UI
+        const slots = Array.isArray(data.slots)
+          ? data.slots
+          : (data.available_slots || []).map((slot) => ({
+              time: slot.time || slot,
+              is_booked: slot.is_booked || false,
+            }));
+        setAvailableTimes(slots);
       } catch (error) {
         console.error("Error fetching times from backend:", error);
         setAvailableTimes([]); // Fallback to empty array on error
