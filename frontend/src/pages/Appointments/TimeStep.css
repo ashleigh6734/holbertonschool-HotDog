@@ -1,0 +1,20 @@
+.time-button {
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  color: #1f3a5f;
+}
+
+.time-button.time-button-available {
+  background-color: #ffc72c;
+}
+
+.time-button.time-button-booked {
+  background-color: #c5c3c3;
+  cursor: not-allowed;
+}
+
+.time-button.active-btn {
+  outline: 2px solid #1f3a5f;
+  outline-offset: 1px;
+}

@@ -2,7 +2,8 @@ from sqlalchemy import func
 from app.extensions import db
 from app.models.service_provider import ServiceProvider, ServiceType, ProviderService as ProviderServiceModel
 from app.models.review import Review
-from datetime import time
+from datetime import time, datetime, timedelta, timezone
+from app.models.appointment import Appointment, AppointmentStatus
 
 class ServiceProviderService:
     @staticmethod
@@ -209,3 +210,60 @@ class ServiceProviderService:
             current_time += slot_duration
 
         return available_slots, None
+
+    @staticmethod
+    def get_slots_with_status(provider_id, target_date_str):
+        try:
+            target_date = datetime.strptime(target_date_str, "%Y-%m-%d").date()
+        except ValueError:
+            return None, "Invalid date format. Use YYYY-MM-DD."
+
+        provider = ServiceProviderService.get_provider_by_id(provider_id)
+        if not provider:
+            return None, "Provider not found."
+
+        start_of_day = datetime.combine(target_date, datetime.min.time()).replace(tzinfo=timezone.utc)
+        end_of_day = datetime.combine(target_date, datetime.max.time()).replace(tzinfo=timezone.utc)
+
+        appointments = Appointment.query.filter(
+            Appointment.provider_id == provider_id,
+            Appointment.date_time >= start_of_day,
+            Appointment.date_time <= end_of_day,
+            Appointment.status != AppointmentStatus.CANCELLED
+        ).all()
+
+        slot_duration = timedelta(minutes=provider.slot_duration)
+        current_time = datetime.combine(target_date, provider.opening_time).replace(tzinfo=timezone.utc)
+        closing_time = datetime.combine(target_date, provider.closing_time).replace(tzinfo=timezone.utc)
+
+        slots = []
+        available_slots = []
+
+        while current_time + slot_duration <= closing_time:
+            slot_end_time = current_time + slot_duration
+            is_booked = False
+
+            for appt in appointments:
+                appt_start = appt.date_time
+                if appt_start.tzinfo is None or appt_start.tzinfo.utcoffset(appt_start) is None:
+                    appt_start = appt_start.replace(tzinfo=timezone.utc)
+                appt_end = appt_start + slot_duration
+
+                if current_time < appt_end and slot_end_time > appt_start:
+                    is_booked = True
+                    break
+
+            time_string = current_time.strftime("%I:%M%p").lstrip("0")
+            slots.append({
+                "time": time_string,
+                "is_booked": is_booked,
+            })
+            if not is_booked:
+                available_slots.append(time_string)
+
+            current_time += slot_duration
+
+        return {
+            "slots": slots,
+            "available_slots": available_slots,
+        }, None
