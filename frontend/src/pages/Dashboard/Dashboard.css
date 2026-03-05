@@ -35,11 +35,11 @@
   justify-self: center;
   text-align: center;
   color: #1f3a5f;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 /* Search */
-.search {
+/* .search {
   margin: 22px 0 26px;
   display: flex;
   justify-content: center;
@@ -75,7 +75,7 @@
   cursor: pointer;
   padding: 12px 14px;
   background: #ffd24d;
-}
+} */
 
 /* Grid section */
 .grid-2col {
@@ -114,7 +114,7 @@
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #efefef;
+  /* border: 1px solid #efefef; */
 }
 
 .top-service-card img.service-img {
@@ -181,7 +181,9 @@
 }
 
 .events-list {
-  padding: 12px;
+  padding: 12px !important;
+  height: 275px;
+  border: none !important;
 }
 
 .event-row {
@@ -207,7 +209,7 @@
 
 .event-service {
   font-size: 15px;
-  color: #666;
+  color: #333333;
 }
 
 /* banner */
@@ -232,6 +234,7 @@
 }
 
 .banner-title {
+  color: #ffc72c;
   font-size: 35px;
   font-weight: 900;
   margin-left: 50px;
@@ -239,47 +242,31 @@
 }
 
 .banner-text {
+  color: #ffffff;
   font-family: "nunito";
-    font-weight: 900;
-    text-align: left;
-    font-size: 35px;
-    margin-left: 50px;
-    margin-bottom: 40px;
-    line-height: 1.2;
+  font-weight: 900;
+  text-align: left;
+  font-size: 35px;
+  margin-left: 50px;
+  margin-bottom: 40px;
+  line-height: 1.2;
 }
 
 .banner-btn {
   border-radius: 20px;
-  border-radius: 12px !important;
-  border: none;
+  background-color: transparent;
+  border: 3px solid #ffc72c;
+  color: #ffc72c;
   cursor: pointer;
-  background-color: #ffc72c;
-  font-weight: 600 !important;
-  color: #1f3a5f !important;
+  font-weight: 700;
   margin-left: 50px;
   width: 200px;
   height: 40px;
 }
 
 .banner-btn:hover {
-  color: white;
-}
-
-.banner-title {
-  color: #ffffff;
-}
-
-.banner-text {
-  color: #ffc72c;
-}
-
-.banner-btn {
-  color: #333333;
-}
-
-.banner-visual {
-  display: flex;
-  justify-content: flex-end;
+  color: #1f3a5f;
+  background-color: #ffc72c;
 }
 
 .banner-image {
@@ -289,35 +276,8 @@
   display: block;
 }
 
-/* This code has replace the stylist section */
 
-/* stylists section
-.stylists {
-  background: #f2f5f7;
-  padding: 34px 0 46px;
-}
-
-.stylists-title {
-  text-align: center;
-  margin: 0 0 20px;
-  font-size: 22px;
-} */
-
-/* Pet stylist title font and color */
-/* .stylists-title,
-.stylist-name {
-  font-family: "Nunito", sans-serif;
-  color: #1f3a5f;
-}
-
-.stylist-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 20px;
-}
-
-.stylist-card {
+/* .stylist-card {
   background: transparent;
   text-align: center;
   padding: 12px 8px;
@@ -341,7 +301,7 @@
   font-size: 12px;
   max-width: 260px;
   color: #444;
-}
+} */
 
 .stars {
   font-size: 14px;
@@ -382,7 +342,7 @@
 }
 
 /* responsive */
-@media (max-width: 900px) {
+@media (max-width: 390px) {
   .grid-2col {
     grid-template-columns: 1fr;
   }
