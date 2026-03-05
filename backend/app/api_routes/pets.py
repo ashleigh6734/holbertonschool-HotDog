@@ -38,6 +38,7 @@ def create_pet():
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
             "notes": pet.notes,
+            "medical_notes": pet.medical_notes,
             "age": pet.age_display
         }), 201
     except ValueError as e:
@@ -64,6 +65,7 @@ def get_my_pets():
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
             "notes": pet.notes,
+            "medical_notes": pet.medical_notes,
             "age": pet.age_display,
             "img_url": pet.img_url
         }
@@ -96,6 +98,7 @@ def get_pet(pet_id):
         "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
         "weight": pet.weight,
         "notes": pet.notes,
+        "medical_notes": pet.medical_notes,
         "age": pet.age_display,
         "img_url": pet.img_url
     }), 200
@@ -119,7 +122,7 @@ def update_pet(pet_id):
     data = request.get_json()
 
     try:
-        PetService.update_pet(pet, data)
+        PetService.update_pet(pet, data, role)
         return jsonify({"message": "Pet successfully updated"}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
@@ -245,5 +248,6 @@ def provider_create_customer_and_pet():
             "date_of_birth": pet.date_of_birth.isoformat() if pet.date_of_birth else None,
             "weight": pet.weight,
             "notes": pet.notes,
+            "medical_notes": pet.medical_notes,
         },
     }), 201

@@ -104,11 +104,24 @@ export default function PetCard({ pet }) {
 
         <div className="pet-card-footer">
           <div className="notes-label">
+
+            {/* Owner Notes */}
             <BasicPopover
               placement="right"
               heading="Notes"
               body={pet.notes}
               buttonText="See Notes"
+              headerClassName="popover-header"
+              buttonClassName="popover-button"
+              bodyClassName="popover-body"
+            />
+
+            {/* Medical Notes (Provider Only Editable, Owner Read-Only) */}
+            <BasicPopover
+              placement="right"
+              heading="Medical Notes"
+              body={pet.medical_notes || "No medical notes added yet."}
+              buttonText="See Medical Notes"
               headerClassName="popover-header"
               buttonClassName="popover-button"
               bodyClassName="popover-body"

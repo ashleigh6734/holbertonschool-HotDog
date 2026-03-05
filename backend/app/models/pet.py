@@ -50,6 +50,7 @@ class Pet(db.Model):
     date_of_birth = db.Column(db.Date, nullable=True)
     weight = db.Column(db.Float, nullable=True)
     notes = db.Column(db.String(500), nullable=True)
+    medical_notes = db.Column(db.String(1000), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     img_url = db.Column(db.String(500), nullable=True)
 
@@ -116,6 +117,17 @@ class Pet(db.Model):
         if len(value) > 500:
             raise ValueError("Notes cannot exceed 500 characters")
 
+        return value
+    
+    @validates('medical_notes')
+    def validate_medical_notes(self, key, value):
+        if value is None:
+            return value
+        if not isinstance(value, str):
+            raise TypeError("Medical notes must be a string")
+        value = value.strip()
+        if len(value) > 1000:
+            raise ValueError("Medical notes cannot exceed 1000 characters")
         return value
     
     # =====================

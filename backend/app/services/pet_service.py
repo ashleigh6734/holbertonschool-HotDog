@@ -72,6 +72,7 @@ class PetService:
             date_of_birth=dob,
             weight=data.get("weight"),
             notes=data.get("notes"),
+            medical_notes=None,
         )
 
     @staticmethod
@@ -89,7 +90,7 @@ class PetService:
         return Pet.query.get_or_404(pet_id)
 
     @staticmethod
-    def update_pet(pet, data):
+    def update_pet(pet, data, role):
         """
         Update an existing pet
         """
@@ -130,7 +131,15 @@ class PetService:
                     raise ValueError("date_of_birth must be in YYYY-MM-DD format")
 
         # Other simple fields
-        for field in ["name", "desexed", "weight", "notes"]:
+        owner_editable_fields = ["name", "desexed", "weight", "notes"]
+        provider_editable_fields = ["medical_notes"]
+
+        if role == "provider":
+            allowed_fields = owner_editable_fields + provider_editable_fields
+        else:
+            allowed_fields = owner_editable_fields
+
+        for field in allowed_fields:
             if field in data:
                 value = data[field]
 

@@ -154,6 +154,7 @@ with app.app_context():
         date_of_birth=date(2024, 1, 17),
         weight=28.5,
         notes="No known health issues. Up to date on vaccinations - next vaccination date 27/02/2027",
+        medical_notes="Mild skin allergy observed. Monitor diet.",
         img_url="http://localhost:5000/static/images/petImages/butters.jpg"
     )
 
@@ -167,6 +168,7 @@ with app.app_context():
         date_of_birth=date(2023, 1, 10),
         weight=4.2,
         notes="Indoor cat. Spayed/neutered and microchipped. ",
+        medical_notes="Dental cleaning recommended next visit.",
         img_url="http://localhost:5000/static/images/petImages/snom.jpg"
     )
 
@@ -180,6 +182,7 @@ with app.app_context():
         date_of_birth=date(2017, 1, 11),
         weight=8.5,
         notes="Friendly dog but hates walks. Food motivated. ",
+        medical_notes="Behavioural anxiety during grooming.",
         img_url="http://localhost:5000/static/images/petImages/nugget.jpeg"
     )
 
