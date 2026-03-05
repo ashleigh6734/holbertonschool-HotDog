@@ -6,6 +6,8 @@
   display: flex;
   justify-content: center;
   background-color: white;
+  padding-top: 50px;
+  margin: 0 auto;
 }
 
 .appointment-container {
@@ -28,7 +30,7 @@
 
 .provider-content h1 {
   justify-self: center;
-  margin: 40px 0px 30px 0px;
+  font-size: 2.5rem;
   font-weight: 700;
   color: #1f3a5f;
 }
@@ -47,16 +49,19 @@
   object-fit: contain;
 }
 
-.provider-info {
+.provider-info, .provider-details {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  font-size: 1.25rem;
+  color: #333333;
 }
 
 .provider-info img {
-  width: 16px;
-  height: 16px;
+  width: 25px;
+  height: 25px;
   align-self: center;
+  font-size: 1.25rem;
 }
 
 .flex-gap {
@@ -79,6 +84,8 @@
   color: #1f3a5f;
   align-self: center;
   margin-bottom: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .bookings-container {
@@ -127,16 +134,39 @@
   width: 80px;
   max-height: 30px;
   border-radius: 10px;
-  padding: 3px;
   text-align: center;
   border: none;
 }
 
 .grey-btn {
-  background-color: lightgray;
+  background-color: #f2f3f7;
+  color: #1f3a5f;
+  width: 100px;
+  height: 40px !important;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.93rem;
+}
+
+.grey-btn:hover {
+  background-color: transparent;
+  border: 3px solid #ffc72c;
 }
 
 .navy-btn {
+  border: 3px solid #1f3a5f !important;
+  background-color: transparent;
+  color: #1f3a5f;
+  width: 100px;
+  height: 40px !important;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.93rem;
+}
+
+.navy-btn:hover {
   background-color: #1f3a5f;
   color: #ffc72c;
 }
@@ -165,3 +195,13 @@ body.modal-open {
   gap: 1rem;
   width: 100%; 
 }
+
+.css-4k4mmf-MuiButtonBase-root-MuiPickersDay-root:hover {
+  border: 2px solid #ffc72c !important;
+  background-color: transparent !important;
+}
+
+.css-qct7wd-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+  background-color: #ffc72c !important;
+}
+

@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import ConfirmModalCustom from "../../components/modals/ConfirmModalCustom";
 import "./ManageAppointments.css";
-import LocationIcon from "../../assets/icons/geo-alt.svg";
+// import LocationIcon from "../../assets/icons/geo-alt.svg";
+import Days from "../../assets/icons/calendar-icon.png";
+import Bookingicon from "../../assets/icons/book_icon.png";
+import Locationicon from "../../assets/icons/location.png";
+import Doctoricon from "../../assets/icons/doctor.png";
+
 
 export default function ManageAppointments() {
   const { user } = useContext(AuthContext);
@@ -115,121 +120,135 @@ export default function ManageAppointments() {
   };
 
   return (
-    <div className="manage-appointments">
-      <div className="manage-appointments-header">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          &lt;
-        </button>
-        <h1>Manage your appointment(s)</h1>
-      </div>
-
-      {loading && <p className="loading">Loading appointments...</p>}
-      {error && <p className="error">Error: {error}</p>}
-
-      {!loading && appointments.length === 0 && (
-        <p className="no-appointments">You have no upcoming appointments.</p>
-      )}
-
-      <div className="appointments-list">
-        {appointments.map((appointment) => (
-          <div key={appointment.id} className="appointment-card">
-            <div className="appointment-details">
-              {/* Provider */}
-              <div className="detail-row">
-                <div className="detail-label">
-                  <span className="icon">🩺</span>
-                  <span>Provider:</span>
-                </div>
-                <span className="detail-value">
-                  {appointment.provider_name}
-                </span>
-              </div>
-              {/* Customer */}
-              <div className="detail-row">
-                <div className="detail-label">
-                  <span className="icon">🐾</span>
-                  <span>Customer:</span>
-                </div>
-                <span className="detail-value">{appointment.pet_name}</span>
-              </div>
-              <div className="detail-row">
-                <div className="detail-label">
-                  <span className="icon">🐾</span>
-                  <span>Booking Type:</span>
-                </div>
-                <span className="detail-value">{appointment.service_type}</span>
-              </div>
-              {/* Date & Time */}
-              <div className="detail-row">
-                <div className="detail-label">
-                  <span className="icon">🗓️</span>
-                  <span>Time:</span>
-                </div>
-                <span className="detail-value">
-                  {formatDate(appointment.date_time)}{" "}
-                  {formatTime(appointment.date_time)}
-                </span>
-              </div>
-
-              <div className="detail-row">
-                <div className="detail-label">
-                  <img
-                    src={LocationIcon}
-                    alt="location"
-                    className="location-icon"
-                  />
-                  <span>Location:</span>
-                </div>
-                <span className="detail-value">
-                  {appointment.provider_address}
-                </span>
-              </div>
-            </div>
-
-            <button
-              className="cancel-btn"
-              onClick={() => handleCancelClick(appointment.id)}
-              disabled={cancellingId === appointment.id}
-            >
-              {cancellingId === appointment.id ? "Cancelling..." : "Cancel"}
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Make Another Appointment Button */}
-      <div className="make-another-appointment-section">
-        <button
-          className="make-appointment-btn"
-          onClick={() => navigate("/services")}
-        >
-          Make Another Appointment
-        </button>
-      </div>
-
-      {/* Cancel Confirmation Modal */}
-      {showCancelConfirm && (
-        <ConfirmModalCustom
-          title="Are you sure you want to cancel this appointment?"
-          onConfirm={handleConfirmCancel}
-          onClose={() => {
-            setShowCancelConfirm(false);
-            setSelectedAppointmentId(null);
-          }}
-          confirmText="Confirm"
-          isLoading={cancellingId !== null}
-        />
-      )}
-
-      {/* Cancel Success Modal */}
-      {showCancelSuccess && (
-        <div className="success-modal">
-          <div className="success-modal-content">
-            <h2>✅ Appointment Cancelled</h2>
-            <p>Your appointment has been successfully cancelled.</p>
-          </div>
+    <div className="manage-appt-container">
+      <div className="manage-appointments">
+        <div className="manage-appointments-header">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            &lt;
+          </button>
+          <h1>Manage your appointment(s)</h1>
         </div>
-      )}
+
+        {loading && <p className="loading">Loading appointments...</p>}
+        {error && <p className="error">Error: {error}</p>}
+
+        {!loading && appointments.length === 0 && (
+          <p className="no-appointments">You have no upcoming appointments.</p>
+        )}
+
+        <div className="appointments-list">
+          {appointments.map((appointment) => (
+            <div key={appointment.id} className="appointment-card">
+              <div className="appointment-details">
+                {/* Provider */}
+                <div className="detail-row">
+                  <div className="detail-label">
+                    <img
+                      src={Doctoricon}
+                      alt="location"
+                      className="location-icon"
+                    />
+                    <span>Provider:</span>
+                  </div>
+                  <span className="detail-value">
+                    {appointment.provider_name}
+                  </span>
+                </div>
+                {/* Customer */}
+                <div className="detail-row">
+                  <div className="detail-label">
+                    <span className="icon">🐾</span>
+                    <span>Customer:</span>
+                  </div>
+                  <span className="detail-value">{appointment.pet_name}</span>
+                </div>
+                <div className="detail-row">
+                  <div className="detail-label">
+                    <img
+                      src={Bookingicon}
+                      alt="location"
+                      className="location-icon"
+                    />
+                    <span>Booking Type:</span>
+                  </div>
+                  <span className="detail-value">{appointment.service_type}</span>
+                </div>
+                {/* Date & Time */}
+                <div className="detail-row">
+                  <div className="detail-label">
+                    <img
+                      src={Days}
+                      alt="location"
+                      className="location-icon"
+                    />
+                    <span>Time:</span>
+                  </div>
+                  <span className="detail-value">
+                    {formatDate(appointment.date_time)}{" "}
+                    {formatTime(appointment.date_time)}
+                  </span>
+                </div>
+
+                <div className="detail-row">
+                  <div className="detail-label">
+                    <img
+                      src={Locationicon}
+                      alt="location"
+                      className="location-icon"
+                    />
+                    <span>Location:</span>
+                  </div>
+                  <span className="detail-value">
+                    {appointment.provider_address}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                className="cancel-btn"
+                onClick={() => handleCancelClick(appointment.id)}
+                disabled={cancellingId === appointment.id}
+              >
+                {cancellingId === appointment.id ? "Cancelling..." : "Cancel"}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Make Another Appointment Button */}
+        <div className="make-another-appointment-section">
+          <button
+            className="make-appointment-btn"
+            onClick={() => navigate("/services")}
+          >
+            Make Another Appointment
+          </button>
+        </div>
+
+        {/* Cancel Confirmation Modal */}
+        {showCancelConfirm && (
+          <ConfirmModalCustom
+            title="Are you sure you want to cancel this appointment?"
+            onConfirm={handleConfirmCancel}
+            onClose={() => {
+              setShowCancelConfirm(false);
+              setSelectedAppointmentId(null);
+            }}
+            confirmText="Confirm"
+            isLoading={cancellingId !== null}
+          />
+        )}
+
+        {/* Cancel Success Modal */}
+        {showCancelSuccess && (
+          <div className="success-modal">
+            <div className="success-modal-content">
+              <h2>✅ Appointment Cancelled</h2>
+              <p>Your appointment has been successfully cancelled.</p>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

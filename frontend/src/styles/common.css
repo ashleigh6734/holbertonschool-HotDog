@@ -11,13 +11,11 @@ h6 {
   color: #1f3a5f;
 }
 
-h1,
-h2,
-h3 {
+h1 {
   font-family: "Nunito", sans-serif;
 }
 
-h6 {
+h6, h2, h3 {
   font-family: "Open Sans", sans-serif;
 }
 

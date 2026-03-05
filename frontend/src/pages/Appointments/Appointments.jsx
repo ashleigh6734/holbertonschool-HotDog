@@ -5,9 +5,9 @@ import DateStep from "./DateStep";
 import TimeStep from "./TimeStep";
 import { ReviewList } from "../../components/Review";
 import { useParams } from "react-router-dom";
-import LocationIcon from "../../assets/icons/geo-alt.svg";
-import EmailIcon from "../../assets/icons/email.svg";
-import PhoneIcon from "../../assets/icons/phone.svg";
+import LocationIcon from "../../assets/icons/location.png";
+import EmailIcon from "../../assets/icons/email_icon.png";
+import PhoneIcon from "../../assets/icons/telephone-icon.png";
 
 import BookingSteps1 from "../../components/BookingSteps/BookingSteps1";
 import BookingSteps2 from "../../components/BookingSteps/BookingSteps2";

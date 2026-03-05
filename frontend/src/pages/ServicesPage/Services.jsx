@@ -92,47 +92,45 @@ function Services() {
 
 
   return (
-    <div class="main">
-      <div className="service-container">
-        <SearchButton
-          service={inputService}
-          searchValue={inputQuery}
-          onServiceChange={handleServiceChange}
-          onSearchChange={handleSearchChange}
-          onSearch={handleSearch}
-        />
+    <div className="service-container">
+      <SearchButton
+        service={inputService}
+        searchValue={inputQuery}
+        onServiceChange={handleServiceChange}
+        onSearchChange={handleSearchChange}
+        onSearch={handleSearch}
+      />
 
-        <div className="service-title-card-container">
-          <p className="service-card-title">Providers</p>
-        </div>
+      <div className="service-title-card-container">
+        <p className="service-card-title">Providers</p>
+      </div>
 
-        <div className="service-cards-container">
-          {loading && <p>loading...</p>}
+      <div className="service-cards-container">
+        {loading && <p>loading...</p>}
 
-          {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
 
-          {!loading && providers.length > 0 ? (
-            providers.map((p) => (
-              <ServicesFilters_Card
-                key={p.id}
-                title={p.name} 
-                address={p.address}
-                phone={p.phone} 
-                logo_url={p.logo_url}  
-                avgrating={p.rating}
-                days="Mon–Fri"
-                times={`${p.opening_time} - ${p.closing_time}`}
-                isOpen={isProviderOpen(p.opening_time, p.closing_time)}
-                availability="9:00 10:00 11:00"
-                booknowbtn={true}
-                bookNow={() => navigate(`/appointments/${p.id}`)}
-              />
-            ))
-          ) : ( 
-            !loading && <p>No results found</p>
-          )}
+        {!loading && providers.length > 0 ? (
+          providers.map((p) => (
+            <ServicesFilters_Card
+              key={p.id}
+              title={p.name} 
+              address={p.address}
+              phone={p.phone} 
+              logo_url={p.logo_url}  
+              avgrating={p.rating}
+              days="Mon–Fri"
+              times={`${p.opening_time} - ${p.closing_time}`}
+              isOpen={isProviderOpen(p.opening_time, p.closing_time)}
+              availability="9:00 10:00 11:00"
+              booknowbtn={true}
+              bookNow={() => navigate(`/appointments/${p.id}`)}
+            />
+          ))
+        ) : ( 
+          !loading && <p>No results found</p>
+        )}
 
-        </div>
       </div>
     </div>
   );

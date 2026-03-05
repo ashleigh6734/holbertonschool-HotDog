@@ -21,8 +21,9 @@ const ReviewList = ({ title, reviews, hasAppointment = false, onAddReview }) => 
   };
 
   return (
+    <div className="review-container">
     <div className="review-list-container">
-      <h2 className="review-title">{title}</h2>
+      <h2 className="review-title">Reviews</h2>
       <div className="reviews-grid">
         {reviews && reviews.length > 0 ? (
           reviews.map((reviewItem, index) => (
@@ -50,6 +51,7 @@ const ReviewList = ({ title, reviews, hasAppointment = false, onAddReview }) => 
         onClose={handleModalClose}
         onSubmit={handleModalSubmit}
       />
+    </div>
     </div>
   );
 };

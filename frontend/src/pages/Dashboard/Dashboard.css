@@ -28,7 +28,7 @@
 
 .intro-title {
   margin: 0;
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 800;
   line-height: 1.15;
   max-width: 720px;
@@ -95,7 +95,7 @@
 
 .panel-title {
   margin: 0 0 12px;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   text-align: left;
   color: #1f3a5f;
@@ -132,7 +132,7 @@
   right: 0;
   bottom: 0;
   padding: 8px 10px;
-  font-size: 12px;
+  font-size: 0.80rem;
   /* font-weight: 700; */
   color: #ffffff;
   background: rgba(31, 58, 95, 0.9);
@@ -164,7 +164,7 @@
   border: 0;
   padding: 10px 12px;
   cursor: pointer;
-  background: #e8eaee;
+  background: #f2f3f7;
   font-weight: 700;
   text-align: left;
   border-radius: 12px 0 0 0;
@@ -200,15 +200,15 @@
 
 .event-date {
   font-weight: 700;
-  font-size: 15px;
+  font-size: 0.93rem;
 }
 
 .event-title {
-  font-size: 15px;
+  font-size: 0.93rem;
 }
 
 .event-service {
-  font-size: 15px;
+  font-size: 0.93rem;
   color: #333333;
 }
 
@@ -235,7 +235,7 @@
 
 .banner-title {
   color: #ffc72c;
-  font-size: 35px;
+  font-size: 2.1rem;
   font-weight: 900;
   margin-left: 50px;
   text-align: left;
@@ -246,7 +246,7 @@
   font-family: "nunito";
   font-weight: 900;
   text-align: left;
-  font-size: 35px;
+  font-size: 2.1rem;
   margin-left: 50px;
   margin-bottom: 40px;
   line-height: 1.2;
@@ -319,7 +319,7 @@
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: #c7c7c7;
+  background: #f2f3f7;
 }
 
 .dot-active {

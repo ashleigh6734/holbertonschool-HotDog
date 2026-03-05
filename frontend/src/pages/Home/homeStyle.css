@@ -1,19 +1,18 @@
 body {
-  /* width: 100vw; remove this later */
   margin: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: white;
   overflow-x: hidden;
-  /* padding: 0 16px; */
 }
 
 /* Page container */
 .home-container {
   max-width: 1000px !important;
-  min-height: 100vh;
-  margin: 50px auto;
+  min-height: 150vh;
+  margin: 0 auto;
+  padding-top: 50px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -22,7 +21,7 @@ body {
 
 .home-heading {
   font-weight: 900;
-  font-size: 40px;
+  font-size: 2.5rem;
   text-align: center;
   color: #1f3a5f;
   font-family: "nunito";
@@ -30,13 +29,13 @@ body {
 }
 
 .home-subheading {
-  font-size: 25px;
+  font-size: 1.5rem;
   font-weight: 500;
   text-align: center;
   color: #333333;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-family: "Open Sans";
+  font-family: "Open Sans" !important;
   line-height: 1.2;
 }
 
@@ -49,7 +48,7 @@ body {
 
 .topsearchs-card-title {
   font-family: "Open Sans";
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   text-align: left;
   color: #1f3a5f;
@@ -107,7 +106,7 @@ body {
 
 .topsearchs-servicestitle {
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 0.93rem;
   color: white;
   margin: 0;
   text-align: center;
@@ -139,7 +138,7 @@ body {
   font-family: "nunito";
   font-weight: 900;
   text-align: left;
-  font-size: 35px;
+  font-size: 2.1rem;
   margin-left: 50px;
   margin-bottom: 40px;
   line-height: 1.2;
@@ -156,7 +155,7 @@ body {
   border: 3px solid#1f3a5f;
   color: #1f3a5f;
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 0.93rem;
   font-weight: 600;
   width: 200px;
   height: 40px;
@@ -183,7 +182,7 @@ body {
   padding-top: 40px !important;
   padding-bottom: 40px !important;
   padding: 0 max(50px, calc((100vw - 1000px) / 2));
-  background-color: #e8eaee;
+  background-color: #f2f3f7;
   overflow: hidden;
 }
 
@@ -201,7 +200,7 @@ body {
   color: #1f3a5f;
   font-family: "nunito";
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.25rem;
   text-align: center;
   margin-bottom: 8px;
 }
@@ -210,7 +209,7 @@ body {
   color: #1f3a5f;
   font-family: "nunito";
   font-weight: 900;
-  font-size: 20px;
+  font-size: 1.25rem;
   text-align: center;
   margin-bottom: 8px;
 }
@@ -218,7 +217,7 @@ body {
 .advert-description {
   color: #333333;
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 0.93rem;
   line-height: 1.5;
   max-width: 300px;
 }
@@ -235,7 +234,7 @@ body {
   color: #ffc72c;
   font-family: "nunito";
   font-weight: 900;
-  font-size: 35px;
+  font-size: 2rem;
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -244,7 +243,7 @@ body {
   color: #1f3a5f;
   font-family: "nunito";
   font-weight: 900;
-  font-size: 35px;
+  font-size: 2.5rem;
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -254,7 +253,7 @@ body {
   border: 3px solid#1f3a5f;
   color: #1f3a5f;
   font-family: "Open Sans";
-  font-size: 15px;
+  font-size: 0.93rem;
   font-weight: 600;
   width: 200px;
   height: 40px;
@@ -273,16 +272,98 @@ body {
 /* RESPONSIVE USING MEDIA QUERY */
 /* Mobiles */
 @media (max-width: 390px) {
+
   .home-container {
-    max-width: 100%;
-    min-height: 100vh;
-    padding: 30px;
+    padding: 20px 15px;
+    min-height: auto;
   }
 
-  .home-subheading  {
-    font-size: 30px !important;
+  .home-heading {
+    font-size: 2rem;
   }
-  
+
+  .home-subheading {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Top searches cards */
+  .topsearchs-cards-container {
+    grid-template-columns: 2fr;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+
+  .topsearchs-card-title {
+    font-size: 1rem;
+    margin-bottom: 0px;
+  }
+
+  .topsearchs-card {
+    height: 120px;
+  }
+
+  /* Banner section */
+  .home-banner-container {
+    grid-template-columns: 1fr;
+    height: 400px;
+    max-height: none;
+    padding: 25px;
+    gap: 20px;
+    overflow: hidden;
+  }
+
+  .home-banner-h1 {
+    font-size: 1.5rem;
+    margin-left: 0;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .home-banner-btn {
+    margin-left: 0;
+    width: 100%;
+    margin-bottom: 0px;
+    padding-bottom: ;
+  }
+
+  .home-banner-img {
+    width: 70%;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  /* Advert section */
+  .banner-advert-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .advert-name,
+  .advert-companyName {
+    font-size: 1.1rem;
+  }
+
+  .advert-description {
+    font-size: 0.9rem;
+  }
+
+  .advert-h1 {
+    font-size: 1.4rem;
+  }
+
+  .advert-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 1.8rem;
+  }
+
+  .advert-btn {
+    width: 100%;
+  }
 }
 
 

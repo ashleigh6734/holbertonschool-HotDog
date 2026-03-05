@@ -31,7 +31,7 @@ export default function AllPets() {
   }, []);
 
   return (
-    <div className="all-pets-container">
+    <div className="pets-container">
       <div className="all-pets-content">
         <div className="all-pets-header">
           <h2>Your Pet(s)</h2>

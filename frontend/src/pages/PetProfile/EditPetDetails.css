@@ -83,7 +83,7 @@
   background: white;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(31, 58, 95, 0.1);
+  box-shadow: 0 4px 20px rgba(31, 58, 95, 0.2);
   text-align: center;
   min-width: 260px;
   display: flex;
@@ -96,7 +96,7 @@
   background: white;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(31, 58, 95, 0.1);
+  box-shadow: 0 4px 20px rgba(31, 58, 95, 0.2);
   text-align: center;
   min-width: 260px;
   display: flex;

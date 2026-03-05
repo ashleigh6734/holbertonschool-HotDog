@@ -85,7 +85,7 @@ function Home() {
       <div className="using-hotDog-container">
       {/* Main Heading */}
       <h1 className="adout-heading">
-          Using HotDog to Deliver a <br /> Better Patient Experience
+          Our Story
       </h1>
 
       {/* Subheading */}
