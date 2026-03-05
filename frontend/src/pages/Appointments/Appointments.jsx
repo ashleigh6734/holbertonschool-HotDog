@@ -59,7 +59,9 @@ export default function Appointments() {
     setBookingData(updatedBookingData);
 
     if (step === 2) {
-      await submitAppointment(updatedBookingData);
+      const success = await submitAppointment(updatedBookingData);
+
+      if (!success) return;
     }
 
     setStep(prev => prev + 1);
@@ -69,26 +71,37 @@ export default function Appointments() {
   const submitAppointment = async (dataFromStep1) => {
     const token = localStorage.getItem("token");
 
-    if (!dataFromStep1.pet_id || !dataFromStep1.booking_type || !selectedTime) {
+    if (!dataFromStep1.pet_id || 
+      !dataFromStep1.booking_type || 
+      !selectedTime) {
       alert("Please make sure all required fields are selected.");
-      return;
+      return false;
     }
 
     setIsSubmitting(true);
-
+    
     try {
+      const fullDateTime = selectedDate
+        .hour(dayjs(selectedTime, ["h:mm A"]).hour())
+        .minute(dayjs(selectedTime, ["h:mm A"]).minute())
+        .second(0)
+        .millisecond(0)
+        .toISOString();
+
       const response = await fetch("/api/appointments/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+
         body: JSON.stringify({
           pet_id: dataFromStep1.pet_id,
-          booking_type: dataFromStep1.booking_type,
-          date: selectedDate.format("YYYY-MM-DD"),
-          time: selectedTime,
           provider_id: providerID.id,
+          service_type: dataFromStep1.booking_type,
+          date_time: fullDateTime,
+          // date: selectedDate.format("YYYY-MM-DD"),
+          // time: selectedTime,
         }),
       });
 
@@ -98,16 +111,21 @@ export default function Appointments() {
         throw new Error(data.error || data.msg || "Failed to create appointment");
       }
 
+      setBookingData(prev => ({
+        ...prev,
+        appointment_id: data.booking.id
+      }));
+
+      return true;
+
       // Store the appointment ID for Step 3 display
-      setBookingData((prev) => ({ ...prev, appointment_id: data.id }));
-      console.log("Appointment successfully created:", data);
-    } catch (err) {
-      console.error("Error creating appointment:", err.message);
-      alert("❌ Failed to create appointment: " + err.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+      } catch (err) {
+        alert("Failed to create appointment: " + err.message);
+        return false;  // 👈 failed
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
 
   // FETCH SERVICE PROVIDER DETAILS
@@ -143,7 +161,7 @@ export default function Appointments() {
     fetchProviderDetails();
   }, [providerID.id]);
 
-  console.log(provider.img_url, "provider");
+  // console.log(provider.img_url, "provider");
 
   // FETCH AVAILABLE TIME SLOTS (CONNECTED TO BACKEND)
   useEffect(() => {
@@ -174,7 +192,7 @@ export default function Appointments() {
     };
 
     fetchAvailableTimes();
-  }, [selectedDate, providerID]);
+  }, [selectedDate, providerID.id]);
 
   // 4. SUBMIT A NEW REVIEW
   const handleAddReview = async (reviewData) => {
@@ -320,7 +338,7 @@ export default function Appointments() {
         {isPopupOpen && (
           <div className="provider-modal-overlay">
             <div className="provider-modal">
-              {step === 1 && <BookingSteps1 closePopup={closePopup} onNext={handleNext} />}
+              {step === 1 && <BookingSteps1 closePopup={closePopup} onNext={handleNext} services={provider.services} />}
               {step === 2 && <BookingSteps2 closePopup={closePopup} handleNext={handleNext} goBack={goBack} />}
               {step === 3 && (
                 <BookingSteps3

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./bookingsteps.css";
 
-function BookingSteps1({ closePopup, onNext }) { 
+function BookingSteps1({ closePopup, onNext, services }) { 
   const [pets, setPets] = useState([]);
   const [values, setValues] = useState({
     pet_id: "",
@@ -57,10 +57,10 @@ function BookingSteps1({ closePopup, onNext }) {
       return;
     }
 
-    const selectedPet = pets.find(pet => pet.id === parseInt(values.pet_id));
+    const selectedPet = pets.find(pet => pet.id === values.pet_id);
 
     onNext({
-      pet_id: parseInt(values.pet_id),      
+      pet_id: values.pet_id,
       pet_name: selectedPet?.name || "",
       booking_type: values.booking_type,
     });
@@ -99,15 +99,24 @@ function BookingSteps1({ closePopup, onNext }) {
           onChange={handleChange}
           required
         >
-          <option value="" disabled>Select a type</option>
-          <option value="Vet Consultations">Vet Consultations</option>
-          <option value="Vaccinations">Vaccinations</option>
-          <option value="Desexing">Desexing</option>
-          <option value="Dental">Dental</option>
-          <option value="Nail Trimming">Nail Trimming</option>
-          <option value="Haircuts and Coat Maintenance">Haircuts and Coat Maintenance</option>
-          <option value="Dog Walking">Dog Walking</option>
-          <option value="Puppy Training">Puppy Training</option>
+          <option value="">Select a type</option>
+
+          {services && services.length > 0 ? (
+            services.map((service, idx) => {
+              const serviceName =
+                typeof service === "string"
+                  ? service
+                  : service?.service_type?.value || "Unknown Service";
+
+              return (
+                <option key={idx} value={serviceName}>
+                  {serviceName}
+                </option>
+              );
+            })
+          ) : (
+            <option disabled>No services available</option>
+          )}
         </select>
 
         <div className="button-group">

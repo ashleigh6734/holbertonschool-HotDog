@@ -37,6 +37,19 @@ header {
   z-index: 1000;
 }
 
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  width: 100%;
+}
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .header-content {
   display: flex;
   align-items: center;
@@ -55,6 +68,17 @@ header {
   height: 40px;
   height: auto;
   object-fit: cover;
+}
+
+/* User greeting */
+.intro-hi {
+  margin: 0;   
+  line-height: 1; 
+   display: flex;
+  align-items: center; 
+  font-size: 15px;
+  font-weight: 700;
+  color: #1f3a5f;
 }
 
 /* Navigation */
@@ -83,10 +107,10 @@ header {
 }
 
 /* Access buttons */
-.access-btn {
+/* .access-btn {
   display: flex;
   gap: 12px;
-}
+} */
 
 .login {
   background: transparent;

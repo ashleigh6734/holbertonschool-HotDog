@@ -26,7 +26,7 @@ const advert_Data = [
   },
   {
     id: 4,
-    dashboardSubtitle: "Here’s what HotDog users are saying!",
+    dashboardSubtitle: "Here’s what HotDog users have to say!",
     showButton: true,
   },
 ];

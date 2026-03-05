@@ -9,7 +9,7 @@ import PetStylistReviews from '../../components/Dashboard/PetStylistReviews.jsx'
 import Advert from '../../pages/Home/Advert.jsx';
 import advert_Data from '../../pages/Home/advert_Data.js';
 
-import { STYLISTS } from './dashboardData.js';
+// import { STYLISTS } from './dashboardData.js';
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -39,7 +39,11 @@ export default function Dashboard() {
   return (
     <div className="dash">
       <div className="dash-container">
-        <DashboardHero name={user?.first_name || 'User'} />
+        
+        <DashboardHero
+          displayGreeting={false}
+          title="Welcome to HotDog, where quality care and everything your pet needs come together."
+        />
 
         {/* <DashboardSearch
           onSearch={(query) => {

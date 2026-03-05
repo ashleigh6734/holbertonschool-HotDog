@@ -19,7 +19,7 @@ function BookingSteps3({ closePopup, bookingData, selectedDate, selectedTime, ad
         </div>
         
         <div className="apptdetail-container">
-          <p>{bookingData.name}</p>
+          <p>{bookingData.pet_name}</p>
           <p>{bookingData.booking_type}</p>
           <p>{selectedDate.format("DD/MM/YYYY")}</p>
           <p>{selectedTime}</p>
