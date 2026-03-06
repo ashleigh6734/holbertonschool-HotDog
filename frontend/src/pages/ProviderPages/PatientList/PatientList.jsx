@@ -17,10 +17,12 @@ export default function PatientList() {
       }
       const providerAppointments = await getProviderAppointments(token);
       // only set appointments where status is CONFIRMED
-      const confirmedAppointments = providerAppointments.appointments.filter(
-        (appointment) => appointment.status === "CONFIRMED",
+      const completedAppointments = providerAppointments.appointments.filter(
+        (appointment) =>
+          appointment.status === "CONFIRMED" ||
+          appointment.status === "COMPLETED",
       );
-      setAppointments(confirmedAppointments || []);
+      setAppointments(completedAppointments || []);
     }
     getAppointments();
   }, []);

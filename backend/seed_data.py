@@ -137,7 +137,16 @@ with app.app_context():
     )
     user2.set_password("password124")
 
-    db.session.add_all([user1, user2])
+    user3 = User(
+        first_name="Cardi",
+        last_name="B",
+        email="cardib@test.com",
+        phone_number="+61412345629",
+        role="user"
+    )
+    user3.set_password("password123")
+
+    db.session.add_all([user1, user2, user3])
     db.session.commit() # commit first so user 1 gets an ID
 
 
@@ -186,7 +195,21 @@ with app.app_context():
         img_url="http://localhost:5000/static/images/petImages/nugget.jpeg"
     )
 
-    db.session.add_all([pet1, pet2, pet3])
+    pet4 = Pet(
+        owner_id=user3.id,
+        name="Crumpet",
+        species=SpeciesEnum.dog,
+        breed="bulldog",
+        gender=GenderEnum.female,
+        desexed=False,
+        date_of_birth=date(2026, 2, 14),
+        weight=10,
+        notes="Requires regular grooming once a month. ",
+        medical_notes="Mild skin fold irritation noted. Clean folds daily and monitor for redness.",
+        img_url=""
+    )
+
+    db.session.add_all([pet1, pet2, pet3, pet4])
     db.session.commit()
     # =====================
     # 3. Seed 6 Service Providers
@@ -246,7 +269,7 @@ with app.app_context():
     # Query all providers from database
     providers = ServiceProvider.query.all()
     
-    if providers and pet1 and pet2 and pet3:
+    if providers and pet1 and pet2 and pet3 and pet4:
         # Create appointments for user1's pets
         # Note: Appointment times are set to on the hour or half past
         appointments = [
@@ -297,6 +320,14 @@ with app.app_context():
                 service_type=ServiceType.VACCINATIONS,
                 status=AppointmentStatus.CONFIRMED,
                 notes="Annual vaccination"
+            ),
+            Appointment(
+                pet_id=pet4.id,
+                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
+                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
+                service_type=ServiceType.VACCINATIONS,
+                status=AppointmentStatus.COMPLETED,
+                notes="Test for COMPLETED appointments"
             ),
         ]
         
