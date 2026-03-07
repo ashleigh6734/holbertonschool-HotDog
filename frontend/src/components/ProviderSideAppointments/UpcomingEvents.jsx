@@ -22,9 +22,6 @@ function getStatusClass(status) {
   if (normalized === "CONFIRMED") {
     return "status-pill status-confirmed";
   }
-  if (normalized === "PENDING") {
-    return "status-pill status-pending";
-  }
   if (normalized === "CANCELLED") {
     return "status-pill status-cancelled";
   }
