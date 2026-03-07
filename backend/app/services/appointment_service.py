@@ -115,7 +115,7 @@ class AppointmentService:
             provider_id=provider_id,
             date_time=date_time,
             notes=notes,
-            status=AppointmentStatus.PENDING,
+            status=AppointmentStatus.CONFIRMED,
             service_type=service_type_str
         )
 
