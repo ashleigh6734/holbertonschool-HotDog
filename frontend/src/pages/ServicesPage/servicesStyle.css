@@ -8,7 +8,7 @@
 
 .service-content {
   max-width: 1000px !important;
-  min-height: 115vh;
+  min-height: calc(100vh - 100px);
   margin: 0 auto;
   margin-top: clamp(2.5rem, 3.5vw, 4rem);
   margin-bottom: clamp(2.5rem, 3.5vw, 4rem);
@@ -250,11 +250,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-
-    height: 100vh;         
-    overflow-y: auto;
-
-    scroll-snap-type: y mandatory;
   }
 
   .service-cards-container > * {
@@ -295,11 +290,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 16px;
-
-    height: 100vh;          /* required for internal scrolling */
-    overflow-y: auto;
-
-    scroll-snap-type: y mandatory;
   }
 
   .service-cards-container > * {

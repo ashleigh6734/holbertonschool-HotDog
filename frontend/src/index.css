@@ -6,7 +6,6 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  margin-top: clamp(6rem, 6vw, 6rem);
   /* margin-bottom: clamp(2.5rem, 3.5vw, 4rem); */
 }
 
