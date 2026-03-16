@@ -7,7 +7,8 @@ A full-stack application for Pet care management platform.
 1. [Prerequisites](#prerequisites)  
 2. [Backend Installation](#backend-installation)  
 3. [Frontend Installation](#frontend-installation)
-4. [License](#license)  
+4. [Deployment](#deployment)
+5. [License](#license)  
 
 
 ## Prerequisites
@@ -69,6 +70,44 @@ npm install # or yarn install
 npm run dev
 ```
 > The frontend server should now be running at: http://localhost:5173
+
+## Deployment
+HotDog is deployed using **Render**, which hosts both frontend and backend services
+
+### Services
+| Service | Description |
+|------|------|
+| Frontend | React + Vite application (user interface) |
+| Backend | Python Flask API handling authentication, appointments, and database operations |
+
+Both services are connected to this GitHub repository and automatically deploy when changes are merged into **main**.
+
+### Environment Variables
+Note the backend service requires the following:
+- SENDGRID_API_KEY
+- DATABASE_URL
+- JWT_SECRET_KEY
+
+### Live Application
+- Frontend: **https://holbertonschool-hotdog.onrender.com** (main entry point of the application, accessed directly by users)
+- Backend: **https://holbertonschool-hotdog-backend.onrender.com** (is not meant to be accessed directly by users, instead, the frontend sends requests to this API to perform actions and fetch data)
+#### How the application flow works:
+  User opens the frontend link  
+  ↓  
+  Frontend sends API requests  
+  ↓  
+  Backend processes the request  
+  ↓  
+  Database retrieves data  
+  ↓  
+  Backend returns response  
+  ↓  
+  Frontend displays the result to the user
+
+### Useful Render Locations
+- If deployment issues occur, check the **Render dashboard logs** for the affected service.
+  -  Under Monitor → select Logs
+- Manual Deploy: My Projects → Production → Service Name → select the frontend/backend service → Manual Deploy 
 
 
 ## License
