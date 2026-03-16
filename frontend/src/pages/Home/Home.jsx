@@ -16,24 +16,18 @@ const API_URL = import.meta.env.VITE_API_URL; // for deployment purposes, keep a
 
 // Function service cards
 function createCard(props) {
-  return (
-    <Card
-      key={props.id}
-      title={props.title}
-      img={props.img}
-    />
-  );
+  return <Card key={props.id} title={props.title} img={props.img} />;
 }
 
 // Function for main banner
 function bannerCard(props, navigate) {
   return (
     <CardBanner
-    key={props.id}
-    bannerTitle={props.bannerTitle}
-    img={props.img}
-    showButton={props.showButton}
-    onButtonClick={() => navigate("/services")}
+      key={props.id}
+      bannerTitle={props.bannerTitle}
+      img={props.img}
+      showButton={props.showButton}
+      onButtonClick={() => navigate("/services")}
     />
   );
 }
@@ -42,18 +36,17 @@ function bannerCard(props, navigate) {
 function advertBanner(props, navigate) {
   return (
     <Advert
-    key={props.id}
-    img={props.img}
-    name={props.name}
-    description={props.description}
-    title={props.title}
-    subtitle={props.subtitle}
-    showButton={props.showButton}
-    registerNowBtnClick={() => navigate("/about")}
+      key={props.id}
+      img={props.img}
+      name={props.name}
+      description={props.description}
+      title={props.title}
+      subtitle={props.subtitle}
+      showButton={props.showButton}
+      registerNowBtnClick={() => navigate("/about")}
     />
   );
 }
-
 
 function Home() {
   // 1. Add state for the live providers
@@ -95,20 +88,25 @@ function Home() {
         <SearchBar />
 
         {/* DYNAMIC BACKEND SECTION: Top Rated Providers */}
-        <div className="topsearchs-title-card-container" style={{ marginTop: '40px' }}>
+        <div
+          className="topsearchs-title-card-container"
+          style={{ marginTop: "40px" }}
+        >
           <p className="topsearchs-card-title">Top Rated Providers</p>
         </div>
 
         <div className="topsearchs-cards-container">
           {topProviders.length > 0 ? (
-            topProviders.slice(0, 6).map((provider) => (
-              <Card
-                key={provider.id}
-                img={provider.img_url}
-                title={`${provider.name} (⭐${provider.rating})`}
-                onClick={() => navigate(`/appointments/${provider.id}`)}
-              />
-            ))
+            topProviders
+              .slice(0, 6)
+              .map((provider) => (
+                <Card
+                  key={provider.id}
+                  img={provider.img_url}
+                  title={`${provider.name} ⭐${provider.rating}`}
+                  onClick={() => navigate(`/appointments/${provider.id}`)}
+                />
+              ))
           ) : (
             <p>Loading top rated clinics...</p>
           )}
@@ -129,6 +127,5 @@ function Home() {
     </div>
   );
 }
-
 
 export default Home;

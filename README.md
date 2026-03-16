@@ -72,9 +72,11 @@ npm run dev
 > The frontend server should now be running at: http://localhost:5173
 
 ## Deployment
-HotDog is deployed using **Render**, which hosts both frontend and backend services
+HotDog is deployed using **Render**, which hosts both the frontend and backend services.
 
 ### Services
+Our app consists of two services:
+
 | Service | Description |
 |------|------|
 | Frontend | React + Vite application (user interface) |
@@ -82,33 +84,34 @@ HotDog is deployed using **Render**, which hosts both frontend and backend servi
 
 Both services are connected to this GitHub repository and automatically deploy when changes are merged into **main**.
 
+### Deployment Flow
+1. Our GitHub repo is linked to Render 
+2. Code is merged into the **main** on GitHub
+3. Render detects the update automatically
+4. Render builds the service
+5. The new version is deployed online
+
 ### Environment Variables
-Note the backend service requires the following:
+The backend requires the following in Render:
+- JWT_SECRET_KEY
 - SENDGRID_API_KEY
 - DATABASE_URL
-- JWT_SECRET_KEY
 
 ### Live Application
-- Frontend: **https://holbertonschool-hotdog.onrender.com** (main entry point of the application, accessed directly by users)
-- Backend: **https://holbertonschool-hotdog-backend.onrender.com** (is not meant to be accessed directly by users, instead, the frontend sends requests to this API to perform actions and fetch data)
+- Frontend: https://holbertonschool-hotdog.onrender.com (our entry main point, accessed directly by users)
+- Backend API: https://holbertonschool-hotdog-backend.onrender.com (not meant to be accessed directly by users, instead, the frontend sends requests to this API to perform actions and retrieve data.
+
 #### How the application flow works:
-  User opens the frontend link  
-  ↓  
-  Frontend sends API requests  
-  ↓  
-  Backend processes the request  
-  ↓  
-  Database retrieves data  
-  ↓  
-  Backend returns response  
-  ↓  
-  Frontend displays the result to the user
+1. User opens the frontend link
+2. Frontend sends API requests
+3. Backend processes the request
+4. Database retrieves data
+5. Backend returns response
+6. Frontend displays the result to the user
 
 ### Useful Render Locations
-- If deployment issues occur, check the **Render dashboard logs** for the affected service.
-  -  Under Monitor → select Logs
-- Manual Deploy: My Projects → Production → Service Name → select the frontend/backend service → Manual Deploy 
-
+- Logs (check this for the affected service when debugging): Under Monitor on the left nav bar, select Logs)
+- Manual Deploy: My Projects -> Production -> select the backend/frontend service -> Manual Deploy (black button) -> select how you want to deploy (at the latest commit, specific commit)
 
 ## License
 
