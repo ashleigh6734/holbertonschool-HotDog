@@ -1,0 +1,146 @@
+#!/bin/bash
+# Script to split grace-intergrations commits into multiple branches
+# Each branch includes the commit, lists all files changed grouped by name, and shows commit message for each file
+
+# Start on the backup branch
+git checkout PR-MULTI-SPLIT---GRACE
+
+# -----------------------------
+# Branch 1: PatientCard
+# -----------------------------
+# Files and commits:
+# frontend/src/components/cards/PatientCard.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/components/cards/PatientCard.jsx — Commit: ff69ee5e — "created a separate search filter for providers patient lists"
+git checkout -b patient-card
+git cherry-pick 214406bd ff69ee5e
+git push origin patient-card
+
+# -----------------------------
+# Branch 2: PetCard
+# -----------------------------
+# Files and commits:
+# frontend/src/components/cards/PetCard.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b pet-card
+git cherry-pick 214406bd
+git push origin pet-card
+
+# -----------------------------
+# Branch 3: Appointments
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/Appointments/Appointments.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/pages/Appointments/Appointments.jsx — Commit: 48c443f6 — "Integrated time-slots-available on cards services and also created navi links to appointment pages"
+# frontend/src/pages/Appointments/TimeStep.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b appointments
+git cherry-pick 214406bd 48c443f6
+git push origin appointments
+
+# -----------------------------
+# Branch 4: Header
+# -----------------------------
+# Files and commits:
+# frontend/src/components/Header/Header.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/components/Header/ProviderNav.jsx — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/components/Header/providernavStyles.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b header
+git cherry-pick 214406bd
+git push origin header
+
+# -----------------------------
+# Branch 5: SearchBar
+# -----------------------------
+# Files and commits:
+# frontend/src/components/SearchBar/searchbar.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/components/SearchBar/ProviderSearchBar.jsx — Commit: ff69ee5e — "created a separate search filter for providers patient lists"
+# frontend/src/components/SearchBar/SearchButton.jsx — Commit: ff69ee5e — "created a separate search filter for providers patient lists"
+# frontend/src/components/SearchBar/providername_Data.js — Commit: fce991cb — "Deleted these files and folders -- no longer necessary"
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b search-bar
+git cherry-pick 214406bd ff69ee5e fce991cb
+git push origin search-bar
+
+# -----------------------------
+# Branch 6: ProviderBookings
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/ProviderPages/ProviderBookings/ProviderBookings.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/pages/ProviderPages/ProviderBookings/ProviderBookings.jsx — Commit: 8ed99b72 — "Add provider business insights calculation from appointments..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b provider-bookings
+git cherry-pick 214406bd 8ed99b72
+git push origin provider-bookings
+
+# -----------------------------
+# Branch 7: ProviderPages / PatientList
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/ProviderPages/PatientList/PatientList.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/pages/ProviderPages/PatientList/PatientList.jsx — Commit: ff69ee5e — "created a separate search filter for providers patient lists"
+# frontend/src/pages/ProviderPages/PatientList/ProviderEditPetDetails.jsx — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b patient-list
+git cherry-pick 214406bd ff69ee5e
+git push origin patient-list
+
+# -----------------------------
+# Branch 8: ManageAppointmentsProvider
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/ProviderPages/ManageAppointmentsProvider/ManageAppointmentProvider.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/pages/ProviderPages/ManageAppointmentsProvider/ManageAppointmentProvider.jsx — Commit: df481b22 — "Replaces sg web icons with png image from our assets"
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b manage-appointments-provider
+git cherry-pick 214406bd df481b22
+git push origin manage-appointments-provider
+
+# -----------------------------
+# Branch 9: FormNav / Account / UserProfile
+# -----------------------------
+# Files and commits:
+# frontend/src/components/Form/FormNav.jsx — Commit: 3d1b5869 — "converted FormNav into a dynamic component so it can be used for userprofile and account nav"
+# frontend/src/pages/ProviderPages/Account/Account.jsx — Commit: 3d1b5869 — "converted FormNav into a dynamic component..."
+# frontend/src/pages/UserProfile/UserProfile.jsx — Commit: 3d1b5869 — "converted FormNav into a dynamic component..."
+# frontend/src/pages/UserProfile/UserProfile.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b formnav-account-userprofile
+git cherry-pick 214406bd 3d1b5869
+git push origin formnav-account-userprofile
+
+# -----------------------------
+# Branch 10: Dashboard
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/Dashboard/Dashboard.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/components/Dashboard/DashboardHero.jsx — Commit: a7e8a0f6 — "Made greeting message more casual"
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b dashboard
+git cherry-pick 214406bd a7e8a0f6
+git push origin dashboard
+
+# -----------------------------
+# Branch 11: Services
+# -----------------------------
+# Files and commits:
+# frontend/src/pages/ServicesPage/servicesStyle.css — Commit: 214406bd — "Css styling - ensure all colour used were correct..."
+# frontend/src/pages/ServicesPage/Services.jsx — Commit: 48c443f6 — "Integrated time-slots-available on cards services and also created navigation links"
+# frontend/src/pages/ServicesPage/ServicesFilters_Card.jsx — Commit: 48c443f6 — "Integrated time-slots-available on cards services..."
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b services
+git cherry-pick 214406bd 48c443f6
+git push origin services
+
+# -----------------------------
+# Branch 12: API / Seed
+# -----------------------------
+# Files and commits:
+# backend/app/api_routes/pets.py — Commit: 62e65858 — "added owner_name to API to be pulled into the search filter"
+# backend/seed_data.py — Commit: 62e65858 — "added owner_name to API to be pulled into the search filter"
+git checkout PR-MULTI-SPLIT---GRACE
+git checkout -b api-seed
+git cherry-pick 62e65858
+git push origin api-seed
+
+echo "All grouped branches created, files and commit messages documented, commits cherry-picked, and pushed to GitHub."
