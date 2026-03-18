@@ -1,7 +1,7 @@
-Flask
-Flask-SQLAlchemy
-Flask-CORS
-Flask-bcrypt
+flask
+flask-sqlalchemy
+flask-cors
+flask-bcrypt
 flask-jwt-extended
 sendgrid
 python-dotenv # make sure env vars loaded

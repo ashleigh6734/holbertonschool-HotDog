@@ -90,6 +90,10 @@ def create_app():
     app.register_blueprint(reviews_bp)
     app.register_blueprint(appointments_bp)
 
+    @app.get("/health")
+    def health():
+        return {"status": "ok"}, 200
+
     @app.after_request
     def add_cors_headers(response):
         origin = response.request.headers.get("Origin") if hasattr(response, "request") else None
