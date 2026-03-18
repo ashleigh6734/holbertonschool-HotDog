@@ -14,6 +14,7 @@ import {
 } from "../../../api/providerBookings";
 
 dayjs.extend(utc);
+const API_URL = import.meta.env.VITE_API_URL;
 
 function sortAppointmentsByDateTime(items = []) {
   return [...items].sort((a, b) => {
@@ -204,7 +205,7 @@ export default function ProviderBookings() {
     try {
       const formattedDate = date.format("YYYY-MM-DD");
       const response = await fetch(
-        `/api/providers/${provider.id}/slots?date=${formattedDate}`,
+        `${API_URL}/api/providers/${provider.id}/slots?date=${formattedDate}`,
       );
       const data = await response.json();
       if (!response.ok) {

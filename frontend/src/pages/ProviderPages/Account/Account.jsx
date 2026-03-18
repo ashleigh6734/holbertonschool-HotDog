@@ -10,6 +10,8 @@ import Appointments from "../../Appointments/Appointments.jsx";
 import "./account.css";
 import "../../../styles/common.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Account() {
   const { user, logout } = useContext(AuthContext);
   
@@ -34,7 +36,7 @@ export default function Account() {
       if (!token) return;
 
       try {
-        const res = await fetch("/api/providers/me", {
+        const res = await fetch(`${API_URL}/api/providers/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -76,7 +78,9 @@ export default function Account() {
     setSaving(true);
 
     try {
-      const url = provider.id ? `/api/providers/${provider.id}` : "/api/providers";
+      const url = provider.id
+        ? `${API_URL}/api/providers/${provider.id}`
+        : `${API_URL}/api/providers`;
       const method = provider.id ? "PATCH" : "POST";
 
       const payload = {
@@ -130,7 +134,7 @@ export default function Account() {
 
       console.log("Token:", token);
 
-      const res = await fetch(`/api/users/${user.id}`, {
+      const res = await fetch(`${API_URL}/api/users/${user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +161,7 @@ export default function Account() {
   const deleteAccount = async () => {
     try {
       const token = localStorage.getItem("token");
-      await fetch(`/api/users/${user.id}`, {
+      await fetch(`${API_URL}/api/users/${user.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

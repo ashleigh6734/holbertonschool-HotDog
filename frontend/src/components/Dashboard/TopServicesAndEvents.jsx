@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function TopServicesAndEvents({
   topProviders = [], // Accepting live backend data
@@ -27,7 +28,7 @@ export default function TopServicesAndEvents({
           return;
         }
 
-        const response = await fetch('/api/appointments/user/me', {
+        const response = await fetch(`${API_URL}/api/appointments/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

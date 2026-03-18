@@ -16,6 +16,8 @@ import BookingSteps3 from "../../components/BookingSteps/BookingSteps3";
 
 dayjs.extend(utc);
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Appointments({ previewMode = false, providerData = null }) {
   const providerID = useParams();
   const today = dayjs();
@@ -126,7 +128,7 @@ export default function Appointments({ previewMode = false, providerData = null 
     try {
       const fullDateTime = buildDateTimeFromSlot();
 
-      const response = await fetch("/api/appointments/", {
+      const response = await fetch(`${API_URL}/api/appointments/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -178,9 +180,9 @@ export default function Appointments({ previewMode = false, providerData = null 
     if (!idString) return;
 
     const fetchProviderDetails = async () => {
-      const API_URL = `/api/providers/${idString}`;
+      const providerUrl = `${API_URL}/api/providers/${idString}`;
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(providerUrl);
         if (!response.ok) throw new Error(`Status: ${response.status}`);
 
         const result = await response.json();
@@ -215,7 +217,7 @@ export default function Appointments({ previewMode = false, providerData = null 
 
       try {
         const response = await fetch(
-          `/api/providers/${providerID.id}/slots?date=${formattedDate}`,
+          `${API_URL}/api/providers/${providerID.id}/slots?date=${formattedDate}`,
         );
 
         if (!response.ok) throw new Error(`Failed to fetch time slots: ${response.status}`);
@@ -250,7 +252,7 @@ export default function Appointments({ previewMode = false, providerData = null 
     const appointmentId = validAppointmentId;
 
     try {
-      const response = await fetch("/api/reviews/", {
+      const response = await fetch(`${API_URL}/api/reviews/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -295,7 +297,7 @@ export default function Appointments({ previewMode = false, providerData = null 
       if (!token) return; // Don't check if they aren't logged in
 
       try {
-        const response = await fetch("/api/appointments/list", {
+        const response = await fetch(`${API_URL}/api/appointments/list`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

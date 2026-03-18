@@ -10,6 +10,7 @@ import Locationicon from "../../assets/icons/location.png";
 import Doctoricon from "../../assets/icons/doctor.png";
 import Customericon from "../../assets/icons/customer.png";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function ManageAppointments() {
   const { user } = useContext(AuthContext);
@@ -29,7 +30,7 @@ export default function ManageAppointments() {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/appointments/user/me", {
+        const response = await fetch(`${API_URL}/api/appointments/user/me`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -67,7 +68,7 @@ export default function ManageAppointments() {
     try {
       setCancellingId(selectedAppointmentId);
       const response = await fetch(
-        `/api/appointments/${selectedAppointmentId}/cancel`,
+        `${API_URL}/api/appointments/${selectedAppointmentId}/cancel`,
         {
           method: "DELETE",
           headers: {
