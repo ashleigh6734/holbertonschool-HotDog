@@ -75,7 +75,7 @@ export default function AllPets() {
 
           <div className="pets-list">
             {pets.map(pet => (
-              <PetCard key={pet.id} pet={pet} />
+              <PetCard key={pet.id} pet={pet} onPetDeleted={refreshPets} />
             ))}
           </div>
         </div>

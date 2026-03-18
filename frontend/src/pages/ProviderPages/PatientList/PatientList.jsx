@@ -119,6 +119,10 @@ export default function PatientList() {
     setSearchQuery(searchInput);
   };
 
+  const handlePatientDeleted = (deletedPetId) => {
+    setPatients((prev) => prev.filter((p) => p.id !== deletedPetId));
+  };
+
   return (
     <div className="all-patients-container">
       <div className="all-patient-section">
@@ -143,7 +147,11 @@ export default function PatientList() {
 
             <div className="pets-list">
               {filteredPatients.map((patient) => (
-                <PatientCard key={patient.id} pet={patient} />
+                <PatientCard
+                  key={patient.id}
+                  pet={patient}
+                  onPetDeleted={handlePatientDeleted}
+                />
               ))}
             </div>
           </div>

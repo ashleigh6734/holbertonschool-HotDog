@@ -8,7 +8,7 @@ import dogImage from "../../assets/images/dog_default.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function PetCard({ pet }) {
+export default function PetCard({ pet, onPetDeleted }) {
   const navigate = useNavigate();
   // SHOW MODAL ON DELETE ACCOUNT
   const [showModal, setShowModal] = useState(false);
@@ -29,8 +29,9 @@ export default function PetCard({ pet }) {
       }
 
       setShowModal(false);
-
-      window.location.reload();
+      if (onPetDeleted) {
+        onPetDeleted(pet.id);
+      }
     } catch (err) {
       console.error("Delete failed:", err);
     }
