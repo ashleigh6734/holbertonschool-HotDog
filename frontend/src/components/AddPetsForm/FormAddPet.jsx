@@ -29,9 +29,13 @@ function FormAddPet({ closePopup, onPetAdded }) {
       if (!token) return;
 
       try {
-        const res = await fetch("/api/pets/options", {
+        const API_URL = import.meta.env.VITE_API_URL;
+        const res = await fetch(`${API_URL}/api/pets/options`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        if (!res.ok) {
+          throw new Error(`Failed to load pet options: ${res.status}`);
+        }
         const data = await res.json();
         setOptions(data);
       } catch (err) {

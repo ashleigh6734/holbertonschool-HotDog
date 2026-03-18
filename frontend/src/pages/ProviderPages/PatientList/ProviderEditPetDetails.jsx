@@ -5,6 +5,8 @@ import catImage from "../../../assets/images/cat_default.png";
 import dogImage from "../../../assets/images/dog_default.png";
 import ConfirmModal from "../../../components/modals/ConfirmModal";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function ProviderEditPetDetails() {
   const { petId } = useParams();
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function ProviderEditPetDetails() {
   useEffect(() => {
     const fetchPet = async () => {
       try {
-        const res = await fetch(`/api/pets/${petId}`, {
+        const res = await fetch(`${API_URL}/api/pets/${petId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -97,7 +99,7 @@ export default function ProviderEditPetDetails() {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/pets/${petId}`, {
+      const res = await fetch(`${API_URL}/api/pets/${petId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +130,7 @@ export default function ProviderEditPetDetails() {
 
   const handleDeleteConfirm = async () => {
     try {
-      const res = await fetch(`/api/pets/${petId}`, {
+      const res = await fetch(`${API_URL}/api/pets/${petId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

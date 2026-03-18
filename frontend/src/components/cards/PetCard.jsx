@@ -6,6 +6,8 @@ import BasicPopover from "../popovers/BasicPopover";
 import catImage from "../../assets/images/cat_default.png";
 import dogImage from "../../assets/images/dog_default.png";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function PetCard({ pet }) {
   const navigate = useNavigate();
   // SHOW MODAL ON DELETE ACCOUNT
@@ -13,7 +15,7 @@ export default function PetCard({ pet }) {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`/api/pets/${pet.id}`, {
+      const res = await fetch(`${API_URL}/api/pets/${pet.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
