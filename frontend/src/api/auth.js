@@ -1,4 +1,4 @@
-const API_URL = `${import.meta.env.VITE_API_URL}/api/users/`;
+const API_URL = `${import.meta.env.VITE_API_URL}/api/users`;
 
 export async function registerUser(userData) {
     const response = await fetch(`${API_URL}`, {
