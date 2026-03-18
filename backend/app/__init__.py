@@ -41,14 +41,18 @@ def create_app():
         static_url_path="/static")
     
     # enable CORS: allow Vite site to access API with CORS -- Deployment
-    CORS(
-        app,
-        origins=[
-            "http://localhost:5173", # local development URL
-            "https://holbertonschool-hotdog-frontend.onrender.com", # replace with your actual frontend URL
-        ],
-        supports_credentials=True,
-    )
+    CORS(app, resources={r"/*": {"origins": [
+        "http://localhost:5173",
+        "https://holbertonschool-hotdog-frontend.onrender.com"
+    ]}})
+    # CORS(
+    #     app,
+    #     origins=[
+    #         "http://localhost:5173", # local development URL
+    #         "https://holbertonschool-hotdog-frontend.onrender.com", # replace with your actual frontend URL
+    #     ],
+    #     supports_credentials=True,
+    # )
 
     # load configurations
     app.config.from_object(Config)
@@ -86,20 +90,20 @@ def create_app():
     app.register_blueprint(reviews_bp)
     app.register_blueprint(appointments_bp)
 
-    @app.after_request
-    def add_cors_headers(response):
-        origin = response.request.headers.get("Origin") if hasattr(response, "request") else None
-        allowed_origins = {
-            "http://localhost:5173",
-            "https://holbertonschool-hotdog-frontend.onrender.com",
-        }
+    # @app.after_request
+    # def add_cors_headers(response):
+    #     origin = response.request.headers.get("Origin") if hasattr(response, "request") else None
+    #     allowed_origins = {
+    #         "http://localhost:5173",
+    #         "https://holbertonschool-hotdog-frontend.onrender.com",
+    #     }
 
-        if origin in allowed_origins:
-            response.headers["Access-Control-Allow-Origin"] = origin
-            response.headers["Vary"] = "Origin"
-            response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-            response.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, DELETE, OPTIONS"
+    #     if origin in allowed_origins:
+    #         response.headers["Access-Control-Allow-Origin"] = origin
+    #         response.headers["Vary"] = "Origin"
+    #         response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    #         response.headers["Access-Control-Allow-Methods"] = "GET, POST, PATCH, PUT, DELETE, OPTIONS"
 
-        return response
+    #     return response
 
     return app
