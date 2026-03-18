@@ -24,7 +24,7 @@ def get_me():
         "role": user.role
     }), 200
 
-@users_bp.route('/', methods=['POST'])
+@users_bp.route('', methods=['POST'])
 def create_user():
     """ Create a new user """
     if not request.is_json:
