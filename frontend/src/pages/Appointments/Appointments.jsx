@@ -13,6 +13,7 @@ import PhoneIcon from "../../assets/icons/telephone-icon.png";
 import BookingSteps1 from "../../components/BookingSteps/BookingSteps1";
 import BookingSteps2 from "../../components/BookingSteps/BookingSteps2";
 import BookingSteps3 from "../../components/BookingSteps/BookingSteps3";
+import { resolveApiImageUrl } from "../../utils/mediaUrl";
 
 dayjs.extend(utc);
 
@@ -346,7 +347,7 @@ export default function Appointments({ previewMode = false, providerData = null 
         <div className="provider-content">
           <h1 className="mb-4">{provider.name}</h1>
           <div className="provider-img-container">
-            <img src={provider.img_url} alt="provider-image" />
+            <img src={resolveApiImageUrl(provider.img_url, API_URL)} alt="provider-image" />
           </div>
 
           <div className="provider-details">{provider.description}</div>

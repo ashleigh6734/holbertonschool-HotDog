@@ -8,6 +8,7 @@ import banner_Data from "./banner_Data.js";
 import Advert from "./Advert.jsx";
 import advert_Data from "./advert_Data.js";
 import AvatarImages from "../../components/AvatarImages/AvatarImages.jsx";
+import { resolveApiImageUrl } from "../../utils/mediaUrl.js";
 import "./homeStyle.css";
 import "../../components/SearchBar/searchbar.css";
 import "../../components/AvatarImages/avatarStyle.css";
@@ -102,7 +103,7 @@ function Home() {
               .map((provider) => (
                 <Card
                   key={provider.id}
-                  img={provider.img_url}
+                  img={resolveApiImageUrl(provider.img_url, API_URL)}
                   title={`${provider.name} ⭐${provider.rating}`}
                   onClick={() => navigate(`/appointments/${provider.id}`)}
                 />

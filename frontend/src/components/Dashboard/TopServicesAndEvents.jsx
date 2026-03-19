@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import { resolveApiImageUrl } from '../../utils/mediaUrl';
 
 dayjs.extend(utc);
 const API_URL = import.meta.env.VITE_API_URL;
@@ -73,7 +74,7 @@ export default function TopServicesAndEvents({
                 style={{ cursor: 'pointer' }}>
                 <img
                   className="service-img"
-                  src={provider.img_url}
+                  src={resolveApiImageUrl(provider.img_url, API_URL)}
                   alt={provider.name}
                   loading="lazy"
                   style={{ objectFit: 'cover' }}
