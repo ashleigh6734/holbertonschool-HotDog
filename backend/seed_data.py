@@ -198,18 +198,32 @@ with app.app_context():
     pet4 = Pet(
         owner_id=user3.id,
         name="Crumpet",
-        species=SpeciesEnum.dog,
-        breed="bulldog",
+        species=SpeciesEnum.cat,
+        breed="domestic_longhair",
         gender=GenderEnum.female,
         desexed=False,
         date_of_birth=date(2026, 2, 14),
         weight=10,
-        notes="Requires regular grooming once a month. ",
-        medical_notes="Mild skin fold irritation noted. Clean folds daily and monitor for redness.",
+        notes="Only eats sashimi. Frequent furballs.",
+        medical_notes="Healthy cat - no issues.",
         img_url=""
     )
 
-    db.session.add_all([pet1, pet2, pet3, pet4])
+    # pet5 = Pet(
+    #     owner_id=user1.id, #Bad Bunny
+    #     name="Peanut",
+    #     species=SpeciesEnum.dog,
+    #     breed="mixed",
+    #     gender=GenderEnum.male,
+    #     desexed=True,
+    #     date_of_birth=date(2014, 2, 14),
+    #     weight=12,
+    #     notes="Adopted last week - requires initial check up. Am concerned about rashes on his paws and areas of skin.",
+    #     medical_notes="Mild skin allergy observed. Monitor diet.",
+    #     img_url=""
+    # )
+
+    db.session.add_all([pet1, pet2, pet3, pet4])  # remember to add in pet5 when re-seeding for Review Demo -> refer also to line 284
     db.session.commit()
     # =====================
     # 3. Seed 6 Service Providers
@@ -267,83 +281,59 @@ with app.app_context():
     # Query all providers from database
     providers = ServiceProvider.query.all()
     
-    if providers and pet1 and pet2 and pet3 and pet4:
+    if providers and pet1 and pet2 and pet3 and pet4: #REMEMBER TO ADD IN pet5 FOR REVIEW DEMO
         # Create appointments for user1's pets
         # Note: Appointment times are set to on the hour or half past
         appointments = [
             Appointment(
-                pet_id=pet1.id,
-                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=3, hours=10),
-                service_type=ServiceType.VET_CONSULTATIONS,
-                status=AppointmentStatus.CONFIRMED,
-                notes="Check-up for Butters"
-            ),
-            Appointment(
-                pet_id=pet1.id,
+                pet_id=pet1.id, #butters
                 provider_id=providers[1].id,  # Sparkle Paws Grooming
                 date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=5, hours=14),
                 service_type=ServiceType.HAIRCUTS_COAT,
                 status=AppointmentStatus.CONFIRMED,
                 notes="Grooming session"
             ),
-            # Bad Bunny (user1) completed appointment at Safe Hands (providers[4])
             Appointment(
-                pet_id=pet1.id,
-                provider_id=providers[4].id,  # Safe Hands Desexing Clinic
-                date_time=datetime.now(timezone.utc) - timedelta(days=7), # 1 week ago
-                service_type=ServiceType.DESEXING,
-                status=AppointmentStatus.COMPLETED,
-                notes="Routine desexing completed without complications."
-            ),
-            Appointment(
-                pet_id=pet2.id,
-                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=30, second=0, microsecond=0) + timedelta(days=7, hours=11),
-                service_type=ServiceType.VET_CONSULTATIONS,
-                status=AppointmentStatus.CONFIRMED,
-                notes="Annual check-up for Snom"
-            ),
-            Appointment(
-                pet_id=pet1.id,
-                provider_id=providers[2].id,  # Happy Tails Dog Walking
-                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
-                service_type=ServiceType.DOG_WALKING,
-                status=AppointmentStatus.CONFIRMED,
-                notes="30-minute walk"
-            ),
-            Appointment(
-                pet_id=pet3.id,
-                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=14, minutes=30),
-                service_type=ServiceType.VET_CONSULTATIONS,
-                status=AppointmentStatus.CONFIRMED,
-                notes="Not yet desexed"
-            ),
-            Appointment(
-                pet_id=pet3.id,
-                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
-                service_type=ServiceType.VACCINATIONS,
-                status=AppointmentStatus.CONFIRMED,
-                notes="Annual vaccination"
-            ),
-            Appointment(
-                pet_id=pet4.id,
-                provider_id=providers[0].id,  # Paws & Claws Veterinary Clinic
-                date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=2, hours=15),
-                service_type=ServiceType.VACCINATIONS,
-                status=AppointmentStatus.COMPLETED,
-                notes="Test for COMPLETED appointments"
-            ),
-            Appointment(
-                pet_id=pet1.id,
+                pet_id=pet2.id, #snom
                 provider_id=providers[5].id,  # Canine Smiles Dental
-                date_time=datetime.now(timezone.utc) - timedelta(days=3), # 3 days ago
+                date_time=datetime.now(timezone.utc) + timedelta(days=3), # 3 days ago
                 service_type=ServiceType.DENTAL,
                 status=AppointmentStatus.COMPLETED,
                 notes="Routine dental scaling and cleaning completed."
             ),
+            Appointment(
+                pet_id=pet4.id, #crumpet
+                provider_id=providers[0].id,  # Paws and Claws
+                date_time=datetime.now(timezone.utc) - timedelta(days=2), # 2 days ago
+                service_type=ServiceType.VACCINATIONS,
+                status=AppointmentStatus.COMPLETED,
+                notes="Up to date on vaccinations - next check up 16/04/2026"
+            ),
+            Appointment(
+                pet_id=pet3.id, #nugget
+                provider_id=providers[0].id,  # Paws and Claws
+                date_time=datetime.now(timezone.utc) + timedelta(days=1), # in 1 day
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.CONFIRMED,
+                notes="Nugget is slightly over healthy weight. Check in at next appointment."
+            ),
+            Appointment(
+                pet_id=pet3.id, #nugget
+                provider_id=providers[0].id,  # Paws and Claws
+                date_time=datetime.now(timezone.utc) - timedelta(days=6), # 6 days in the past, to show repeat clients
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.COMPLETED,
+                notes="Nugget is slightly over healthy weight. Check in at next appointment."
+            ),
+            # Bad Bunny (user1) completed appointment at Paws and Claws (providers[0]) for Peanut (pet5)
+            # Appointment(
+            #     pet_id=pet5.id, #Peanut
+            #     provider_id=providers[0].id,  # Paws and Claws
+            #     date_time=datetime.now(timezone.utc) - timedelta(days=7), # 1 week ago
+            #     service_type=ServiceType.VET_CONSULTATIONS,
+            #     status=AppointmentStatus.COMPLETED,
+            #     notes="No major concerns, however has a mild allergy to peanuts which is causing his itchy rashes. Appointment to be booked next week for follow up."
+            # ),   
         ]
         
         db.session.add_all(appointments)
@@ -356,33 +346,33 @@ with app.app_context():
 
     if appointments and len(appointments) >= 2:
         test_reviews = [
-            # Link this review to the first appointment (Paws & Claws)
+            # Link this review to the first appointment (Paws & Claws - Cardi B)
             Review(
-                provider_id=appointments[0].provider_id,
-                user_id=appointments[0].pet.owner_id,
-                appointment_id=appointments[0].id,
+                provider_id=appointments[2].provider_id,
+                user_id=appointments[2].pet.owner_id,
+                appointment_id=appointments[2].id,
                 rating=5,
-                comment="Absolutely the best care for my dog! The staff at Paws & Claws are so gentle and knowledgeable.",
+                comment="Absolutely the best care for my cat! The staff at Paws & Claws are so gentle and knowledgeable.",
                 created_at=datetime.now() - timedelta(days=2)
             ),
-            # Link this to the second appointment (Sparkle Paws)
-            Review(
-                provider_id=appointments[1].provider_id,
-                user_id=appointments[1].pet.owner_id,
-                appointment_id=appointments[1].id,
-                rating=4,
-                comment="Great grooming session, Butters looks like a new dog!",
-                created_at=datetime.now() - timedelta(days=5)
-            ),
-            # Link this to the fourth appointment (Happy Tails)
-            Review(
-                provider_id=appointments[4].provider_id,
-                user_id=appointments[4].pet.owner_id,
-                appointment_id=appointments[4].id,
-                rating=3,
-                comment="Happy Tails is reliable, but the 30-minute walk ended up being closer to 20 minutes today.",
-                created_at=datetime.now() - timedelta(days=1)
-            ),
+            # # Link this to the second appointment (Sparkle Paws)
+            # Review(
+            #     provider_id=appointments[1].provider_id,
+            #     user_id=appointments[1].pet.owner_id,
+            #     appointment_id=appointments[1].id,
+            #     rating=4,
+            #     comment="Great grooming session, Butters looks like a new dog!",
+            #     created_at=datetime.now() - timedelta(days=5)
+            # ),
+            # # Link this to the fourth appointment (Happy Tails)
+            # Review(
+            #     provider_id=appointments[4].provider_id,
+            #     user_id=appointments[4].pet.owner_id,
+            #     appointment_id=appointments[4].id,
+            #     rating=3,
+            #     comment="Happy Tails is reliable, but the 30-minute walk ended up being closer to 20 minutes today.",
+            #     created_at=datetime.now() - timedelta(days=1)
+            # ),
         ]
         
         db.session.add_all(test_reviews)
