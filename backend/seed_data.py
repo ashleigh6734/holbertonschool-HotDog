@@ -210,7 +210,7 @@ with app.app_context():
         desexed=False,
         date_of_birth=date(2026, 2, 14),
         weight=10,
-        notes="Only eats sashimi. Frequent furballs.",
+        notes="Only eats sashimmi. Frequent furballs.",
         medical_notes="Healthy cat - no issues.",
         img_url=""
     )
