@@ -16,7 +16,7 @@ app = create_app()
 # ==========================================
 PROVIDERS_DATA = [
     {
-        "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
+        "owner": {"first": "Alice", "last": "Vet", "email": "alice@gmail.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
             "img_url": "http://localhost:5000/static/images/bookingImages/paws-and-claws.jpg",
@@ -123,7 +123,7 @@ with app.app_context():
     user1 = User(
         first_name="Bad",
         last_name="Bunny",
-        email="badbunny@test.com",
+        email="badbunny@gmail.com",
         phone_number="+61412345678"
     )
     user1.set_password("password123")
