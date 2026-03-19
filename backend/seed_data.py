@@ -26,7 +26,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
             "img_url": static_url("images/bookingImages/paws-and-claws.jpg"),
-            "logo_url": "https://i.postimg.cc/2y76xGNF/Logo-Paws-Claws-Veterinary-Clinic.png",
+            "logo_url": static_url("images/Logo-Paws-Claws-Veterinary-Clinic.png"),
             "services": [ServiceType.VET_CONSULTATIONS, ServiceType.VACCINATIONS, ServiceType.DESEXING],
             "description": "A trusted local veterinary clinic providing general health check-ups, vaccinations, and surgical procedures. Our experienced team is dedicated to keeping pets healthy and supporting owners with professional advice and care.",
             "address": "123 High St, Melbourne VIC",
@@ -36,13 +36,13 @@ PROVIDERS_DATA = [
             "opening_time": "08:00",
             "closing_time": "17:00"
         }
-    },
+    },  
     {
         "owner": {"first": "Bob", "last": "Groomer", "email": "bob@grooming.com"},
         "business": {
             "name": "Sparkle Paws Grooming",
             "img_url": static_url("images/bookingImages/sparkle-paws-grooming.jpg"),
-            "logo_url": "https://i.postimg.cc/FRgNtKC5/Logo-Sparkle-Paws-Grooming.png",
+            "logo_url": static_url("images/Logo-Sparkle-Paws-Grooming.png"),
             "services": [ServiceType.HAIRCUTS_COAT, ServiceType.NAIL_TRIMMING],
             "description": "Professional pet grooming services including bathing, coat trimming, nail clipping, and styling. We focus on creating a calm and comfortable experience so every pet leaves looking and feeling their best.",
             "address": "45 Dogwood Ln, Melbourne VIC",
@@ -58,7 +58,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Happy Tails Dog Walking",
             "img_url": static_url("images/bookingImages/dog-walking.jpg"),
-            "logo_url": "https://i.postimg.cc/P5gjPDBp/Logo-Happy-Tails-Dog-Walking.png",
+            "logo_url": static_url("images/Logo-Happy-Tails-Dog-Walking.png"),
             "services": [ServiceType.DOG_WALKING],
             "description": "Reliable dog walking services designed to keep your dog active, social, and happy. We offer both solo and small group walks, ensuring each dog receives plenty of exercise, attention, and outdoor time.",
             "address": "78 Park Ave, Melbourne VIC",
@@ -74,7 +74,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Good Boy Puppy School",
             "img_url": static_url("images/bookingImages/puppy-school.jpg"),
-            "logo_url": "https://i.postimg.cc/wM4KHRX6/Logo-Good-Boy-Puppy-School.png",
+            "logo_url": static_url("images/Logo-Good-Boy-Puppy-School.png"),
             "services": [ServiceType.PUPPY_TRAINING],
             "description": "Puppy training and socialisation classes designed to build confidence and good behaviour. Our structured sessions help puppies learn essential commands while supporting owners with practical training guidance.",
             "address": "101 Training Crt, Melbourne VIC",
@@ -90,7 +90,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Safe Hands Desexing Clinic",
             "img_url": static_url("images/bookingImages/desexing.jpg"),
-            "logo_url": "https://i.postimg.cc/zGgmZBV8/Logo-Safe-Hands-Desexing-Clinic.png",
+            "logo_url": static_url("images/Logo-Safe-Hands-Desexing-Clinic.png"),
             "services": [ServiceType.DESEXING],
             "description": "A specialised clinic focused on safe and professional desexing procedures. Our experienced veterinary team prioritises pet comfort, safety, and post-surgery care for a smooth recovery.",
             "address": "202 Safety Rd, Melbourne VIC",
@@ -106,7 +106,7 @@ PROVIDERS_DATA = [
         "business": {
             "name": "Canine Smiles Dental",
             "img_url": static_url("images/bookingImages/dental-smiles.jpg"),
-            "logo_url": "https://i.postimg.cc/90MSxXvn/Logo-Canine-Smiles-Dental.png",
+            "logo_url": static_url("images/Logo-Canine-Smiles-Dental.png"),
             "services": [ServiceType.DENTAL],
             "description": "Veterinary dental services including professional cleaning, scaling, and oral health assessments. We help prevent dental disease and keep your pet’s teeth and gums healthy.",
             "address": "303 Molar St, Melbourne VIC",
