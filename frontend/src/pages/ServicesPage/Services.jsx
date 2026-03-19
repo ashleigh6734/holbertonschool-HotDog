@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SearchButton from "../../components/SearchBar/SearchButton.jsx";
 import ServicesFilters_Card from "./ServicesFilters_Card.jsx";
+import { resolveApiImageUrl } from "../../utils/mediaUrl.js";
 import "./servicesStyle.css";
 
 function isProviderOpen(openingTimeStr, closingTimeStr) {
@@ -148,7 +149,7 @@ function Services() {
                 title={p.name}
                 address={p.address}
                 phone={p.phone}
-                logo_url={p.logo_url}
+                logo_url={resolveApiImageUrl(p.logo_url, import.meta.env.VITE_API_URL)}
                 avgrating={p.rating}
                 days="Mon–Fri"
                 times={`${p.opening_time} - ${p.closing_time}`}

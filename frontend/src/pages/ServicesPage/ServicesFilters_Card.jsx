@@ -5,13 +5,20 @@ import Locationicon from "../../assets/icons/location.png";
 import Mobile from "../../assets/icons/mobile.png";
 
 function ServicesFilters_Card(props) {
+  const [logoVisible, setLogoVisible] = useState(true);
+
   return (
     <div className="service-card">
 
       {/* Top section */}
       <div className="service-info-row">
-        {props.logo_url && (
-          <img src={props.logo_url} className="company-logos" alt="Company logo" />
+        {props.logo_url && logoVisible && (
+          <img
+            src={props.logo_url}
+            className="company-logos"
+            alt="Company logo"
+            onError={() => setLogoVisible(false)}
+          />
         )}
 
         <div className="service-header-text">
