@@ -344,7 +344,7 @@ with app.app_context():
         
         db.session.add_all(appointments)
         db.session.commit()
-        print("✅ Appointments seeded successfully!")
+        print("✅ Appointments seeded successfully")
         
     # =====================
     # 5. Seed Reviews 
