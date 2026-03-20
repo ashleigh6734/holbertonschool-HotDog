@@ -22,7 +22,7 @@ def static_url(path):
 # ==========================================
 PROVIDERS_DATA = [
     {
-        "owner": {"first": "Alice", "last": "Vet", "email": "alice@gmail.com"},
+        "owner": {"first": "Alice", "last": "Vet", "email": "alice@vet.com"},
         "business": {
             "name": "Paws & Claws Veterinary Clinic",
             "img_url": static_url("images/bookingImages/paws-and-claws.jpg"),
@@ -129,7 +129,7 @@ with app.app_context():
     user1 = User(
         first_name="Bad",
         last_name="Bunny",
-        email="badbunny@gmail.com",
+        email="badbunny56172@gmail.com",
         phone_number="+61412345678"
     )
     user1.set_password("password123")
