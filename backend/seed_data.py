@@ -294,7 +294,7 @@ with app.app_context():
                 date_time=datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) + timedelta(days=5, hours=14),
                 service_type=ServiceType.HAIRCUTS_COAT,
                 status=AppointmentStatus.CONFIRMED,
-                notes="Grooming session"
+                notes="Grooming session - include nail trim"
             ),
             Appointment(
                 pet_id=pet2.id, #snom
