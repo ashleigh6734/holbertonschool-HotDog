@@ -1,10 +1,11 @@
 import "./PetCard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../../components/modals/ConfirmModal";
 import BasicPopover from "../popovers/BasicPopover";
 import catImage from "../../assets/images/cat_default.png";
 import dogImage from "../../assets/images/dog_default.png";
+import { resolveApiImageUrl } from "../../utils/mediaUrl";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -53,13 +54,21 @@ export default function PetCard({ pet, onPetDeleted }) {
     return dogImage;
   };
 
+  const [imgSrc, setImgSrc] = useState(getPetImage());
+
+  useEffect(() => {
+    const normalized = resolveApiImageUrl(pet?.img_url, API_URL);
+    setImgSrc(normalized || getPetImage());
+  }, [pet?.img_url, pet?.species]);
+
   return (
     <div className="pet-card">
       <div className="pet-card-left">
         <img
           className="pet-img"
-          src={pet.img_url ? pet.img_url : getPetImage()}
+          src={imgSrc}
           alt={pet?.name}
+          onError={() => setImgSrc(getPetImage())}
         />
         <h6 className="pet-name mb-0">{pet?.name}</h6>
       </div>

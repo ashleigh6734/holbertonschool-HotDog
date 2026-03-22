@@ -1,4 +1,3 @@
-import os
 from app import create_app
 from app.api_routes import providers
 from app.extensions import db
@@ -11,11 +10,9 @@ from datetime import datetime
 from app.models.review import Review
 
 app = create_app()
-IMAGE_BASE_URL = os.getenv("IMAGE_BASE_URL", "http://localhost:5000").rstrip("/")
-
-
 def static_url(path):
-    return f"{IMAGE_BASE_URL}/static/{path.lstrip('/')}"
+    # frontend prepends backend host at runtime.
+    return f"/static/{path.lstrip('/')}"
 
 # ==========================================
 # DATA: List of 6 Providers to Seed

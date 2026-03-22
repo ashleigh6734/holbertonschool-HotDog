@@ -1,4 +1,3 @@
-import os
 from urllib.parse import urlparse
 
 from app import create_app
@@ -6,26 +5,23 @@ from app.extensions import db
 from app.models.pet import Pet
 from app.models.service_provider import ServiceProvider
 
-IMAGE_BASE_URL = os.getenv("IMAGE_BASE_URL", "").rstrip("/")
-
-
 def _filename_from_path(path):
     return (path or "").split("/")[-1]
 
 
 def rewrite_static_url(url):
-    if not url or not IMAGE_BASE_URL:
+    if not url:
         return None
     parsed = urlparse(url)
     path = parsed.path or ""
     filename = _filename_from_path(path)
 
     if path.startswith("/static/"):
-        return f"{IMAGE_BASE_URL}{parsed.path}"
+        return path
 
     # Legacy postimg-hosted logos include the original filename.
     if filename.startswith("Logo-"):
-        return f"{IMAGE_BASE_URL}/static/images/{filename}"
+        return f"/static/images/{filename}"
     return None
 
 
