@@ -215,21 +215,21 @@ with app.app_context():
         img_url=""
     )
 
-    # pet5 = Pet(
-    #     owner_id=user1.id, #Bad Bunny
-    #     name="Peanut",
-    #     species=SpeciesEnum.dog,
-    #     breed="mixed",
-    #     gender=GenderEnum.male,
-    #     desexed=True,
-    #     date_of_birth=date(2014, 2, 14),
-    #     weight=12,
-    #     notes="Adopted last week - requires initial check up. Am concerned about rashes on his paws and areas of skin.",
-    #     medical_notes="Mild skin allergy observed. Monitor diet.",
-    #     img_url=""
-    # )
+    pet5 = Pet(
+        owner_id=user1.id, #Bad Bunny
+        name="Peanut",
+        species=SpeciesEnum.dog,
+        breed="mixed",
+        gender=GenderEnum.male,
+        desexed=True,
+        date_of_birth=date(2014, 2, 14),
+        weight=12,
+        notes="Adopted last week - requires initial check up. Am concerned about rashes on his paws and areas of skin.",
+        medical_notes="Mild skin allergy observed. Monitor diet.",
+        img_url=""
+    )
 
-    db.session.add_all([pet1, pet2, pet3, pet4])  # remember to add in pet5 when re-seeding for Review Demo -> refer also to line 284
+    db.session.add_all([pet1, pet2, pet3, pet4, pet5])  # remember to add in pet5 when re-seeding for Review Demo -> refer also to line 284
     db.session.commit()
     # =====================
     # 3. Seed 6 Service Providers
@@ -287,7 +287,7 @@ with app.app_context():
     # Query all providers from database
     providers = ServiceProvider.query.all()
     
-    if providers and pet1 and pet2 and pet3 and pet4: #REMEMBER TO ADD IN pet5 FOR REVIEW DEMO
+    if providers and pet1 and pet2 and pet3 and pet4 and pet5: #REMEMBER TO ADD IN pet5 FOR REVIEW DEMO
         # Create appointments for user1's pets
         # Note: Appointment times are set to on the hour or half past
         appointments = [
@@ -332,14 +332,14 @@ with app.app_context():
                 notes="Nugget is slightly over healthy weight. Check in at next appointment."
             ),
             # Bad Bunny (user1) completed appointment at Paws and Claws (providers[0]) for Peanut (pet5)
-            # Appointment(
-            #     pet_id=pet5.id, #Peanut
-            #     provider_id=providers[0].id,  # Paws and Claws
-            #     date_time=datetime.now(timezone.utc) - timedelta(days=7), # 1 week ago
-            #     service_type=ServiceType.VET_CONSULTATIONS,
-            #     status=AppointmentStatus.COMPLETED,
-            #     notes="No major concerns, however has a mild allergy to peanuts which is causing his itchy rashes. Appointment to be booked next week for follow up."
-            # ),   
+            Appointment(
+                pet_id=pet5.id, #Peanut
+                provider_id=providers[0].id,  # Paws and Claws
+                date_time=datetime.now(timezone.utc) - timedelta(days=7), # 1 week ago
+                service_type=ServiceType.VET_CONSULTATIONS,
+                status=AppointmentStatus.COMPLETED,
+                notes="No major concerns, however has a mild allergy to peanuts which is causing his itchy rashes. Appointment to be booked next week for follow up."
+            ),   
         ]
         
         db.session.add_all(appointments)
